@@ -24,10 +24,10 @@
     void dispatch(struct node *);
 }
 
-%token <string> NUMERIC_IMMEDIATE
-%token <string> IDENTIFIER
-%token <string> STR_CONSTANT
-%token <string> CHAR_CONSTANT
+%token<string> NUMERIC_IMMEDIATE
+%token<string> IDENTIFIER
+%token<string> STR_CONSTANT
+%token<string> CHAR_CONSTANT
 
 %token KEYWORD_NEW
 %token KEYWORD_LET
