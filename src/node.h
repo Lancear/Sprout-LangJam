@@ -13,7 +13,7 @@ struct node {
     unsigned int type;
 };
 
-struct node * new_node(unsigned int type, struct node * child, struct node * brother, const char * value);
+struct node * new_node(unsigned int type, struct node * child, struct node * brother, char * value);
 struct node * append_brother(struct node * parent, struct node * brother);
 
 #endif
