@@ -17,8 +17,6 @@
 
 /* may switch later */
 
-#define YYSTYPE char
-
 %}
 
 %option noinput nounput noyywrap 8bit nodefault
@@ -94,22 +92,22 @@ as          return(KEYWORD_AS);
 ";"         return(SEMICOLON);
 
 \'\\?.\'                   {
-    yylval = strdup(yytext);
+    yylval->string = strdup(yytext);
     return(CHAR_CONSTANT);
 }
 
 \"(\\.|[^\"])*\"           {
-    yylval = strdup(yytext);
+    yylval->string = strdup(yytext);
     return(STR_CONSTANT);
 }
 
 [A-Za-z_][0-9A-Za-z_\.]*   {
-    yylval = strdup(yytext);
+    yylval->string = strdup(yytext);
     return(IDENTIFIER);
 }
 
 \-?(0[xbo])?([0-9A-Fa-f])+ {
-    yylval = strdup(yytext);
+    yylval->string = strdup(yytext);
     return(NUMERIC_IMMEDIATE);
 }
 
