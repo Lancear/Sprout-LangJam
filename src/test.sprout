@@ -1,0 +1,4 @@
+
+fn test(arg1:par1, arg2:par2):void {
+    return 0;
+}
