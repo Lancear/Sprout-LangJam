@@ -2,6 +2,19 @@
 #include "codegen_stub.h"
 #include <stdio.h>
 
+#define INDENT for(i=0;i<indent;i++)putchar(' ')
+
 void dispatch(struct node * n) {
-    printf("Dispatch called! n=%p\n", n);
+    static int indent = 0;
+    int i;
+    
+    if(!n)
+        return;
+    
+    INDENT; printf("type: %d\n", n->type);
+    INDENT; printf("value: %s\n", n->value);
+    if(!n->child) { INDENT; printf("child: (null)\n"); }
+    else { indent += 1; INDENT; printf("child:\n"); dispatch(n->child); indent -= 1; }
+    if(!n->brother) { INDENT; printf("brother: (null)\n"); }
+    else { indent += 1; INDENT; printf("brother:\n"); dispatch(n->brother); indent -= 1; }
 }
