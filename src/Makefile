@@ -6,7 +6,7 @@
 all: sprout
 
 clean:
-	rm -f lex.yy.c parser.tab.c parser.tab.h *.o
+	rm -f lex.yy.c parser.tab.c parser.tab.h *.o sprout
 
 lex.yy.c: lexer.l
 	flex lexer.l
