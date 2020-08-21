@@ -1,4 +1,4 @@
-.PHONY: clean all
+.PHONY: clean all rebuild
 
 PARSERFILES := $(addprefix src/parser/, lex.yy.c parser.tab.c parser.tab.h)
 CFILES := $(shell find src -name *.c) $(filter %.c, $(PARSERFILES))
@@ -11,12 +11,13 @@ clean:
 	rm -f $(PARSERFILES) sprout
 	rm -rf ./obj
 
+rebuild: clean sprout
+
 src/parser/lex.yy.c: src/parser/lexer.l src/parser/parser.tab.h
 	flex -o $@ $^
 
 src/parser/parser.tab.h src/parser/parser.tab.c: src/parser/parser.y
 	bison -d -o $@ $^
-
 
 obj/%.o: src/%.c
 	mkdir -p $(@D)
@@ -28,4 +29,3 @@ obj/%.o: src/%.cpp
 
 sprout: $(OBJFILES)
 	g++ $(CPPFLAGS) -o $@ $^
-

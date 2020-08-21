@@ -1,6 +1,6 @@
 #include "SymbolTable.hpp"
 //TODO: Find out why i have to link Scope.cpp here
-#include "Scope.cpp"
+#include "Scope.hpp"
 #include <unordered_map>
 #include <stdexcept>
 using namespace std;
