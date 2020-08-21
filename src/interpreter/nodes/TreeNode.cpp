@@ -1,6 +1,6 @@
 #include "TreeNode.hpp"
 #include "FunctionNode.hpp"
-#include "node.h"
+#include "../../parser/node.h"
 
 TreeNode::TreeNode(char * val) {
   value = val;

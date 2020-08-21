@@ -1,6 +1,6 @@
 #pragma once
 
-#include "node.h"
+#include "../parser/node.h"
 
 extern "C" {
     void dispatch(struct node *);

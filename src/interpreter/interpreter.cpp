@@ -1,5 +1,5 @@
 #include "interpreter.hpp"
-#include "TreeNode.hpp"
+#include "./nodes/TreeNode.hpp"
 #include <iostream>
 using namespace std;
 
