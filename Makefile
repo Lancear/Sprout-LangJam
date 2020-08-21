@@ -1,27 +1,31 @@
 .PHONY: clean all
 
-OBJECTS = $(addprefix ./bin/, parser.tab.o lex.yy.o error.o node.o main.o interpreter.o TreeNode.o FunctionNode.o)
+PARSERFILES := $(addprefix src/parser/, lex.yy.c parser.tab.c parser.tab.h)
+CFILES := $(shell find src -name *.c) $(filter %.c, $(PARSERFILES))
+CPPFILES := $(shell find src -name *.cpp)
+OBJFILES := $(patsubst src/%.c, obj/%.o, $(CFILES)) $(patsubst src/%.cpp, obj/%.o, $(CPPFILES))
 
-all: bin sprout
+all: sprout
 
 clean:
-	rm -f $(addprefix ./src/, lex.yy.c parser.tab.c parser.tab.h) sprout
-	rm -rf ./bin
+	rm -f $(PARSERFILES) sprout
+	rm -rf ./obj
 
-./src/lex.yy.c: ./src/lexer.l
+src/parser/lex.yy.c: src/parser/lexer.l src/parser/parser.tab.h
 	flex -o $@ $^
 
-./src/parser.tab.c: ./src/parser.y
+src/parser/parser.tab.h src/parser/parser.tab.c: src/parser/parser.y
 	bison -d -o $@ $^
 
-bin:
-	mkdir -p ./bin
 
-./bin/%.o: ./src/%.c
+obj/%.o: src/%.c
+	mkdir -p $(@D)
 	gcc $(CFLAGS) -c -o $@ $^
 
-./bin/%.o: ./src/%.cpp
+obj/%.o: src/%.cpp
+	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -c -o $@ $^
 
-sprout: $(OBJECTS)
+sprout: $(OBJFILES)
 	g++ $(CPPFLAGS) -o $@ $^
+

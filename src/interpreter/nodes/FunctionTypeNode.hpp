@@ -2,7 +2,7 @@
 
 #include "TreeNode.hpp"
 
-class FunctionNode : public TreeNode {
+class FunctionTypeNode : public TreeNode {
   using TreeNode::TreeNode;
   
   public:
