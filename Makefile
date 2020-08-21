@@ -1,6 +1,6 @@
 .PHONY: clean all
 
-OBJECTS = $(addprefix ./bin/, parser.tab.o lex.yy.o error.o node.o main.o codegen_stub.o)
+OBJECTS = $(addprefix ./bin/, parser.tab.o lex.yy.o error.o node.o main.o interpreter.o)
 
 all: bin sprout
 
