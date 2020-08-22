@@ -29,9 +29,7 @@
 %token<string> STR_CONSTANT
 %token<string> CHAR_CONSTANT
 
-%token KEYWORD_NEW
 %token KEYWORD_LET
-%token KEYWORD_DELETE
 %token KEYWORD_WHILE
 %token KEYWORD_IF
 %token KEYWORD_FN

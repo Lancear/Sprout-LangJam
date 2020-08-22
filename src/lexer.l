@@ -25,9 +25,7 @@
 %option reentrant bison-bridge bison-locations
 
 %%
-new         return(KEYWORD_NEW);
 let         return(KEYWORD_LET);
-delete      return(KEYWORD_DELETE);
 while       return(KEYWORD_WHILE);
 if          return(KEYWORD_IF);
 fn          return(KEYWORD_FN);
