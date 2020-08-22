@@ -6,7 +6,7 @@ enum {
     ImportNode, AsNode, FunctionDeclaration, ParameterList, Parameter, ParameterType,
     CodeBlock, StatementList, ReturnStatement, NumericImmediate, FunctionReturnType, EmptyStatement,
     LocalDeclarationStatement, MutableLocalDeclarationStatement, VariableTypeNode, SymbolImmediate,
-    AdditiveExpression
+    AddExpression, SubtractExpression
 };
 
 struct node {

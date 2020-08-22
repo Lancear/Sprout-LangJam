@@ -243,7 +243,15 @@ Expression
     $$ = new_node(SymbolImmediate, NULL, NULL, $ref);
 }
 | Expression[expr1] OP_PLUS Expression[expr2] {
-    $$ = new_node(AdditiveExpression,
+    $$ = new_node(AddExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
+| Expression[expr1] OP_MINUS Expression[expr2] {
+    $$ = new_node(SubtractExpression,
         append_brother(
             $expr1,
             $expr2
