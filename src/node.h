@@ -6,7 +6,8 @@ enum {
     ImportDeclaration, AsCompound, FunctionDeclaration, ParameterList, Parameter, ParameterType,
     CodeBlock, StatementList, ReturnStatement, NumericImmediate, FunctionReturnType, EmptyStatement,
     LocalDeclarationStatement, MutableLocalDeclarationStatement, VariableTypeNode, SymbolImmediate,
-    AddExpression, SubtractExpression, MultiplyExpression, DivideExpression, ModulusExpression
+    AddExpression, SubtractExpression, MultiplyExpression, DivideExpression, ModulusExpression,
+    ConditionalStatement, ElseCompound
 };
 
 struct node {

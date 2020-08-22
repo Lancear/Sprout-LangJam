@@ -95,7 +95,7 @@
 %token OP_AT
 %token SEMICOLON
 
-%type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock Statement StatementList ReturnStatement Expression DeclarationStatement
+%type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock ConditionalStatement
 
 %left OP_LOG_OR
 %left OP_LOG_AND
@@ -185,6 +185,11 @@ FnCodeBlock
 }
 ;
 
+CodeBlock
+: FnCodeBlock { $$ = $1; }
+| Statement { $$ = $1; }
+;
+
 StatementList
 : Statement[stmt] {
     $$ = new_node(StatementList, $stmt, NULL, NULL);
@@ -197,10 +202,21 @@ StatementList
 Statement
 : ReturnStatement { $$ = $1; }
 | DeclarationStatement { $$ = $1; }
+| ConditionalStatement { $$ = $1; }
 | SEMICOLON {
     $$ = new_node(EmptyStatement, NULL, NULL, NULL);
 }
 ;
+
+ConditionalStatement
+: KEYWORD_IF OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN CodeBlock[code] {
+    $$ = new_node(ConditionalStatement,
+        append_brother(
+            $expr,
+            $code
+        ),
+    NULL, NULL);
+}
 
 DeclarationStatement
 : KEYWORD_LET IDENTIFIER[name] OP_EQ Expression[value] SEMICOLON {
