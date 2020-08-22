@@ -113,6 +113,9 @@
 %left OP_LEFT_PAREN OP_RIGHT_PAREN
 %left OP_INCREMENT OP_DECREMENT
 
+/* Shut the fuck up the dangling else shift-reduce conflict. */
+%nonassoc KEYWORD_ELSE
+
 %start TopLevelScope
 %%
 
