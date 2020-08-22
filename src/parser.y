@@ -95,7 +95,7 @@
 %token OP_AT
 %token SEMICOLON
 
-%type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock ConditionalStatement
+%type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock ConditionalStatement TypeNode
 
 %left OP_LOG_OR
 %left OP_LOG_AND
@@ -136,6 +136,12 @@ ImportStatement
 }
 ;
 
+TypeNode
+: OP_COLON IDENTIFIER[name] {
+    $$ = new_node(TypeCompound, NULL, NULL, $name);
+}
+;
+
 FunctionDeclaration
 : KEYWORD_FN IDENTIFIER[name] ParameterList[param] FnCodeBlock[code] {
     $$ = new_node(FunctionDeclaration,
@@ -145,13 +151,15 @@ FunctionDeclaration
         ),
     NULL, $name);
 }
-| KEYWORD_FN IDENTIFIER[name] ParameterList[params] OP_COLON IDENTIFIER[return_type] FnCodeBlock[code] {
+| KEYWORD_FN IDENTIFIER[name] ParameterList[params] TypeNode[return_type] FnCodeBlock[code] {
     $$ = new_node(FunctionDeclaration,
         new_node(FunctionReturnType, NULL,
             append_brother(
-                $params,
-                $code
-            ), $return_type
+                append_brother(
+                    $params,
+                    $code
+                ), $return_type
+            ), NULL
         ),
     NULL, $name);
 }
@@ -167,14 +175,14 @@ ParameterList
 ;
 
 ParameterListLoop
-: IDENTIFIER[param_name] OP_COLON IDENTIFIER[param_type] OP_COMMA ParameterListLoop[next] {
+: IDENTIFIER[param_name] TypeNode[type] OP_COMMA ParameterListLoop[next] {
     $$ = new_node(Parameter,
-        new_node(ParameterType, NULL, NULL, $param_type)
+        new_node(ParameterType, $type, NULL, NULL)
     , $next, $param_name);
 }
-| IDENTIFIER[param_name] OP_COLON IDENTIFIER[param_type] {
+| IDENTIFIER[param_name] TypeNode[type] {
     $$ = new_node(Parameter,
-        new_node(ParameterType, NULL, NULL, $param_type)
+        new_node(ParameterType, $type, NULL, NULL)
     , NULL, $param_name);
 }
 ;
@@ -236,22 +244,22 @@ DeclarationStatement
 : KEYWORD_LET IDENTIFIER[name] OP_EQ Expression[value] SEMICOLON {
     $$ = new_node(LocalDeclarationStatement, $value, NULL, $name);
 }
-| KEYWORD_LET IDENTIFIER[name] OP_COLON IDENTIFIER[type] OP_EQ Expression[value] SEMICOLON {
+| KEYWORD_LET IDENTIFIER[name] TypeNode[type] OP_EQ Expression[value] SEMICOLON {
     $$ = new_node(LocalDeclarationStatement,
-        new_node(VariableTypeNode, NULL, $value, $type)
+        new_node(VariableTypeNode, $type, $value, NULL)
     , NULL, $name);
 }
 | KEYWORD_MUT IDENTIFIER[name] OP_EQ Expression[value] SEMICOLON {
     $$ = new_node(MutableLocalDeclarationStatement, $value, NULL, $name);
 }
-| KEYWORD_MUT IDENTIFIER[name] OP_COLON IDENTIFIER[type] OP_EQ Expression[value] SEMICOLON {
+| KEYWORD_MUT IDENTIFIER[name] TypeNode[type] OP_EQ Expression[value] SEMICOLON {
     $$ = new_node(MutableLocalDeclarationStatement,
-        new_node(VariableTypeNode, NULL, $value, $type),
+        new_node(VariableTypeNode, $type, $value, NULL),
     NULL, $name);
 }
-| KEYWORD_MUT IDENTIFIER[name] OP_COLON IDENTIFIER[type] SEMICOLON {
+| KEYWORD_MUT IDENTIFIER[name] TypeNode[type] SEMICOLON {
     $$ = new_node(MutableLocalDeclarationStatement,
-        new_node(VariableTypeNode, NULL, NULL, $type)
+        new_node(VariableTypeNode, $type, NULL, NULL)
     , NULL, $name);
 }
 ;
