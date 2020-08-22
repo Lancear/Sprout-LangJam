@@ -5,25 +5,26 @@
 using namespace std;
 
 Scope * Scope::getParent(){
-	return this->parent;
+	return parent;
 }
 
 bool Scope::contains(char *symbolName){
 	std::string symbolNameAsString(symbolName);
-	auto search = this->internalMap.find(symbolNameAsString);
-	return search != this->internalMap.end();
+	auto search = internalMap.find(symbolNameAsString);
+	return search != internalMap.end();
 }
 
 void Scope::add(char *symbolName, char *symbolType){
+	//Using a string here because pointers as keys could be a bit chaotic
 	std::string symbolNameAsString(symbolName);
 	internalMap[symbolNameAsString] = symbolType;
 }
 
 const char * Scope::get(char *symbolName){
 	std::string symbolNameAsString(symbolName);
-	return this->internalMap.at(symbolNameAsString);
+	return internalMap.at(symbolNameAsString);
 }
 
 void Scope::clear(){
-	this->internalMap.clear();
+	internalMap.clear();
 }

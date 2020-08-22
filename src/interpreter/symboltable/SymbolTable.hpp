@@ -14,7 +14,8 @@ public:
 		}
 		SymbolTable *add(char *name, char *symbolType);
 		bool contains(char *name);
-		const char *get(char *name);
+		bool contains(char *name, Scope *scope); 
+		const char * get(char *name);
 		const char * get(char *name, Scope *scope);
 		SymbolTable * clear();
 		SymbolTable * openNewScope();
@@ -22,4 +23,7 @@ public:
 		SymbolTable * resetCursor();
 		SymbolTable * enterScope();
 		SymbolTable * exitScope();
+		~SymbolTable(){
+			delete root;
+		}
 };
