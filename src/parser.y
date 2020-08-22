@@ -217,6 +217,17 @@ ConditionalStatement
         ),
     NULL, NULL);
 }
+| KEYWORD_IF OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN CodeBlock[code1] KEYWORD_ELSE CodeBlock[code2] {
+    $$ = new_node(ConditionalStatement,
+        new_node(ElseCompound,
+            append_brother(
+                $code1,
+                $code2
+            ),
+        $expr, NULL),
+    NULL, NULL);
+}
+;
 
 DeclarationStatement
 : KEYWORD_LET IDENTIFIER[name] OP_EQ Expression[value] SEMICOLON {
