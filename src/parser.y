@@ -120,7 +120,7 @@ FunctionDeclaration
     $$ = new_node(FunctionDeclaration, append_brother($3, $4), NULL, $2);
 }
 | KEYWORD_FN IDENTIFIER ParameterList OP_COLON IDENTIFIER FnCodeBlock {
-    $$ = new_node(FunctionDeclaration, new_node(FnNameNode, NULL, append_brother($3, $6), $5), NULL, $2);
+    $$ = new_node(FunctionDeclaration, new_node(FunctionReturnType, NULL, append_brother($3, $6), $5), NULL, $2);
 }
 ;
 
@@ -135,7 +135,6 @@ ParameterList
 
 ParameterListLoop
 : IDENTIFIER OP_COLON IDENTIFIER OP_COMMA ParameterListLoop {
-    /* dejavu, I've just been in this parser state before */
     $$ = new_node(Parameter, new_node(ParameterType, NULL, NULL, $1), $5, $3);
 }
 | IDENTIFIER OP_COLON IDENTIFIER {

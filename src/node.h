@@ -4,7 +4,7 @@
 
 enum {
     ImportNode, AsNode, FunctionDeclaration, ParameterList, Parameter, ParameterType,
-    CodeBlock, StatementList, ReturnStatement, Expression, FnNameNode, EmptyStatement
+    CodeBlock, StatementList, ReturnStatement, Expression, FunctionReturnType, EmptyStatement
 };
 
 struct node {
