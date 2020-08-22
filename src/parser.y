@@ -211,11 +211,23 @@ StatementList
 ;
 
 Statement
-: ReturnStatement { $$ = $1; }
+: ReturnStatement      { $$ = $1; }
 | DeclarationStatement { $$ = $1; }
 | ConditionalStatement { $$ = $1; }
+| WhileStatement       { $$ = $1; }
 | SEMICOLON {
     $$ = new_node(EmptyStatement, NULL, NULL, NULL);
+}
+;
+
+WhileStatement
+: KEYWORD_WHILE OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN CodeBlock[code] {
+    $$ = new_node(WhileStatement,
+        append_brother(
+            $expr,
+            $code
+        ),
+    NULL, NULL);
 }
 ;
 
