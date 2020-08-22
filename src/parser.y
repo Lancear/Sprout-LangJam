@@ -120,7 +120,7 @@
 /* Shut the fuck up the dangling else shift-reduce conflict. */
 %nonassoc KEYWORD_ELSE
 
-%start ToppestLevelScope
+%start Start
 %%
 
 IndirectedIdentifier
@@ -144,7 +144,7 @@ ModuleDeclaration
 }
 ;
 
-ToppestLevelScope
+Start
 : TopLevelScope { dispatch($1); }
 ;
 
