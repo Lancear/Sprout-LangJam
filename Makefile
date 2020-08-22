@@ -25,3 +25,6 @@ bin:
 
 sprout: $(OBJECTS)
 	g++ $(CPPFLAGS) -o $@ $^
+
+test:
+	./sprout test.sprout
