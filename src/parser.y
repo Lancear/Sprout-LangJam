@@ -242,6 +242,17 @@ Expression
 | IDENTIFIER[ref] {
     $$ = new_node(SymbolImmediate, NULL, NULL, $ref);
 }
+| Expression[expr1] OP_PLUS Expression[expr2] {
+    $$ = new_node(AdditiveExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
+| OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN {
+    $$ = $expr;
+}
 ;
 
 %%
