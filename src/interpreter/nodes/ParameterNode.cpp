@@ -1,7 +1,11 @@
-#include "ParameterNode.hpp"
 #include <iostream>
+
+#include "ParameterNode.hpp"
+#include "../symboltable/Symbol.hpp"
+
 using namespace std;
 
-void ParameterNode::analyse() {
+Symbol ParameterNode::analyse(Symbol sym) {
   cout << "Param: " << value << endl;
+  return Symbol();
 }

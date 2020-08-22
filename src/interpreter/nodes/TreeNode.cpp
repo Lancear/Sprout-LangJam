@@ -11,6 +11,7 @@
 #include "ReturnStatementNode.hpp"
 #include "StatementListNode.hpp"
 #include "../../parser/node.h"
+#include "../symboltable/Symbol.hpp"
 
 using namespace std;
 
@@ -24,34 +25,38 @@ TreeNode::TreeNode(struct node * n) {
   }
 }
 
-TreeNode * TreeNode::of(struct node * n) {
+Symbol TreeNode::analyse() {
+  return this->analyse(Symbol());
+}
+
+unique_ptr<TreeNode> TreeNode::of(struct node * n) {
   switch (n->type) {
     case CodeBlock:
-      return new CodeBlockNode(n);
+      return make_unique<CodeBlockNode>(n);
 
     case Expression:
-      return new ExpressionNode(n);
+      return make_unique<ExpressionNode>(n);
 
     case FunctionDeclaration:
-      return new FunctionDeclarationNode(n);
+      return make_unique<FunctionDeclarationNode>(n);
 
     case FnNameNode:
-      return new FunctionTypeNode(n);
+      return make_unique<FunctionTypeNode>(n);
 
     case Parameter:
-      return new ParameterNode(n);
+      return make_unique<ParameterNode>(n);
 
     case ParameterList:
-      return new ParameterListNode(n);
+      return make_unique<ParameterListNode>(n);
 
     case ParameterType:
-      return new ParameterTypeNode(n);
+      return make_unique<ParameterTypeNode>(n);
 
     case ReturnStatement:
-      return new ReturnStatementNode(n);
+      return make_unique<ReturnStatementNode>(n);
 
     case StatementList:
-      return new StatementListNode(n);
+      return make_unique<StatementListNode>(n);
     
     default:
       cout << "ERRORROR: " << n->type << endl;

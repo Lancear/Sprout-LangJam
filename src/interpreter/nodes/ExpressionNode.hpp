@@ -1,10 +1,11 @@
 #pragma once
 
 #include "TreeNode.hpp"
+#include "../symboltable/Symbol.hpp"
 
 class ExpressionNode : public TreeNode {
   using TreeNode::TreeNode;
   
   public:
-    void analyse();
+    Symbol analyse(Symbol sym);
 };

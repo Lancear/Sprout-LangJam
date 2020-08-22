@@ -1,8 +1,12 @@
-#include "FunctionDeclarationNode.hpp"
 #include <iostream>
+
+#include "FunctionDeclarationNode.hpp"
+#include "../symboltable/Symbol.hpp"
+
 using namespace std;
 
-void FunctionDeclarationNode::analyse() {
+Symbol FunctionDeclarationNode::analyse(Symbol sym) {
   cout << "Function: " << value << endl;
   children[1]->analyse();
+  return Symbol();
 }

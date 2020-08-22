@@ -1,7 +1,11 @@
-#include "CodeBlockNode.hpp"
 #include <iostream>
+
+#include "CodeBlockNode.hpp"
+#include "../symboltable/Symbol.hpp"
+
 using namespace std;
 
-void CodeBlockNode::analyse() {
+Symbol CodeBlockNode::analyse(Symbol sym) {
   cout << "Value: " << value << endl;
+  return Symbol();
 }
