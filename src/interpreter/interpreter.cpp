@@ -4,8 +4,10 @@
 #include <iostream>
 using namespace std;
 
-void dispatch(struct node * n) {    
-    if(!n) return;
+void test(char *name);
+
+void dispatch(struct node *n){
+	if(!n) return;
 
     unique_ptr<TreeNode> tree = TreeNode::of(n); // wraps our nodes around the original parse-tree
     if(!tree) return;
@@ -14,8 +16,15 @@ void dispatch(struct node * n) {
     tree->execute(); // interpreter execution
 
     // Testing out the symbol table
-    SymbolTable table;
-    table.add("var1","string");
-    cout << table.get("var1") << ", found the thing? " << endl;
-    cout << table.get("var1") << endl;
+	char* name = "var1";
+	char* value = "string";
+	shared_ptr<SymbolTable> table = SymbolTable::getInstance();
+	table->add(name, value);
+	test(name);
+}
+
+void test(char* name){
+	shared_ptr<SymbolTable > table = SymbolTable::getInstance();
+	cout << "Found it? " << (table->contains(name) > 0 ? "true" : "false") << "\n";
+	cout << "Value: " << table->get(name) << endl;
 }

@@ -1,9 +1,19 @@
 #include "SymbolTable.hpp"
-//TODO: Find out why i have to link Scope.cpp here
 #include "Scope.hpp"
 #include <unordered_map>
 #include <stdexcept>
+#include <iostream>
 using namespace std;
+
+shared_ptr<SymbolTable> SymbolTable::_instance = NULL;
+
+shared_ptr<SymbolTable> SymbolTable::getInstance(){
+	if (_instance == NULL)
+	{
+		_instance.reset(new SymbolTable());
+	}
+	return _instance;
+}
 
 const char *SymbolTable::get(char *name){
 	return get(name, currentScope);
