@@ -280,6 +280,9 @@ Expression
 | IDENTIFIER[ref] {
     $$ = new_node(SymbolImmediate, NULL, NULL, $ref);
 }
+| STR_CONSTANT[str] {
+    $$ = new_node(StringImmediate, NULL, NULL, $str);
+}
 | Expression[expr1] OP_PLUS Expression[expr2] {
     $$ = new_node(AddExpression,
         append_brother(
