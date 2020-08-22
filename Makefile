@@ -1,32 +1,33 @@
-.PHONY: clean all
+.PHONY: clean all rebuild
 
-CFLAGS=-Ofast -march=native -funroll-loops
+PARSER_FILES	:= $(addprefix src/parser/, lex.yy.c parser.tab.c parser.tab.h)
+C_FILES 		:= $(shell find src -name *.c) $(filter %.c, $(PARSER_FILES))
+CPP_FILES 		:= $(shell find src -name *.cpp)
+OBJ_FILES 		:= $(patsubst src/%.c, obj/%.o, $(C_FILES)) $(patsubst src/%.cpp, obj/%.o, $(CPP_FILES))
+C_FLAGS   		:= -Ofast -march=native -funroll-loops
+CPP_FLAGS 		:= $(shell llvm-config --cxxflags --ldflags --system-libs --libs all)
 
-OBJECTS = $(addprefix ./bin/, parser.tab.o lex.yy.o error.o node.o main.o codegen_stub.o)
-
-all: bin sprout
+all: sprout
 
 clean:
-	rm -f $(addprefix ./src/, lex.yy.c parser.tab.c parser.tab.h) sprout
-	rm -rf ./bin
+	rm -f $(PARSER_FILES) sprout
+	rm -rf ./obj
 
-./src/lex.yy.c: ./src/lexer.l
-	flex --full -o $@ $^
+rebuild: clean sprout
 
-./src/parser.tab.c: ./src/parser.y
+src/parser/lex.yy.c: src/parser/lexer.l src/parser/parser.tab.h
+	flex -o $@ $^
+
+src/parser/parser.tab.h src/parser/parser.tab.c: src/parser/parser.y
 	bison -d -o $@ $^
 
-bin:
-	mkdir -p ./bin
+obj/%.o: src/%.c
+	mkdir -p $(@D)
+	gcc -c -o $@ $^ $(C_FLAGS)
 
-./bin/%.o: ./src/%.c
-	gcc $(CFLAGS) -c -o $@ $^
+obj/%.o: src/%.cpp
+	mkdir -p $(@D)
+	g++ -c -o $@ $^ $(CPP_FLAGS)
 
-./bin/%.o: ./src/%.cpp
-	g++ $(CPPFLAGS) -c -o $@ $^
-
-sprout: $(OBJECTS)
-	g++ $(CPPFLAGS) -o $@ $^
-
-test:
-	./sprout test.sprout
+sprout: $(OBJ_FILES)
+	g++ -o $@ $^ $(CPP_FLAGS)
