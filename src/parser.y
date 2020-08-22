@@ -258,6 +258,22 @@ Expression
         ),
     NULL, NULL);
 }
+| Expression[expr1] OP_STAR Expression[expr2] {
+    $$ = new_node(MultiplyExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
+| Expression[expr1] OP_SLASH Expression[expr2] {
+    $$ = new_node(DivideExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
 | OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN {
     $$ = $expr;
 }
