@@ -3,7 +3,9 @@
 %param { yyscan_t scanner }
 
 %code top {
+    #define _GNU_SOURCE
     #include <stdio.h>
+    #include <string.h>
     #include "node.h"
     #include "error.h"
     
@@ -97,6 +99,8 @@
 
 %type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock ConditionalStatement TypeNode WhileStatement ForStatement
 
+%type<string> IndirectedIdentifier
+
 %left OP_LOG_OR
 %left OP_LOG_AND
 %left OP_BIN_OR
@@ -119,6 +123,21 @@
 %start TopLevelScope
 %%
 
+IndirectedIdentifier
+: IDENTIFIER {
+    $$ = strdup($1);
+}
+| IDENTIFIER OP_DOT IndirectedIdentifier {
+    char * p;
+    
+    (void) asprintf(&p, "%s.%s", $1, $3);
+    
+    free($3);
+    
+    $$ = p;
+}
+;
+
 TopLevelScope
 : ImportStatement[decl] TopLevelScope { dispatch($decl); }
 | FunctionDeclaration[decl] TopLevelScope { dispatch($decl); }
@@ -126,10 +145,10 @@ TopLevelScope
 ;
 
 ImportStatement
-: KEYWORD_IMPORT IDENTIFIER[pkg] SEMICOLON {
+: KEYWORD_IMPORT IndirectedIdentifier[pkg] SEMICOLON {
     $$ = new_node(ImportDeclaration, NULL, NULL, $pkg);
 }
-| KEYWORD_IMPORT IDENTIFIER[pkg] KEYWORD_AS IDENTIFIER[id] SEMICOLON {
+| KEYWORD_IMPORT IndirectedIdentifier[pkg] KEYWORD_AS IndirectedIdentifier[id] SEMICOLON {
     $$ = new_node(ImportDeclaration,
         new_node(AsCompound, NULL, NULL, $id),
     NULL, $pkg);
@@ -137,13 +156,13 @@ ImportStatement
 ;
 
 TypeNode
-: OP_COLON IDENTIFIER[name] {
+: OP_COLON IndirectedIdentifier[name] {
     $$ = new_node(TypeCompound, NULL, NULL, $name);
 }
 ;
 
 FunctionDeclaration
-: KEYWORD_FN IDENTIFIER[name] ParameterList[param] FnCodeBlock[code] {
+: KEYWORD_FN IndirectedIdentifier[name] ParameterList[param] FnCodeBlock[code] {
     $$ = new_node(FunctionDeclaration,
         append_brother(
             $param,
@@ -151,7 +170,7 @@ FunctionDeclaration
         ),
     NULL, $name);
 }
-| KEYWORD_FN IDENTIFIER[name] ParameterList[params] TypeNode[return_type] FnCodeBlock[code] {
+| KEYWORD_FN IndirectedIdentifier[name] ParameterList[params] TypeNode[return_type] FnCodeBlock[code] {
     $$ = new_node(FunctionDeclaration,
         new_node(FunctionReturnType, NULL,
             append_brother(
@@ -175,12 +194,12 @@ ParameterList
 ;
 
 ParameterListLoop
-: IDENTIFIER[param_name] TypeNode[type] OP_COMMA ParameterListLoop[next] {
+: IndirectedIdentifier[param_name] TypeNode[type] OP_COMMA ParameterListLoop[next] {
     $$ = new_node(Parameter,
         new_node(ParameterType, $type, NULL, NULL)
     , $next, $param_name);
 }
-| IDENTIFIER[param_name] TypeNode[type] {
+| IndirectedIdentifier[param_name] TypeNode[type] {
     $$ = new_node(Parameter,
         new_node(ParameterType, $type, NULL, NULL)
     , NULL, $param_name);
@@ -292,23 +311,23 @@ ConditionalStatement
 ;
 
 DeclarationStatement
-: KEYWORD_LET IDENTIFIER[name] OP_EQ Expression[value] SEMICOLON {
+: KEYWORD_LET IndirectedIdentifier[name] OP_EQ Expression[value] SEMICOLON {
     $$ = new_node(LocalDeclarationStatement, $value, NULL, $name);
 }
-| KEYWORD_LET IDENTIFIER[name] TypeNode[type] OP_EQ Expression[value] SEMICOLON {
+| KEYWORD_LET IndirectedIdentifier[name] TypeNode[type] OP_EQ Expression[value] SEMICOLON {
     $$ = new_node(LocalDeclarationStatement,
         new_node(VariableTypeNode, $type, $value, NULL)
     , NULL, $name);
 }
-| KEYWORD_MUT IDENTIFIER[name] OP_EQ Expression[value] SEMICOLON {
+| KEYWORD_MUT IndirectedIdentifier[name] OP_EQ Expression[value] SEMICOLON {
     $$ = new_node(MutableLocalDeclarationStatement, $value, NULL, $name);
 }
-| KEYWORD_MUT IDENTIFIER[name] TypeNode[type] OP_EQ Expression[value] SEMICOLON {
+| KEYWORD_MUT IndirectedIdentifier[name] TypeNode[type] OP_EQ Expression[value] SEMICOLON {
     $$ = new_node(MutableLocalDeclarationStatement,
         new_node(VariableTypeNode, $type, $value, NULL),
     NULL, $name);
 }
-| KEYWORD_MUT IDENTIFIER[name] TypeNode[type] SEMICOLON {
+| KEYWORD_MUT IndirectedIdentifier[name] TypeNode[type] SEMICOLON {
     $$ = new_node(MutableLocalDeclarationStatement,
         new_node(VariableTypeNode, $type, NULL, NULL)
     , NULL, $name);
@@ -328,7 +347,7 @@ Expression
 : NUMERIC_IMMEDIATE[imm] {
     $$ = new_node(NumericImmediate, NULL, NULL, $imm);
 }
-| IDENTIFIER[ref] {
+| IndirectedIdentifier[ref] {
     $$ = new_node(SymbolImmediate, NULL, NULL, $ref);
 }
 | STR_CONSTANT[str] {
