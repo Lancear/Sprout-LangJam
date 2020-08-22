@@ -2,7 +2,7 @@
 fn test(arg1:par1, arg2:par2):void {
     mut x:par2 = 3;
     let y:par1 = 4;
-    mut z:par3;
+    mut z:par3 = y;
     
-    return 5 * x + (y + z) - 5 / y;
+    return (5 * x + (y + z) - 5 / y) % 256;
 }

@@ -274,6 +274,14 @@ Expression
         ),
     NULL, NULL);
 }
+| Expression[expr1] OP_MOD Expression[expr2] {
+    $$ = new_node(ModulusExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
 | OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN {
     $$ = $expr;
 }
