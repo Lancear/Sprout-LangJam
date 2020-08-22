@@ -119,6 +119,7 @@
 
 /* Shut the fuck up the dangling else shift-reduce conflict. */
 %nonassoc KEYWORD_ELSE
+%nonassoc OP_EQ
 
 %start Start
 %%
@@ -452,6 +453,14 @@ Expression
             $expr2
         ),
     NULL, "!=");
+}
+| IndirectedIdentifier[expr1] OP_EQ Expression[expr2] {
+    $$ = new_node(AssignmentExpression,
+        $expr2,
+    NULL, $expr1);
+}
+| IndirectedIdentifier[expr1] OP_LEFT_PAREN OP_RIGHT_PAREN {
+    $$ = new_node(FunctionCall, NULL, NULL, $expr1);
 }
 | OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN {
     $$ = $expr;
