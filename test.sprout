@@ -1,8 +1,8 @@
 
 fn test(arg1:par1, arg2:par2):void {
-    let mut x:par2 = 3;
+    mut x:par2 = 3;
     let y:par1 = 4;
-    let mut z;
+    mut z:par3;
     
     return 0;
 }

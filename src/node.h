@@ -4,8 +4,8 @@
 
 enum {
     ImportNode, AsNode, FunctionDeclaration, ParameterList, Parameter, ParameterType,
-    CodeBlock, StatementList, ReturnStatement, Expression, FunctionReturnType, EmptyStatement,
-    LocalDeclarationStatement, MutableLocalDeclarationStatement, VariableTypeNode
+    CodeBlock, StatementList, ReturnStatement, NumericImmediate, FunctionReturnType, EmptyStatement,
+    LocalDeclarationStatement, MutableLocalDeclarationStatement, VariableTypeNode, SymbolImmediate
 };
 
 struct node {

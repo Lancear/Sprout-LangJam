@@ -83,7 +83,7 @@ as          return(KEYWORD_AS);
 ">"         return(OP_CMP_GT);
 "<"         return(OP_CMP_LT);
 "!="        return(OP_CMP_NE);
-"~"         return(OP_TIDLE);
+"~"         return(OP_TILDE);
 ","         return(OP_COMMA);
 "!"         return(OP_BANG);
 "@"         return(OP_AT);

@@ -87,13 +87,29 @@
 %token OP_CMP_GT
 %token OP_CMP_LT
 %token OP_CMP_NE
-%token OP_TIDLE
+%token OP_TILDE
 %token OP_COMMA
 %token OP_BANG
 %token OP_AT
 %token SEMICOLON
 
 %type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock Statement StatementList ReturnStatement Expression DeclarationStatement
+
+%left OP_LOG_OR
+%left OP_LOG_AND
+%left OP_BIN_OR
+%left OP_XOR
+%left OP_BIN_AND
+%left OP_CMP_EQ OP_CMP_NE
+%left OP_CMP_GE OP_CMP_GT OP_CMP_LE OP_CMP_LT
+%left OP_SHL OP_SHR
+%left OP_PLUS OP_MINUS
+%left OP_STAR OP_SLASH OP_MOD
+%left OP_BANG OP_TILDE
+%left OP_DOT OP_ARROW
+%left OP_LEFT_SQPAREN OP_RIGHT_SQPAREN
+%left OP_LEFT_PAREN OP_RIGHT_PAREN
+%left OP_INCREMENT OP_DECREMENT
 
 %start TopLevelScope
 %%
@@ -219,7 +235,10 @@ ReturnStatement
 
 Expression
 : NUMERIC_IMMEDIATE[imm] {
-    $$ = new_node(Expression, NULL, NULL, $imm);
+    $$ = new_node(NumericImmediate, NULL, NULL, $imm);
+}
+| IDENTIFIER[ref] {
+    $$ = new_node(SymbolImmediate, NULL, NULL, $ref);
 }
 ;
 
