@@ -124,11 +124,11 @@ TopLevelScope
 
 ImportStatement
 : KEYWORD_IMPORT IDENTIFIER[pkg] SEMICOLON {
-    $$ = new_node(ImportNode, NULL, NULL, $pkg);
+    $$ = new_node(ImportDeclaration, NULL, NULL, $pkg);
 }
 | KEYWORD_IMPORT IDENTIFIER[pkg] KEYWORD_AS IDENTIFIER[id] SEMICOLON {
-    $$ = new_node(ImportNode,
-        new_node(AsNode, NULL, NULL, $id),
+    $$ = new_node(ImportDeclaration,
+        new_node(AsCompound, NULL, NULL, $id),
     NULL, $pkg);
 }
 ;
