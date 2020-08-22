@@ -1,5 +1,7 @@
 .PHONY: clean all
 
+CFLAGS=-Ofast -march=native
+
 OBJECTS = $(addprefix ./bin/, parser.tab.o lex.yy.o error.o node.o main.o codegen_stub.o)
 
 all: bin sprout
@@ -9,7 +11,7 @@ clean:
 	rm -rf ./bin
 
 ./src/lex.yy.c: ./src/lexer.l
-	flex -o $@ $^
+	flex --full -o $@ $^
 
 ./src/parser.tab.c: ./src/parser.y
 	bison -d -o $@ $^
