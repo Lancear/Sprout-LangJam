@@ -9,3 +9,8 @@ Symbol CodeBlockNode::analyse(Symbol sym) {
   cout << "Value: " << value << endl;
   return Symbol();
 }
+
+Symbol CodeBlockNode::execute(Symbol sym) {
+  cout << "Executing: " << value << endl;
+  return Symbol();
+}

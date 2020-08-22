@@ -8,4 +8,5 @@ class ParameterListNode : public TreeNode {
   
   public:
     Symbol analyse(Symbol sym);
+    Symbol execute(Symbol sym);
 };

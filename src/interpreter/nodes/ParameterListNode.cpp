@@ -14,3 +14,8 @@ Symbol ParameterListNode::analyse(Symbol sym) {
   
   return Symbol();
 }
+
+Symbol ParameterListNode::execute(Symbol sym) {
+  cout << "Executing: " << value << endl;
+  return Symbol();
+}

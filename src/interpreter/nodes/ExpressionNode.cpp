@@ -9,3 +9,8 @@ Symbol ExpressionNode::analyse(Symbol sym) {
   cout << "Value: " << value << endl;
   return Symbol();
 }
+
+Symbol ExpressionNode::execute(Symbol sym) {
+  cout << "Executing: " << value << endl;
+  return Symbol();
+}

@@ -29,6 +29,10 @@ Symbol TreeNode::analyse() {
   return this->analyse(Symbol());
 }
 
+Symbol TreeNode::execute() {
+  return this->execute(Symbol());
+}
+
 unique_ptr<TreeNode> TreeNode::of(struct node * n) {
   switch (n->type) {
     case CodeBlock:
@@ -60,6 +64,6 @@ unique_ptr<TreeNode> TreeNode::of(struct node * n) {
     
     default:
       cout << "ERRORROR: " << n->type << endl;
-      return 0;
+      return nullptr;
   }
 }

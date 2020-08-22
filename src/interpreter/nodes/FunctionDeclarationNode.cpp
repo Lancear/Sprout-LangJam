@@ -10,3 +10,8 @@ Symbol FunctionDeclarationNode::analyse(Symbol sym) {
   children[1]->analyse();
   return Symbol();
 }
+
+Symbol FunctionDeclarationNode::execute(Symbol sym) {
+  cout << "Executing: " << value << endl;
+  return Symbol();
+}

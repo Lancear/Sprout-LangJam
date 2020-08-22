@@ -17,4 +17,7 @@ class TreeNode {
 
     virtual Symbol analyse(Symbol sym) = 0;
     Symbol analyse();
+
+    virtual Symbol execute(Symbol sym) = 0;
+    Symbol execute();
 };

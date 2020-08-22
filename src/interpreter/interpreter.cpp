@@ -10,11 +10,12 @@ void dispatch(struct node * n) {
     unique_ptr<TreeNode> tree = TreeNode::of(n); // wraps our nodes around the original parse-tree
     if(!tree) return;
     
-    tree->analyse();
+    tree->analyse(); // semantical analysis
+    tree->execute(); // interpreter execution
 
     // Testing out the symbol table
     SymbolTable table;
     table.add("var1","string");
     cout << table.get("var1") << ", found the thing? " << endl;
-    cout << table.get("var1") << endl; 
+    cout << table.get("var1") << endl;
 }

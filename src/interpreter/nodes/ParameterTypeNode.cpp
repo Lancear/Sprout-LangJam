@@ -9,3 +9,8 @@ Symbol ParameterTypeNode::analyse(Symbol sym) {
   cout << "Value: " << value << endl;
   return Symbol();
 }
+
+Symbol ParameterTypeNode::execute(Symbol sym) {
+  cout << "Executing: " << value << endl;
+  return Symbol();
+}
