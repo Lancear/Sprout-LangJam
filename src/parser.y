@@ -188,23 +188,20 @@ DeclarationStatement
 : KEYWORD_LET IDENTIFIER[name] OP_EQ Expression[value] SEMICOLON {
     $$ = new_node(LocalDeclarationStatement, $value, NULL, $name);
 }
-| KEYWORD_LET KEYWORD_MUT IDENTIFIER[name] OP_EQ Expression[value] SEMICOLON {
-    $$ = new_node(MutableLocalDeclarationStatement, $value, NULL, $name);
-}
-| KEYWORD_LET KEYWORD_MUT IDENTIFIER[name] SEMICOLON {
-    $$ = new_node(MutableLocalDeclarationStatement, NULL, NULL, $name);
-}
 | KEYWORD_LET IDENTIFIER[name] OP_COLON IDENTIFIER[type] OP_EQ Expression[value] SEMICOLON {
     $$ = new_node(LocalDeclarationStatement,
         new_node(VariableTypeNode, NULL, $value, $type)
     , NULL, $name);
 }
-| KEYWORD_LET KEYWORD_MUT IDENTIFIER[name] OP_COLON IDENTIFIER[type] OP_EQ Expression[value] SEMICOLON {
+| KEYWORD_MUT IDENTIFIER[name] OP_EQ Expression[value] SEMICOLON {
+    $$ = new_node(MutableLocalDeclarationStatement, $value, NULL, $name);
+}
+| KEYWORD_MUT IDENTIFIER[name] OP_COLON IDENTIFIER[type] OP_EQ Expression[value] SEMICOLON {
     $$ = new_node(MutableLocalDeclarationStatement,
         new_node(VariableTypeNode, NULL, $value, $type),
     NULL, $name);
 }
-| KEYWORD_LET KEYWORD_MUT IDENTIFIER[name] OP_COLON IDENTIFIER[type] SEMICOLON {
+| KEYWORD_MUT IDENTIFIER[name] OP_COLON IDENTIFIER[type] SEMICOLON {
     $$ = new_node(MutableLocalDeclarationStatement,
         new_node(VariableTypeNode, NULL, NULL, $type)
     , NULL, $name);
