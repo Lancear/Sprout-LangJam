@@ -6,6 +6,8 @@
     #include <stdio.h>
     #include "node.h"
     #include "error.h"
+    
+    #define YYERROR_VERBOSE 1
 }
 
 %code requires {
