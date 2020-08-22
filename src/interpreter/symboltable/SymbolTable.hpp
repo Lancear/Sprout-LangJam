@@ -9,6 +9,7 @@ class SymbolTable
 	std::stack<int> branches; 
 public:
 		SymbolTable(){
+			root = new Scope();
 			currentScope = root;
 		}
 		SymbolTable *add(char *name, char *symbolType);

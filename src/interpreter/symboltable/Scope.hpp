@@ -1,15 +1,17 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <unordered_map>
+#include <map>
 using namespace std;
 
 class Scope
 {
+private:
+	map<string, char*> internalMap;
+
 public:
 	Scope *parent;
 	const vector<Scope*> children;
-	unordered_map<string, string> internalMap;
 	Scope(){
 		this->parent = NULL;
 	}
