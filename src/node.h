@@ -7,7 +7,8 @@ enum {
     CodeBlock, StatementList, ReturnStatement, NumericImmediate, FunctionReturnType, EmptyStatement,
     LocalDeclarationStatement, MutableLocalDeclarationStatement, VariableTypeNode, SymbolImmediate,
     AddExpression, SubtractExpression, MultiplyExpression, DivideExpression, ModulusExpression,
-    ConditionalStatement, ElseCompound, TypeCompound, StringImmediate, ComparisonExpresison, WhileStatement
+    ConditionalStatement, ElseCompound, TypeCompound, StringImmediate, ComparisonExpresison, WhileStatement,
+    ForStatement
 };
 
 struct node {

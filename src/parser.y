@@ -95,7 +95,7 @@
 %token OP_AT
 %token SEMICOLON
 
-%type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock ConditionalStatement TypeNode WhileStatement
+%type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock ConditionalStatement TypeNode WhileStatement ForStatement
 
 %left OP_LOG_OR
 %left OP_LOG_AND
@@ -215,6 +215,7 @@ Statement
 | DeclarationStatement { $$ = $1; }
 | ConditionalStatement { $$ = $1; }
 | WhileStatement       { $$ = $1; }
+| ForStatement         { $$ = $1; }
 | SEMICOLON {
     $$ = new_node(EmptyStatement, NULL, NULL, NULL);
 }
@@ -227,6 +228,14 @@ WhileStatement
             $expr,
             $code
         ),
+    NULL, NULL);
+}
+;
+
+ForStatement
+: KEYWORD_FOR OP_LEFT_BRACKET SEMICOLON SEMICOLON OP_RIGHT_PAREN CodeBlock[code] {
+    $$ = new_node(ForStatement,
+        $code,
     NULL, NULL);
 }
 ;
