@@ -93,40 +93,52 @@
 %token OP_AT
 %token SEMICOLON
 
-%type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock Statement StatementList ReturnStatement Expression
+%type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock Statement StatementList ReturnStatement Expression DeclarationStatement
 
 %start TopLevelScope
 %%
 
 TopLevelScope
-: ImportStatement TopLevelScope { dispatch($1); }
-| FunctionDeclaration TopLevelScope { dispatch($1); }
+: ImportStatement[decl] TopLevelScope { dispatch($decl); }
+| FunctionDeclaration[decl] TopLevelScope { dispatch($decl); }
 | %empty { dispatch(NULL); }
 ;
 
 ImportStatement
-: KEYWORD_IMPORT IDENTIFIER SEMICOLON {
-    $$ = new_node(ImportNode, NULL, NULL, $2);
+: KEYWORD_IMPORT IDENTIFIER[pkg] SEMICOLON {
+    $$ = new_node(ImportNode, NULL, NULL, $pkg);
 }
-| KEYWORD_IMPORT IDENTIFIER KEYWORD_AS IDENTIFIER SEMICOLON {
+| KEYWORD_IMPORT IDENTIFIER[pkg] KEYWORD_AS IDENTIFIER[id] SEMICOLON {
     $$ = new_node(ImportNode,
-        new_node(AsNode, NULL, NULL, $4),
-    NULL, $2);
+        new_node(AsNode, NULL, NULL, $id),
+    NULL, $pkg);
 }
 ;
 
 FunctionDeclaration
-: KEYWORD_FN IDENTIFIER ParameterList FnCodeBlock {
-    $$ = new_node(FunctionDeclaration, append_brother($3, $4), NULL, $2);
+: KEYWORD_FN IDENTIFIER[name] ParameterList[param] FnCodeBlock[code] {
+    $$ = new_node(FunctionDeclaration,
+        append_brother(
+            $param,
+            $code
+        ),
+    NULL, $name);
 }
-| KEYWORD_FN IDENTIFIER ParameterList OP_COLON IDENTIFIER FnCodeBlock {
-    $$ = new_node(FunctionDeclaration, new_node(FunctionReturnType, NULL, append_brother($3, $6), $5), NULL, $2);
+| KEYWORD_FN IDENTIFIER[name] ParameterList[params] OP_COLON IDENTIFIER[return_type] FnCodeBlock[code] {
+    $$ = new_node(FunctionDeclaration,
+        new_node(FunctionReturnType, NULL,
+            append_brother(
+                $params,
+                $code
+            ), $return_type
+        ),
+    NULL, $name);
 }
 ;
 
 ParameterList
-: OP_LEFT_PAREN ParameterListLoop OP_RIGHT_PAREN {
-    $$ = new_node(ParameterList, $2, NULL, NULL);
+: OP_LEFT_PAREN ParameterListLoop[loop] OP_RIGHT_PAREN {
+    $$ = new_node(ParameterList, $loop, NULL, NULL);
 }
 | OP_LEFT_PAREN OP_RIGHT_PAREN {
     $$ = new_node(ParameterList, NULL, NULL, NULL);
@@ -134,17 +146,21 @@ ParameterList
 ;
 
 ParameterListLoop
-: IDENTIFIER OP_COLON IDENTIFIER OP_COMMA ParameterListLoop {
-    $$ = new_node(Parameter, new_node(ParameterType, NULL, NULL, $1), $5, $3);
+: IDENTIFIER[param_name] OP_COLON IDENTIFIER[param_type] OP_COMMA ParameterListLoop[next] {
+    $$ = new_node(Parameter,
+        new_node(ParameterType, NULL, NULL, $param_type)
+    , $next, $param_name);
 }
-| IDENTIFIER OP_COLON IDENTIFIER {
-    $$ = new_node(Parameter, new_node(ParameterType, NULL, NULL, $1), NULL, $3);
+| IDENTIFIER[param_name] OP_COLON IDENTIFIER[param_type] {
+    $$ = new_node(Parameter,
+        new_node(ParameterType, NULL, NULL, $param_type)
+    , NULL, $param_name);
 }
 ;
 
 FnCodeBlock
-: OP_LEFT_BRACKET StatementList OP_RIGHT_BRACKET {
-    $$ = new_node(CodeBlock, $2, NULL, NULL);
+: OP_LEFT_BRACKET StatementList[stmt_list] OP_RIGHT_BRACKET {
+    $$ = new_node(CodeBlock, $stmt_list, NULL, NULL);
 }
 | OP_LEFT_BRACKET OP_RIGHT_BRACKET {
     $$ = new_node(CodeBlock, NULL, NULL, NULL);
@@ -152,26 +168,52 @@ FnCodeBlock
 ;
 
 StatementList
-: Statement {
-    $$ = new_node(StatementList, $1, NULL, NULL);
+: Statement[stmt] {
+    $$ = new_node(StatementList, $stmt, NULL, NULL);
 }
-| StatementList Statement {
-    $$ = new_node(StatementList, $2, $1, NULL);
+| StatementList[next] Statement[stmt] {
+    $$ = new_node(StatementList, $stmt, $next, NULL);
 }
 ;
 
 Statement
-: ReturnStatement {
-    $$ = $1;
-}
+: ReturnStatement { $$ = $1; }
+| DeclarationStatement { $$ = $1; }
 | SEMICOLON {
     $$ = new_node(EmptyStatement, NULL, NULL, NULL);
 }
 ;
 
+DeclarationStatement
+: KEYWORD_LET IDENTIFIER[name] OP_EQ Expression[value] SEMICOLON {
+    $$ = new_node(LocalDeclarationStatement, $value, NULL, $name);
+}
+| KEYWORD_LET KEYWORD_MUT IDENTIFIER[name] OP_EQ Expression[value] SEMICOLON {
+    $$ = new_node(MutableLocalDeclarationStatement, $value, NULL, $name);
+}
+| KEYWORD_LET KEYWORD_MUT IDENTIFIER[name] SEMICOLON {
+    $$ = new_node(MutableLocalDeclarationStatement, NULL, NULL, $name);
+}
+| KEYWORD_LET IDENTIFIER[name] OP_COLON IDENTIFIER[type] OP_EQ Expression[value] SEMICOLON {
+    $$ = new_node(LocalDeclarationStatement,
+        new_node(VariableTypeNode, NULL, $value, $type)
+    , NULL, $name);
+}
+| KEYWORD_LET KEYWORD_MUT IDENTIFIER[name] OP_COLON IDENTIFIER[type] OP_EQ Expression[value] SEMICOLON {
+    $$ = new_node(MutableLocalDeclarationStatement,
+        new_node(VariableTypeNode, NULL, $value, $type),
+    NULL, $name);
+}
+| KEYWORD_LET KEYWORD_MUT IDENTIFIER[name] OP_COLON IDENTIFIER[type] SEMICOLON {
+    $$ = new_node(MutableLocalDeclarationStatement,
+        new_node(VariableTypeNode, NULL, NULL, $type)
+    , NULL, $name);
+}
+;
+
 ReturnStatement
-: KEYWORD_RETURN Expression SEMICOLON {
-    $$ = new_node(ReturnStatement, $2, NULL, NULL);
+: KEYWORD_RETURN Expression[value] SEMICOLON {
+    $$ = new_node(ReturnStatement, $value, NULL, NULL);
 }
 | KEYWORD_RETURN SEMICOLON {
     $$ = new_node(ReturnStatement, NULL, NULL, NULL);
@@ -179,8 +221,8 @@ ReturnStatement
 ;
 
 Expression
-: NUMERIC_IMMEDIATE {
-    $$ = new_node(Expression, NULL, NULL, $1);
+: NUMERIC_IMMEDIATE[imm] {
+    $$ = new_node(Expression, NULL, NULL, $imm);
 }
 ;
 
