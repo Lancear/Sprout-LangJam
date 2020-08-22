@@ -323,6 +323,54 @@ Expression
         ),
     NULL, NULL);
 }
+| Expression[expr1] OP_CMP_EQ Expression[expr2] {
+    $$ = new_node(ComparisonExpresison,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, "==");
+}
+| Expression[expr1] OP_CMP_GE Expression[expr2] {
+    $$ = new_node(ComparisonExpresison,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, ">=");
+}
+| Expression[expr1] OP_CMP_GT Expression[expr2] {
+    $$ = new_node(ComparisonExpresison,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, ">");
+}
+| Expression[expr1] OP_CMP_LT Expression[expr2] {
+    $$ = new_node(ComparisonExpresison,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, "<");
+}
+| Expression[expr1] OP_CMP_LE Expression[expr2] {
+    $$ = new_node(ComparisonExpresison,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, "<=");
+}
+| Expression[expr1] OP_CMP_NE Expression[expr2] {
+    $$ = new_node(ComparisonExpresison,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, "!=");
+}
 | OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN {
     $$ = $expr;
 }
