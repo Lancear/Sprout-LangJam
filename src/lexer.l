@@ -98,7 +98,7 @@ as          return(KEYWORD_AS);
     return(STR_CONSTANT);
 }
 
-[A-Za-z_][0-9A-Za-z_\.]*   {
+[A-Za-z_][0-9A-Za-z_]*   {
     yylval->string = strdup(yytext);
     return(IDENTIFIER);
 }
