@@ -263,37 +263,37 @@ WhileStatement
 ;
 
 ForStatement
-: KEYWORD_FOR OP_LEFT_BRACKET SEMICOLON SEMICOLON OP_RIGHT_PAREN CodeBlock[code] {
+: KEYWORD_FOR OP_LEFT_PAREN SEMICOLON SEMICOLON OP_RIGHT_PAREN CodeBlock[code] {
     $$ = new_node(ForStatement,
         $code,
     NULL, NULL);
 }
-| KEYWORD_FOR OP_LEFT_BRACKET DeclarationStatement[decl] SEMICOLON SEMICOLON OP_RIGHT_PAREN CodeBlock[code] {
+| KEYWORD_FOR OP_LEFT_PAREN DeclarationStatement[decl] SEMICOLON OP_RIGHT_PAREN CodeBlock[code] {
     $$ = new_node(ForStatement,
         append_brother($decl, $code),
     NULL, NULL);
 }
-| KEYWORD_FOR OP_LEFT_BRACKET DeclarationStatement[decl] SEMICOLON Expression[e1] SEMICOLON OP_RIGHT_PAREN CodeBlock[code] {
+| KEYWORD_FOR OP_LEFT_PAREN DeclarationStatement[decl] Expression[e1] SEMICOLON OP_RIGHT_PAREN CodeBlock[code] {
     $$ = new_node(ForStatement,
         append_brother(append_brother($decl, $code), $e1),
     NULL, NULL);
 }
-| KEYWORD_FOR OP_LEFT_BRACKET DeclarationStatement[decl] SEMICOLON Expression[e1] SEMICOLON Expression[e2] OP_RIGHT_PAREN CodeBlock[code] {
+| KEYWORD_FOR OP_LEFT_PAREN DeclarationStatement[decl] Expression[e1] SEMICOLON Expression[e2] OP_RIGHT_PAREN CodeBlock[code] {
     $$ = new_node(ForStatement,
         append_brother(append_brother(append_brother($decl, $code), $e1), $e2),
     NULL, NULL);
 }
-| KEYWORD_FOR OP_LEFT_BRACKET SEMICOLON Expression[e1] SEMICOLON Expression[e2] OP_RIGHT_PAREN CodeBlock[code] {
+| KEYWORD_FOR OP_LEFT_PAREN SEMICOLON Expression[e1] SEMICOLON Expression[e2] OP_RIGHT_PAREN CodeBlock[code] {
     $$ = new_node(ForStatement,
         append_brother(append_brother($code, $e1), $e2),
     NULL, NULL);
 }
-| KEYWORD_FOR OP_LEFT_BRACKET SEMICOLON SEMICOLON Expression[e2] OP_RIGHT_PAREN CodeBlock[code] {
+| KEYWORD_FOR OP_LEFT_PAREN SEMICOLON SEMICOLON Expression[e2] OP_RIGHT_PAREN CodeBlock[code] {
     $$ = new_node(ForStatement,
         append_brother($code, $e2),
     NULL, NULL);
 }
-| KEYWORD_FOR OP_LEFT_BRACKET SEMICOLON Expression[e1] SEMICOLON OP_RIGHT_PAREN CodeBlock[code] {
+| KEYWORD_FOR OP_LEFT_PAREN SEMICOLON Expression[e1] SEMICOLON OP_RIGHT_PAREN CodeBlock[code] {
     $$ = new_node(ForStatement,
         append_brother($code, $e1),
     NULL, NULL);
