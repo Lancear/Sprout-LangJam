@@ -1,6 +1,6 @@
 .PHONY: clean all
 
-CFLAGS=-Ofast -march=native
+CFLAGS=-Ofast -march=native -funroll-loops
 
 OBJECTS = $(addprefix ./bin/, parser.tab.o lex.yy.o error.o node.o main.o codegen_stub.o)
 
