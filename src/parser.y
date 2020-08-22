@@ -95,7 +95,7 @@
 %token OP_AT
 %token SEMICOLON
 
-%type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock ConditionalStatement TypeNode
+%type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock ConditionalStatement TypeNode WhileStatement
 
 %left OP_LOG_OR
 %left OP_LOG_AND
