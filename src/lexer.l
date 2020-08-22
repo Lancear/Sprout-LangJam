@@ -21,7 +21,6 @@
 
 %option noinput nounput noyywrap 8bit nodefault
 %option yylineno
-%option debug
 %option reentrant bison-bridge bison-locations
 
 %%
