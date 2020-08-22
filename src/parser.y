@@ -246,6 +246,7 @@ Statement
 | ConditionalStatement { $$ = $1; }
 | WhileStatement       { $$ = $1; }
 | ForStatement         { $$ = $1; }
+| Expression SEMICOLON { $$ = $1; }
 | SEMICOLON {
     $$ = new_node(EmptyStatement, NULL, NULL, NULL);
 }
