@@ -97,7 +97,7 @@
 %token OP_AT
 %token SEMICOLON
 
-%type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock ConditionalStatement TypeNode WhileStatement ForStatement
+%type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock ConditionalStatement TypeNode WhileStatement ForStatement ModuleDeclaration TopLevelScope
 
 %type<string> IndirectedIdentifier
 
@@ -120,7 +120,7 @@
 /* Shut the fuck up the dangling else shift-reduce conflict. */
 %nonassoc KEYWORD_ELSE
 
-%start TopLevelScope
+%start ToppestLevelScope
 %%
 
 IndirectedIdentifier
@@ -138,10 +138,21 @@ IndirectedIdentifier
 }
 ;
 
+ModuleDeclaration
+: KEYWORD_MODULE IndirectedIdentifier[id] OP_LEFT_BRACKET TopLevelScope[scope] OP_RIGHT_BRACKET {
+    $$ = new_node(ModuleDeclaration, $scope, NULL, $id);
+}
+;
+
+ToppestLevelScope
+: TopLevelScope { dispatch($1); }
+;
+
 TopLevelScope
-: ImportStatement[decl] TopLevelScope { dispatch($decl); }
-| FunctionDeclaration[decl] TopLevelScope { dispatch($decl); }
-| %empty { dispatch(NULL); }
+: ImportStatement[decl] TopLevelScope { $$ = append_brother($decl, $2); }
+| FunctionDeclaration[decl] TopLevelScope { $$ = append_brother($decl, $2); }
+| ModuleDeclaration[decl] TopLevelScope { $$ = append_brother($decl, $2); }
+| %empty { $$ = NULL; }
 ;
 
 ImportStatement
