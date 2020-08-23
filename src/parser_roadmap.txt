@@ -1,0 +1,21 @@
+
+quirks the codegen team should be aware of:
+ -> currently 'let name1.param = 3` is valid syntax; although next revisions
+    of the parser will fix this problem.
+ -> this problem appears in other contexts too.
+
+TODO:
+ -> preinc/postinc predec/postdec
+ -> event handler declaration, emit statementy
+ -> class declarations
+ -> inline event handlers via @ (local, global)
+ -> mutable parameters, references, mutable referenced parameters
+ -> pattern matching
+ -> tenary operator
+ -> templates
+ -> do..while
+ -> reference syntax
+ -> lambda syntax (single expression makes implicit braces and return)
+
+Optional TODOs:
+ -> add some checks to the parser (to take off some work from the codegen guys)
