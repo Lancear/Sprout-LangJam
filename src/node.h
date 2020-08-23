@@ -8,7 +8,7 @@ enum {
     LocalDeclarationStatement, MutableLocalDeclarationStatement, VariableTypeNode, SymbolImmediate,
     AddExpression, SubtractExpression, MultiplyExpression, DivideExpression, ModulusExpression,
     ConditionalStatement, ElseCompound, TypeCompound, StringImmediate, ComparisonExpresison, WhileStatement,
-    ForStatement, ModuleDeclaration, AssignmentExpression, FunctionCall
+    ForStatement, ModuleDeclaration, AssignmentExpression, FunctionCall, LValue
 };
 
 struct node {

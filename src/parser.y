@@ -46,7 +46,7 @@
 %type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock
 %type<ast> Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock
 %type<ast> ConditionalStatement TypeNode WhileStatement ForStatement ModuleDeclaration TopLevelScope
-%type<ast> CallParameterList
+%type<ast> CallParameterList LValue
 
 %type<string> IndirectedIdentifier
 
@@ -321,8 +321,8 @@ Expression
 : NUMERIC_IMMEDIATE[imm] {
     $$ = new_node(NumericImmediate, NULL, NULL, $imm);
 }
-| IndirectedIdentifier[ref] {
-    $$ = new_node(SymbolImmediate, NULL, NULL, $ref);
+| LValue[ref] {
+    $$ = new_node(SymbolImmediate, $ref, NULL, NULL);
 }
 | STR_CONSTANT[str] {
     $$ = new_node(StringImmediate, NULL, NULL, $str);
@@ -415,10 +415,10 @@ Expression
         ),
     NULL, "!=");
 }
-| IndirectedIdentifier[expr1] OP_EQ Expression[expr2] {
+| LValue[expr1] OP_EQ Expression[expr2] {
     $$ = new_node(AssignmentExpression,
-        $expr2,
-    NULL, $expr1);
+        append_brother($expr1, $expr2),
+    NULL, NULL);
 }
 | IndirectedIdentifier[expr1] OP_LEFT_PAREN OP_RIGHT_PAREN {
     $$ = new_node(FunctionCall, NULL, NULL, $expr1);
@@ -429,6 +429,10 @@ Expression
 | OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN {
     $$ = $expr;
 }
+;
+
+LValue
+: IndirectedIdentifier { $$ = new_node(LValue, NULL, NULL, $1); }
 ;
 
 /* ********************************************************* */
