@@ -10,7 +10,8 @@ enum {
     ConditionalStatement, ElseCompound, TypeCompound, StringImmediate, ComparisonExpresison, WhileStatement,
     ForStatement, ModuleDeclaration, AssignmentExpression, FunctionCall, LValue, DoWhileStatement,
     /* currently I'm the second one */
-    PostOp, PreOp
+    PostOp, PreOp,
+    ClassDeclaration
 };
 
 struct node {

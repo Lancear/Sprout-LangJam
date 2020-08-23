@@ -7,13 +7,14 @@ quirks the codegen team should be aware of:
 TODO:
  -> [X] preinc/postinc predec/postdec
  -> event handler declaration, emit statementy
- -> class declarations
+ -> [X] class declarations
+ -> class members
  -> inline event handlers via @ (local, global)
  -> mutable parameters, references, mutable referenced parameters
  -> pattern matching
  -> tenary operator
  -> templates
- -> do..while
+ -> [X] do..while
  -> reference syntax
  -> lambda syntax (single expression makes implicit braces and return)
 

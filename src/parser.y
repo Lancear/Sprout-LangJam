@@ -46,7 +46,7 @@
 %type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock
 %type<ast> Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock
 %type<ast> ConditionalStatement TypeNode WhileStatement ForStatement ModuleDeclaration TopLevelScope
-%type<ast> CallParameterList LValue DoWhileStatement
+%type<ast> CallParameterList LValue DoWhileStatement ClassDeclaration
 
 %type<string> IndirectedIdentifier
 
@@ -113,12 +113,19 @@ TopLevelScope
 : ImportStatement[decl] TopLevelScope { $$ = append_brother($decl, $2); }
 | FunctionDeclaration[decl] TopLevelScope { $$ = append_brother($decl, $2); }
 | ModuleDeclaration[decl] TopLevelScope { $$ = append_brother($decl, $2); }
+| ClassDeclaration[decl] TopLevelScope { $$ = append_brother($decl, $2); }
 | %empty { $$ = NULL; }
 ;
 
 ModuleDeclaration
 : KEYWORD_MODULE IndirectedIdentifier[id] OP_LEFT_BRACKET TopLevelScope[scope] OP_RIGHT_BRACKET {
     $$ = new_node(ModuleDeclaration, $scope, NULL, $id);
+}
+;
+
+ClassDeclaration
+: KEYWORD_CLASS IndirectedIdentifier[id] OP_LEFT_BRACKET TopLevelScope[scope] OP_RIGHT_BRACKET {
+    $$ = new_node(ClassDeclaration, $scope, NULL, $id);
 }
 ;
 
