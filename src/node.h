@@ -5,7 +5,7 @@
 enum {
     ImportDeclaration, AsCompound, FunctionDeclaration, ParameterList, Parameter, ParameterType,
     CodeBlock, StatementList, ReturnStatement, NumericImmediate, FunctionReturnType, EmptyStatement,
-    LocalDeclarationStatement, MutableLocalDeclarationStatement, VariableTypeNode, SymbolImmediate,
+    LocalDeclarationStatement, MutableLocalDeclarationStatement, VariableTypeNode,
     AddExpression, SubtractExpression, MultiplyExpression, DivideExpression, ModulusExpression,
     ConditionalStatement, ElseCompound, TypeCompound, StringImmediate, ComparisonExpresison, WhileStatement,
     ForStatement, ModuleDeclaration, AssignmentExpression, FunctionCall, LValue
