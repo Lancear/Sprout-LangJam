@@ -322,7 +322,7 @@ Expression
     $$ = new_node(NumericImmediate, NULL, NULL, $imm);
 }
 | LValue[ref] {
-    $$ = new_node(SymbolImmediate, $ref, NULL, NULL);
+    $$ = $ref;
 }
 | STR_CONSTANT[str] {
     $$ = new_node(StringImmediate, NULL, NULL, $str);
