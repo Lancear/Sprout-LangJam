@@ -46,6 +46,7 @@
 %type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock
 %type<ast> Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock
 %type<ast> ConditionalStatement TypeNode WhileStatement ForStatement ModuleDeclaration TopLevelScope
+%type<ast> CallParameterList
 
 %type<string> IndirectedIdentifier
 
@@ -72,6 +73,13 @@
 %start Start
 %%
 
+/* ********************************************************* */
+/* GENERAL RULES */
+
+Start
+: TopLevelScope { dispatch($1); }
+;
+
 IndirectedIdentifier
 : IDENTIFIER {
     $$ = strdup($1);
@@ -87,21 +95,31 @@ IndirectedIdentifier
 }
 ;
 
-ModuleDeclaration
-: KEYWORD_MODULE IndirectedIdentifier[id] OP_LEFT_BRACKET TopLevelScope[scope] OP_RIGHT_BRACKET {
-    $$ = new_node(ModuleDeclaration, $scope, NULL, $id);
+TypeNode
+: OP_COLON IndirectedIdentifier[name] {
+    $$ = new_node(TypeCompound, NULL, NULL, $name);
 }
 ;
 
-Start
-: TopLevelScope { dispatch($1); }
+CodeBlock
+: FnCodeBlock { $$ = $1; }
+| Statement { $$ = $1; }
 ;
+
+/* ********************************************************* */
+/* TOPLEVEL SCOPE */
 
 TopLevelScope
 : ImportStatement[decl] TopLevelScope { $$ = append_brother($decl, $2); }
 | FunctionDeclaration[decl] TopLevelScope { $$ = append_brother($decl, $2); }
 | ModuleDeclaration[decl] TopLevelScope { $$ = append_brother($decl, $2); }
 | %empty { $$ = NULL; }
+;
+
+ModuleDeclaration
+: KEYWORD_MODULE IndirectedIdentifier[id] OP_LEFT_BRACKET TopLevelScope[scope] OP_RIGHT_BRACKET {
+    $$ = new_node(ModuleDeclaration, $scope, NULL, $id);
+}
 ;
 
 ImportStatement
@@ -112,12 +130,6 @@ ImportStatement
     $$ = new_node(ImportDeclaration,
         new_node(AsCompound, NULL, NULL, $id),
     NULL, $pkg);
-}
-;
-
-TypeNode
-: OP_COLON IndirectedIdentifier[name] {
-    $$ = new_node(TypeCompound, NULL, NULL, $name);
 }
 ;
 
@@ -175,10 +187,8 @@ FnCodeBlock
 }
 ;
 
-CodeBlock
-: FnCodeBlock { $$ = $1; }
-| Statement { $$ = $1; }
-;
+/* ********************************************************* */
+/* STATEMENT */
 
 StatementList
 : Statement[stmt] {
@@ -304,6 +314,9 @@ ReturnStatement
 }
 ;
 
+/* ********************************************************* */
+/* EXPRESSION */
+
 Expression
 : NUMERIC_IMMEDIATE[imm] {
     $$ = new_node(NumericImmediate, NULL, NULL, $imm);
@@ -410,8 +423,23 @@ Expression
 | IndirectedIdentifier[expr1] OP_LEFT_PAREN OP_RIGHT_PAREN {
     $$ = new_node(FunctionCall, NULL, NULL, $expr1);
 }
+| IndirectedIdentifier[expr1] OP_LEFT_PAREN CallParameterList[params] OP_RIGHT_PAREN {
+    $$ = new_node(FunctionCall, $params, NULL, $expr1);
+}
 | OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN {
     $$ = $expr;
+}
+;
+
+/* ********************************************************* */
+/* MISC */
+
+CallParameterList
+: CallParameterList Expression {
+    $$ = append_brother($1, $2);
+}
+| Expression {
+    $$ = $1;
 }
 ;
 
