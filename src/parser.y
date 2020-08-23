@@ -28,76 +28,24 @@
     void dispatch(struct node *);
 }
 
-%token<string> NUMERIC_IMMEDIATE
-%token<string> IDENTIFIER
-%token<string> STR_CONSTANT
-%token<string> CHAR_CONSTANT
+%token<string> NUMERIC_IMMEDIATE IDENTIFIER
+%token<string> STR_CONSTANT CHAR_CONSTANT
 
-%token KEYWORD_LET
-%token KEYWORD_WHILE
-%token KEYWORD_IF
-%token KEYWORD_FN
-%token KEYWORD_MUT
-%token KEYWORD_CLASS
-%token KEYWORD_MODULE
-%token KEYWORD_EMIT
-%token KEYWORD_RETURN
-%token KEYWORD_EVENT
-%token KEYWORD_DO
-%token KEYWORD_ELSE
-%token KEYWORD_MATCH
-%token KEYWORD_FOR
-%token KEYWORD_IMPORT
-%token KEYWORD_AS
+%token KEYWORD_LET KEYWORD_WHILE KEYWORD_IF KEYWORD_FN KEYWORD_MUT
+%token KEYWORD_CLASS KEYWORD_MODULE KEYWORD_EMIT KEYWORD_RETURN KEYWORD_EVENT
+%token KEYWORD_DO KEYWORD_ELSE KEYWORD_MATCH KEYWORD_FOR KEYWORD_IMPORT KEYWORD_AS
 
-%token OP_LEFT_PAREN
-%token OP_RIGHT_PAREN
-%token OP_LEFT_SQPAREN
-%token OP_RIGHT_SQPAREN
-%token OP_DOT
-%token OP_PLUS
-%token OP_MINUS
-%token OP_SHR
-%token OP_SHL
-%token OP_MOD
-%token OP_SLASH
-%token OP_STAR
-%token OP_LEFT_BRACKET
-%token OP_RIGHT_BRACKET
-%token OP_TENARY
-%token OP_COLON
-%token OP_ARROW
-%token OP_INCREMENT
-%token OP_DECREMENT
-%token OP_BIN_AND
-%token OP_BIN_OR
-%token OP_LOG_AND
-%token OP_LOG_OR
-%token OP_XOR
-%token OP_ADD_EQ
-%token OP_SUB_EQ
-%token OP_SHL_EQ
-%token OP_SHR_EQ
-%token OP_MUL_EQ
-%token OP_DIV_EQ
-%token OP_MOD_EQ
-%token OP_AND_EQ
-%token OP_OR_EQ
-%token OP_XOR_EQ
-%token OP_EQ
-%token OP_CMP_EQ
-%token OP_CMP_GE
-%token OP_CMP_LE
-%token OP_CMP_GT
-%token OP_CMP_LT
-%token OP_CMP_NE
-%token OP_TILDE
-%token OP_COMMA
-%token OP_BANG
-%token OP_AT
+%token OP_LEFT_PAREN OP_RIGHT_PAREN OP_LEFT_SQPAREN OP_RIGHT_SQPAREN OP_LEFT_BRACKET OP_RIGHT_BRACKET
+%token OP_PLUS OP_MINUS OP_SHR OP_SHL OP_MOD OP_SLASH OP_STAR OP_BIN_AND OP_BIN_OR OP_LOG_AND OP_LOG_OR OP_XOR
+%token OP_TENARY OP_COLON OP_ARROW OP_INCREMENT OP_DECREMENT OP_DOT OP_EQ OP_TILDE OP_BANG
+%token OP_ADD_EQ OP_SUB_EQ OP_SHL_EQ OP_SHR_EQ OP_MUL_EQ OP_DIV_EQ OP_MOD_EQ OP_AND_EQ OP_OR_EQ OP_XOR_EQ
+%token OP_CMP_EQ OP_CMP_GE OP_CMP_LE OP_CMP_GT OP_CMP_LT OP_CMP_NE
+%token OP_COMMA OP_AT
 %token SEMICOLON
 
-%type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock ConditionalStatement TypeNode WhileStatement ForStatement ModuleDeclaration TopLevelScope
+%type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock
+%type<ast> Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock
+%type<ast> ConditionalStatement TypeNode WhileStatement ForStatement ModuleDeclaration TopLevelScope
 
 %type<string> IndirectedIdentifier
 
