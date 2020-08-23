@@ -5,7 +5,7 @@ quirks the codegen team should be aware of:
  -> this problem appears in other contexts too.
 
 TODO:
- -> preinc/postinc predec/postdec
+ -> [X] preinc/postinc predec/postdec
  -> event handler declaration, emit statementy
  -> class declarations
  -> inline event handlers via @ (local, global)
