@@ -1,6 +1,5 @@
 
 module penis {
-
     fn test(arg1:par1, arg2:par2):void {
         mut x:par2 = 3;
         let y:par1 = 4;
@@ -17,16 +16,14 @@ module penis {
         }
     }
 
-
     fn test2(arg1:par1  .name, arg2:par2):void {
         while(arg1)
-            arg1 = dispatch();
+            arg1 = dispatch(x, y, z);
     }
     
     fn test3(i:u8, j:u8):void {
         for(mut a = 0; a < i; a = a + 1)
             dispatch();
     }
-
 }
 

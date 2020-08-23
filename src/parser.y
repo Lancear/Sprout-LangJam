@@ -192,10 +192,10 @@ FnCodeBlock
 
 StatementList
 : Statement[stmt] {
-    $$ = new_node(StatementList, $stmt, NULL, NULL);
+    $$ = $stmt;
 }
 | StatementList[next] Statement[stmt] {
-    $$ = new_node(StatementList, $stmt, $next, NULL);
+    $$ = append_brother($next, $stmt);
 }
 ;
 
@@ -435,8 +435,8 @@ Expression
 /* MISC */
 
 CallParameterList
-: CallParameterList Expression {
-    $$ = append_brother($1, $2);
+: CallParameterList OP_COMMA Expression {
+    $$ = append_brother($1, $3);
 }
 | Expression {
     $$ = $1;
