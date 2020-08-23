@@ -46,7 +46,7 @@
 %type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock
 %type<ast> Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock
 %type<ast> ConditionalStatement TypeNode WhileStatement ForStatement ModuleDeclaration TopLevelScope
-%type<ast> CallParameterList LValue
+%type<ast> CallParameterList LValue DoWhileStatement
 
 %type<string> IndirectedIdentifier
 
@@ -204,16 +204,26 @@ Statement
 | DeclarationStatement { $$ = $1; }
 | ConditionalStatement { $$ = $1; }
 | WhileStatement       { $$ = $1; }
+| DoWhileStatement     { $$ = $1; }
 | ForStatement         { $$ = $1; }
 | Expression SEMICOLON { $$ = $1; }
-| SEMICOLON {
-    $$ = new_node(EmptyStatement, NULL, NULL, NULL);
-}
+| SEMICOLON            { $$ = NULL; }
 ;
 
 WhileStatement
 : KEYWORD_WHILE OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN CodeBlock[code] {
     $$ = new_node(WhileStatement,
+        append_brother(
+            $expr,
+            $code
+        ),
+    NULL, NULL);
+}
+;
+
+DoWhileStatement
+: KEYWORD_DO CodeBlock[code] KEYWORD_WHILE OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN SEMICOLON {
+    $$ = new_node(DoWhileStatement,
         append_brother(
             $expr,
             $code
@@ -414,6 +424,26 @@ Expression
             $expr2
         ),
     NULL, "!=");
+}
+| LValue[expr1] OP_INCREMENT {
+    $$ = new_node(PostOp,
+        $expr1,
+    NULL, "++");
+}
+| OP_INCREMENT LValue[expr1] {
+    $$ = new_node(PreOp,
+        $expr1,
+    NULL, "++");
+}
+| LValue[expr1] OP_DECREMENT {
+    $$ = new_node(PostOp,
+        $expr1,
+    NULL, "--");
+}
+| OP_DECREMENT LValue[expr1] {
+    $$ = new_node(PreOp,
+        $expr1,
+    NULL, "--");
 }
 | LValue[expr1] OP_EQ Expression[expr2] {
     $$ = new_node(AssignmentExpression,

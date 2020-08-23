@@ -4,11 +4,13 @@
 
 enum {
     ImportDeclaration, AsCompound, FunctionDeclaration, ParameterList, Parameter, ParameterType,
-    CodeBlock, StatementList, ReturnStatement, NumericImmediate, FunctionReturnType, EmptyStatement,
+    CodeBlock, StatementList, ReturnStatement, NumericImmediate, FunctionReturnType,
     LocalDeclarationStatement, MutableLocalDeclarationStatement, VariableTypeNode,
     AddExpression, SubtractExpression, MultiplyExpression, DivideExpression, ModulusExpression,
     ConditionalStatement, ElseCompound, TypeCompound, StringImmediate, ComparisonExpresison, WhileStatement,
-    ForStatement, ModuleDeclaration, AssignmentExpression, FunctionCall, LValue
+    ForStatement, ModuleDeclaration, AssignmentExpression, FunctionCall, LValue, DoWhileStatement,
+    /* currently I'm the second one */
+    PostOp, PreOp
 };
 
 struct node {

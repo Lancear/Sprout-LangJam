@@ -25,5 +25,21 @@ module penis {
         for(mut a = 0; a < i; a = a + 1)
             dispatch();
     }
+    
+    fn test4():void {
+        mut a = 13;
+        
+        a++;
+        
+        a = ++a + a++;
+    
+        do {
+            test3();
+        } while(test());
+        
+        do
+            test3();
+        while(test());
+    }
 }
 
