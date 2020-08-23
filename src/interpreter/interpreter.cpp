@@ -21,10 +21,20 @@ void dispatch(struct node *n){
 	shared_ptr<SymbolTable> table = SymbolTable::getInstance();
 	table->add(name, value);
 	test(name);
+
+	//Example of a normal Symbol
+	Symbol s = Symbol("var1",SymbolType::FUNCTION,"Hello World",ValueType::STRING,false,vector<Symbol>());
+	if(s.type == SymbolType::FUNCTION){
+		printf("*Normal Symbol works.\n");
+	}
+	//Example of an Emtpy symbol
+	Symbol s2 = Symbol();
+	if(s2.type == SymbolType::EMPTY){
+		printf("*Empty Symbol also works.\n");
+	}
 }
 
 void test(char* name){
 	shared_ptr<SymbolTable > table = SymbolTable::getInstance();
-	cout << "Found it? " << (table->contains(name) > 0 ? "true" : "false") << "\n";
-	cout << "Value: " << table->get(name) << endl;
+	cout << "*Does the singleton work? " << (table->contains(name) > 0 ? "true" : "false") << "\n";
 }
