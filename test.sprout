@@ -1,8 +1,7 @@
+fn func_111(arg1: i32, arg2: i16) : i8 {
+    return 9999;
+}
 
-fn test(arg1:i32, arg2:i32):void {
-    mut x:par2 = 3;
-    let y:par1 = 4;
-    mut z:par3 = y;
-    
-    return (5 * x + (y + z) - 5 / y) % 256;
+fn func_222(arg1: void, arg2: i64) : void {    
+    return 9991;
 }

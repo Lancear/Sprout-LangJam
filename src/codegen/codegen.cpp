@@ -14,5 +14,5 @@ extern "C" void dispatch(node *n)
 
     module = std::make_unique<llvm::Module>("Sprout", context);
 
-    tree_node->codegen()->print(llvm::errs());
+    tree_node->codegen(n)->print(llvm::errs());
 }

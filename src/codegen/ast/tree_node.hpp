@@ -18,6 +18,6 @@ namespace ast
         std::string value;
         std::vector<std::unique_ptr<tree_node>> children;
 
-        virtual llvm::Value *codegen() = 0;
+        virtual llvm::Value *codegen(node* n) = 0;
     };
 } // namespace ast
