@@ -9,6 +9,6 @@ namespace ast
         using tree_node::tree_node;
 
     public:
-        llvm::Value *codegen() override;
+        llvm::Value *codegen(node* n) override;
     };
 } // namespace ast

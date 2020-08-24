@@ -1,6 +1,6 @@
 #include "return_stmt_node.hpp"
 
-llvm::Value *ast::return_stmt_node::codegen()
+llvm::Value *ast::return_stmt_node::codegen(node* n)
 {
     return nullptr;
 }
