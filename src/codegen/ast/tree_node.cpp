@@ -1,4 +1,3 @@
-#include "tree_node.hpp"
 #include "import_node.hpp"
 #include "as_node.hpp"
 #include "fn_decl_node.hpp"
@@ -20,6 +19,7 @@
 #include "mul_expr_node.hpp"
 #include "div_expr_node.hpp"
 #include "mod_expr_node.hpp"
+#include "tree_node.hpp"
 
 ast::tree_node::tree_node(node *n)
 {
