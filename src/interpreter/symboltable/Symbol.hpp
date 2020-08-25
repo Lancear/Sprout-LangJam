@@ -19,7 +19,17 @@ class Symbol {
 		Symbol(SymbolType type, char *name, char *valueType, char *value)
 			: name(name), type(type), value(value), isReference(false), valueType(valueType) {}
 		
-		static Symbol EMPTY(){
-			return Symbol(SymbolType::EMPTY, "<EMPTY>", "<EMPTY>", "<EMPTY>");
-		}
+		bool IsError();
+		bool isEmpty();
+		bool isFunction();
+		bool isModule();
+		bool isMutable();
+		bool isImmutable();
+
+		static Symbol EMPTY();
+		static Symbol ERROR();
+		static Symbol MODULE(char* name);
+		static Symbol FUNCTION(char *name, char *returnType);
+		static Symbol EXPRESSION(char* value);
+		static Symbol EXPRESSION();
 };

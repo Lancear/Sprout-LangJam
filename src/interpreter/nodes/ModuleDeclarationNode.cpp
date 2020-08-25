@@ -11,7 +11,7 @@ Symbol ModuleDeclarationNode::analyse(Symbol symParam) {
   cout << "Module " << value << " > ";
 
   if (syms->containsInCurrentScope((char*)sym.name)) {
-    cerr << "Symbol `" << sym.name << "` already exists as type " << syms->get(sym.name).type;
+    cerr << "Symbol `" << sym.name << "` already exists as type " << (int)syms->get(sym.name).type;
     return Symbol::ERROR();
   }
 
