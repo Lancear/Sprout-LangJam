@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Symbol ParameterListNode::analyse(Symbol sym) {
+Symbol ParameterListNode::analyse(Symbol symParam) {
   cout << "Params: " << children.size() << endl;
   
   for (int i = 0; i < children.size(); i++) {

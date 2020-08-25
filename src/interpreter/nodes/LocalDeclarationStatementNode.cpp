@@ -4,7 +4,7 @@
 #include "../symboltable/Symbol.hpp"
 
 using namespace std;
-Symbol LocalDeclarationStatementNode::analyse(Symbol sym) {
+Symbol LocalDeclarationStatementNode::analyse(Symbol symParam) {
   if (value) cout << "Value: " << value << endl;
   return Symbol::EMPTY();
 }

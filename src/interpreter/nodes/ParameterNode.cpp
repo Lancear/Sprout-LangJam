@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Symbol ParameterNode::analyse(Symbol sym) {
+Symbol ParameterNode::analyse(Symbol symParam) {
   cout << "Param: " << value << endl;
   return Symbol::EMPTY();
 }

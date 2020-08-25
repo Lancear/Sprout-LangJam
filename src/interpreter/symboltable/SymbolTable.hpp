@@ -33,6 +33,4 @@ private:
 	shared_ptr<Scope> root;
 	shared_ptr<Scope> currentScope;
 	std::stack<int> branches;
-	SymbolTable(const SymbolTable &);
-	SymbolTable &operator=(const SymbolTable &);
 };

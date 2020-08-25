@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Symbol StatementListNode::analyse(Symbol sym) {
+Symbol StatementListNode::analyse(Symbol symParam) {
   if (value) cout << "Value: " << value << endl;
   return Symbol::EMPTY();
 }

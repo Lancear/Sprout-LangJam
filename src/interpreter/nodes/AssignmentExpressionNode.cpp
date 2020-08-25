@@ -4,7 +4,7 @@
 #include "../symboltable/Symbol.hpp"
 
 using namespace std;
-Symbol AssignmentExpressionNode::analyse(Symbol sym) {
+Symbol AssignmentExpressionNode::analyse(Symbol symParam) {
   if (value) cout << "Value: " << value << endl;
   return Symbol::EMPTY();
 }

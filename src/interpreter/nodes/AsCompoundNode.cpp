@@ -4,7 +4,7 @@
 #include "../symboltable/Symbol.hpp"
 
 using namespace std;
-Symbol AsCompoundNode::analyse(Symbol sym) {
+Symbol AsCompoundNode::analyse(Symbol symParam) {
   if (value) cout << "Value: " << value << endl;
   return Symbol::EMPTY();
 }

@@ -4,7 +4,7 @@
 #include "../symboltable/Symbol.hpp"
 
 using namespace std;
-Symbol PostOpNode::analyse(Symbol sym) {
+Symbol PostOpNode::analyse(Symbol symParam) {
   if (value) cout << "Value: " << value << endl;
   return Symbol::EMPTY();
 }

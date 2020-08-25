@@ -13,7 +13,7 @@ private:
 
 public:
 	shared_ptr<Scope> parent;
-	const vector<shared_ptr<Scope>> children;
+	vector<shared_ptr<Scope>> children;
 	Scope(){
 		this->parent = NULL;
 	}

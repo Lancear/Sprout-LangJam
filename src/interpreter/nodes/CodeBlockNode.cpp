@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Symbol CodeBlockNode::analyse(Symbol sym) {
+Symbol CodeBlockNode::analyse(Symbol symParam) {
   if (value) cout << "Value: " << value << endl;
   return Symbol::EMPTY();
 }

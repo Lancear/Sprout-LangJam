@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Symbol FunctionDeclarationNode::analyse(Symbol sym) {
+Symbol FunctionDeclarationNode::analyse(Symbol symParam) {
   cout << "Function: " << value << endl;
   children[1]->analyse();
   return Symbol::EMPTY();
