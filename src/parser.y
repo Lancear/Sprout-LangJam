@@ -43,10 +43,10 @@
 %token OP_COMMA OP_AT
 %token SEMICOLON
 
-%type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop FnCodeBlock
+%type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop CompoundStatement
 %type<ast> Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock
 %type<ast> ConditionalStatement TypeNode WhileStatement ForStatement ModuleDeclaration TopLevelScope
-%type<ast> CallParameterList LValue DoWhileStatement ClassDeclaration
+%type<ast> CallParameterList LValue DoWhileStatement ClassDeclaration ModuleScope ClassScope
 
 %type<string> IndirectedIdentifier
 
@@ -81,6 +81,17 @@ Start
 : TopLevelScope { dispatch($1); }
 ;
 
+/**
+ * Rule for formatting indirected identifiers (e.g. space1.space2.access3).
+ * The following declarations are correct:
+ *  => `space1 .  space2` => yields `space1.space2`
+ *  => `space1  . space2` => yields `space1.space2`
+ *  => `space1. space2` => yields `space1.space2`
+ *  => `space1 .space2` => yields `space1.space2`
+ *  => `space1.space2` => yields `space1.space2`
+ * Spaces can be replaced with arbitrary amounts of any whitespace character
+ * recognized by the lexer.
+ */
 IndirectedIdentifier
 : IDENTIFIER {
     $$ = strdup($1);
@@ -96,74 +107,28 @@ IndirectedIdentifier
 }
 ;
 
+/**
+ * A type compound is just an indirected identifier preceded with a colon.
+ */
 TypeNode
 : OP_COLON IndirectedIdentifier[name] {
     $$ = new_node(TypeCompound, NULL, NULL, $name);
 }
 ;
 
+/**
+ * A code block is either a compound statement, or a single statement.
+ */
 CodeBlock
-: FnCodeBlock { $$ = $1; }
+: CompoundStatement { $$ = $1; }
 | Statement { $$ = $1; }
 ;
 
-/* ********************************************************* */
-/* TOPLEVEL SCOPE */
-
-TopLevelScope
-: ImportStatement[decl] TopLevelScope { $$ = append_brother($decl, $2); }
-| FunctionDeclaration[decl] TopLevelScope { $$ = append_brother($decl, $2); }
-| ModuleDeclaration[decl] TopLevelScope { $$ = append_brother($decl, $2); }
-| ClassDeclaration[decl] TopLevelScope { $$ = append_brother($decl, $2); }
-| %empty { $$ = NULL; }
-;
-
-ModuleDeclaration
-: KEYWORD_MODULE IndirectedIdentifier[id] OP_LEFT_BRACKET TopLevelScope[scope] OP_RIGHT_BRACKET {
-    $$ = new_node(ModuleDeclaration, $scope, NULL, $id);
-}
-;
-
-ClassDeclaration
-: KEYWORD_CLASS IndirectedIdentifier[id] OP_LEFT_BRACKET TopLevelScope[scope] OP_RIGHT_BRACKET {
-    $$ = new_node(ClassDeclaration, $scope, NULL, $id);
-}
-;
-
-ImportStatement
-: KEYWORD_IMPORT IndirectedIdentifier[pkg] SEMICOLON {
-    $$ = new_node(ImportDeclaration, NULL, NULL, $pkg);
-}
-| KEYWORD_IMPORT IndirectedIdentifier[pkg] KEYWORD_AS IndirectedIdentifier[id] SEMICOLON {
-    $$ = new_node(ImportDeclaration,
-        new_node(AsCompound, NULL, NULL, $id),
-    NULL, $pkg);
-}
-;
-
-FunctionDeclaration
-: KEYWORD_FN IndirectedIdentifier[name] ParameterList[param] FnCodeBlock[code] {
-    $$ = new_node(FunctionDeclaration,
-        append_brother(
-            $param,
-            $code
-        ),
-    NULL, $name);
-}
-| KEYWORD_FN IndirectedIdentifier[name] ParameterList[params] TypeNode[return_type] FnCodeBlock[code] {
-    $$ = new_node(FunctionDeclaration,
-        new_node(FunctionReturnType, NULL,
-            append_brother(
-                append_brother(
-                    $params,
-                    $code
-                ), $return_type
-            ), NULL
-        ),
-    NULL, $name);
-}
-;
-
+/**
+ * Parameter list.
+ *  `(param1:type1, param2:type2, param3:type3)`
+ *  `()`
+ */
 ParameterList
 : OP_LEFT_PAREN ParameterListLoop[loop] OP_RIGHT_PAREN {
     $$ = new_node(ParameterList, $loop, NULL, NULL);
@@ -186,7 +151,108 @@ ParameterListLoop
 }
 ;
 
-FnCodeBlock
+/* ********************************************************* */
+/* TOPLEVEL SCOPE */
+
+/**
+ * In the toplevel scope, you can import stuff, declare normal functions,
+ * declare modules and declare classes.
+ */
+TopLevelScope
+: ImportStatement[decl] TopLevelScope { $$ = append_brother($decl, $2); }
+| FunctionDeclaration[decl] TopLevelScope { $$ = append_brother($decl, $2); }
+| ModuleDeclaration[decl] TopLevelScope { $$ = append_brother($decl, $2); }
+| ClassDeclaration[decl] TopLevelScope { $$ = append_brother($decl, $2); }
+| %empty { $$ = NULL; }
+;
+
+/**
+ * Inside classes you can declare methods.
+ */
+ClassScope
+: FunctionDeclaration[decl] ClassScope { $$ = append_brother($decl, $2); }
+| %empty { $$ = NULL; }
+;
+
+/**
+ * In the module scope, you can import stuff, declare normal functions
+ * and declare classes.
+ *
+ * Nested modules are disallowed.
+ */
+ModuleScope
+: ImportStatement[decl] ModuleScope { $$ = append_brother($decl, $2); }
+| FunctionDeclaration[decl] ModuleScope { $$ = append_brother($decl, $2); }
+| ClassDeclaration[decl] ModuleScope { $$ = append_brother($decl, $2); }
+| %empty { $$ = NULL; }
+;
+
+/**
+ * Module declaration syntax.
+ */
+ModuleDeclaration
+: KEYWORD_MODULE IndirectedIdentifier[id] OP_LEFT_BRACKET ModuleScope[scope] OP_RIGHT_BRACKET {
+    $$ = new_node(ModuleDeclaration, $scope, NULL, $id);
+}
+;
+
+/**
+ * Class declaration syntax.
+ */
+ClassDeclaration
+: KEYWORD_CLASS IndirectedIdentifier[id] OP_LEFT_BRACKET ClassScope[scope] OP_RIGHT_BRACKET {
+    $$ = new_node(ClassDeclaration, $scope, NULL, $id);
+}
+;
+
+/**
+ * `import` and `import x as y` syntax.
+ */
+ImportStatement
+: KEYWORD_IMPORT IndirectedIdentifier[pkg] SEMICOLON {
+    $$ = new_node(ImportDeclaration, NULL, NULL, $pkg);
+}
+| KEYWORD_IMPORT IndirectedIdentifier[pkg] KEYWORD_AS IndirectedIdentifier[id] SEMICOLON {
+    $$ = new_node(ImportDeclaration,
+        new_node(AsCompound, NULL, NULL, $id),
+    NULL, $pkg);
+}
+;
+
+/**
+ * Function declaration:
+ *  `fn blah(...):blah {'
+ *  `fn blah(...) {`
+ */
+FunctionDeclaration
+: KEYWORD_FN IndirectedIdentifier[name] ParameterList[param] CompoundStatement[code] {
+    $$ = new_node(FunctionDeclaration,
+        append_brother(
+            $param,
+            $code
+        ),
+    NULL, $name);
+}
+| KEYWORD_FN IndirectedIdentifier[name] ParameterList[params] TypeNode[return_type] CompoundStatement[code] {
+    $$ = new_node(FunctionDeclaration,
+        new_node(FunctionReturnType, NULL,
+            append_brother(
+                append_brother(
+                    $params,
+                    $code
+                ), $return_type
+            ), NULL
+        ),
+    NULL, $name);
+}
+;
+
+/**
+ * Compount statement syntax.
+ *  `{ s1; s2; s3 }`
+ *  `{ }`
+ */
+CompoundStatement
 : OP_LEFT_BRACKET StatementList[stmt_list] OP_RIGHT_BRACKET {
     $$ = new_node(CodeBlock, $stmt_list, NULL, NULL);
 }
@@ -207,6 +273,9 @@ StatementList
 }
 ;
 
+/**
+ * Currently supported statements.
+ */
 Statement
 : ReturnStatement      { $$ = $1; }
 | DeclarationStatement { $$ = $1; }
@@ -218,6 +287,10 @@ Statement
 | SEMICOLON            { $$ = NULL; }
 ;
 
+/**
+ * `while' statement syntax.
+ *     `while(condition) code;`
+ */
 WhileStatement
 : KEYWORD_WHILE OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN CodeBlock[code] {
     $$ = new_node(WhileStatement,
@@ -229,6 +302,10 @@ WhileStatement
 }
 ;
 
+/**
+ * `do..while' statement syntax.
+ *     `do code; while(condition);`
+ */
 DoWhileStatement
 : KEYWORD_DO CodeBlock[code] KEYWORD_WHILE OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN SEMICOLON {
     $$ = new_node(DoWhileStatement,
@@ -240,6 +317,17 @@ DoWhileStatement
 }
 ;
 
+/**
+ * `for` syntax:
+ *     `for(;;) s;`
+ *     `for(a;;) s;`
+ *     `for(a; b;) s;`
+ *     `for(a; b; c) s;`
+ *     `for(; b; c) s;`
+ *     `for(;; c) s;`
+ *     `for(; b;) s;`
+ *     `for(a;; c) s;`
+ */
 ForStatement
 : KEYWORD_FOR OP_LEFT_PAREN SEMICOLON SEMICOLON OP_RIGHT_PAREN CodeBlock[code] {
     $$ = new_node(ForStatement,
