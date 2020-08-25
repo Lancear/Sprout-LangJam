@@ -3,12 +3,13 @@
 #include <vector>
 #include <map>
 #include <memory>
+#include "Symbol.hpp"
 using namespace std;
 
 class Scope
 {
 private:
-	map<string, char*> internalMap;
+	map<string, Symbol> internalMap;
 
 public:
 	shared_ptr<Scope> parent;
@@ -20,8 +21,8 @@ public:
 		this->parent = parent;
 	}
 	shared_ptr<Scope> getParent();
-	void add(char *symbolName, char *symbolType);
+	void add(Symbol symbol);
 	bool contains(char *symbolName);
-	const char *get(char *symbolName);
+	Symbol get(char *symbolName);
 	void clear();
 };

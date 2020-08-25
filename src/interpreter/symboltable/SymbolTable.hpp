@@ -3,17 +3,18 @@
 #include <stack>
 #include <iostream>
 #include <memory>
+#include "Symbol.hpp"
 using namespace std;
 
 class SymbolTable
 { 
 public:
 	static weak_ptr<SymbolTable> getInstance();
-	SymbolTable *add(char *name, char *symbolType);
-	bool contains(char *name);
-	bool contains(char *name, shared_ptr<Scope> scope);
-	const char *get(char *name);
-	const char *get(char *name, shared_ptr<Scope> scope);
+	SymbolTable *add(Symbol symbol);
+	bool contains(Symbol symbol, shared_ptr<Scope> scope);
+	bool contains(Symbol symbol);
+	Symbol get(Symbol symbol, shared_ptr<Scope> scope);
+	Symbol get(Symbol symbol);
 	//Seeing as i return "this" here, i think a pointer will suffice 
 	SymbolTable *clear();
 	SymbolTable *openNewScope();

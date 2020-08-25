@@ -3,7 +3,10 @@
 #include <unordered_map>
 #include <stdexcept>
 #include <iostream>
+#include <optional>
+#include "Symbol.hpp"
 using namespace std;
+//TODO: Switch all functions from char * to const char *
 
 shared_ptr<SymbolTable> SymbolTable::_instance = NULL;
 
@@ -16,40 +19,43 @@ weak_ptr<SymbolTable> SymbolTable::getInstance(){
 	return tablePtr;
 }
 
-const char *SymbolTable::get(char *name){
-	return get(name, currentScope);
-}
-
-const char* SymbolTable::get(char* name, shared_ptr<Scope> scope){
-	shared_ptr<Scope> currentScope = scope;
-	while(currentScope != 0){
-		if(currentScope->contains(name))
-			return currentScope->get(name);
-		currentScope = currentScope->getParent();
-	}
-	return NULL;
-}
-
-bool SymbolTable::contains(char *name)
-{
-	return contains(name, currentScope);
-}
-
-bool SymbolTable::contains(char *name, shared_ptr<Scope> scope)
+Symbol SymbolTable::get(Symbol symbol, shared_ptr<Scope> scope)
 {
 	shared_ptr<Scope> currentScope = scope;
 	while (currentScope != 0)
 	{
-		if (currentScope->contains(name))
+		if (currentScope->contains((char *)symbol.name))
+			return currentScope->get((char *)symbol.name);
+		currentScope = currentScope->getParent();
+	}
+	return Symbol();
+}
+
+Symbol SymbolTable::get(Symbol symbol)
+{
+	return get(symbol, currentScope);
+}
+
+bool SymbolTable::contains(Symbol symbol, shared_ptr<Scope> scope)
+{
+	shared_ptr<Scope> currentScope = scope;
+	while (currentScope != 0)
+	{
+		if (currentScope->contains((char *)symbol.name))
 			return true;
 		currentScope = currentScope->getParent();
 	}
 	return false;
 }
 
-SymbolTable *SymbolTable::add(char *name, char *symbolType)
+bool SymbolTable::contains(Symbol symbol)
 {
-	currentScope->add(name, symbolType);
+	return contains(symbol, currentScope);
+}
+
+SymbolTable *SymbolTable::add(Symbol symbol)
+{
+	currentScope->add(symbol);
 	return this;
 }
 

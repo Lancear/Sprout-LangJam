@@ -2,9 +2,10 @@
 #include "./nodes/TreeNode.hpp"
 #include "./symboltable/SymbolTable.hpp"
 #include <iostream>
+#include "./symboltable/Symbol.hpp"
 using namespace std;
 
-void test(char *name);
+void test(Symbol name);
 
 void dispatch(struct node *n){
 	if(!n) return;
@@ -19,8 +20,8 @@ void dispatch(struct node *n){
 	char* name = "var1";
 	char* value = "string";
 	shared_ptr<SymbolTable> table = SymbolTable::getInstance().lock();
-	table->add(name, value);
-	test(name);
+	table->add(Symbol());
+	test(Symbol());
 
 	//Example of a normal Symbol
 	Symbol s = Symbol("var1",SymbolType::FUNCTION,"Hello World","string",false,vector<Symbol>());
@@ -34,7 +35,8 @@ void dispatch(struct node *n){
 	}
 }
 
-void test(char* name){
+void test(Symbol name){
 	shared_ptr<SymbolTable> table = SymbolTable::getInstance().lock();
+
 	cout << "*Does the singleton work? " << (table->contains(name) > 0 ? "true" : "false") << "\n";
 }
