@@ -38,7 +38,7 @@ Symbol SymbolTable::get(char* symbol)
 			return internalScope->get(symbol);
 		internalScope = internalScope->getParent();
 	}
-	return Symbol();
+	return Symbol::EMPTY();
 }
 
 bool SymbolTable::containsInCurrentScope(char* symbol)

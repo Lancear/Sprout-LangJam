@@ -5,14 +5,23 @@
 #include "../symboltable/Symbol.hpp"
 
 using namespace std;
-Symbol ModuleDeclarationNode::analyse(Symbol sym) {
+Symbol ModuleDeclarationNode::analyse(Symbol symParam) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  
-  syms
-    -> add(Symbol(SymbolType::MODULE, value, "<EMPTY>", "<MODULE>"))
-    -> openNewScope();
+  Symbol sym = Symbol(SymbolType::MODULE, value, "<EMPTY>", "<MODULE>");
+  cout << "Module " << value << " > ";
 
-  cout << syms->get(value).name << endl;
+  if (syms->containsInCurrentScope((char*)sym.name)) {
+    cerr << "Symbol `" << sym.name << "` already exists as type " << syms->get(sym.name).type;
+    return Symbol::ERROR();
+  }
+
+  syms->add(sym)->openNewScope();
+
+  for (int i = 0; i < children.size(); i++) {
+    children[i]->analyse();
+  }
+  
+  syms->closeScope();
   return Symbol::EMPTY();
 }
 
