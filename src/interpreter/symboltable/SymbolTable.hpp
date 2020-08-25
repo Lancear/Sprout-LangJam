@@ -9,12 +9,12 @@ using namespace std;
 class SymbolTable
 { 
 public:
-	static weak_ptr<SymbolTable> getInstance();
+	static shared_ptr<SymbolTable> getInstance();
 	SymbolTable *add(Symbol symbol);
-	bool contains(Symbol symbol, shared_ptr<Scope> scope);
-	bool contains(Symbol symbol);
-	Symbol get(Symbol symbol, shared_ptr<Scope> scope);
-	Symbol get(Symbol symbol);
+	bool contains(char* symbol, shared_ptr<Scope> scope);
+	bool contains(char* symbol);
+	Symbol get(char* symbol, shared_ptr<Scope> scope);
+	Symbol get(char* symbol);
 	//Seeing as i return "this" here, i think a pointer will suffice 
 	SymbolTable *clear();
 	SymbolTable *openNewScope();

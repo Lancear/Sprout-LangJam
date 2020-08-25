@@ -19,12 +19,12 @@ void dispatch(struct node *n){
     // Testing out the symbol table
 	char* name = "var1";
 	char* value = "string";
-	shared_ptr<SymbolTable> table = SymbolTable::getInstance().lock();
+	shared_ptr<SymbolTable> table = SymbolTable::getInstance();
 	table->add(Symbol());
 	test(Symbol());
 
 	//Example of a normal Symbol
-	Symbol s = Symbol("var1",SymbolType::FUNCTION,"Hello World","string",false,vector<Symbol>());
+	Symbol s = Symbol(SymbolType::FUNCTION,"var1", "Hello World", "string", false);
 	if(s.type == SymbolType::FUNCTION){
 		printf("*Normal Symbol works.\n");
 	}
@@ -36,7 +36,7 @@ void dispatch(struct node *n){
 }
 
 void test(Symbol name){
-	shared_ptr<SymbolTable> table = SymbolTable::getInstance().lock();
+	shared_ptr<SymbolTable> table = SymbolTable::getInstance();
 
-	cout << "*Does the singleton work? " << (table->contains(name) > 0 ? "true" : "false") << "\n";
+	cout << "*Does the singleton work? " << (table->contains(name.value) > 0 ? "true" : "false") << "\n";
 }

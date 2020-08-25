@@ -6,49 +6,47 @@
 #include <optional>
 #include "Symbol.hpp"
 using namespace std;
-//TODO: Switch all functions from char * to const char *
 
 shared_ptr<SymbolTable> SymbolTable::_instance = NULL;
 
-weak_ptr<SymbolTable> SymbolTable::getInstance(){
+shared_ptr<SymbolTable> SymbolTable::getInstance(){
 	if (_instance == NULL)
 	{
 		_instance.reset(new SymbolTable());
 	}
-	weak_ptr<SymbolTable> tablePtr = _instance;
-	return tablePtr;
+	return _instance;
 }
 
-Symbol SymbolTable::get(Symbol symbol, shared_ptr<Scope> scope)
+Symbol SymbolTable::get(char* symbol, shared_ptr<Scope> scope)
 {
 	shared_ptr<Scope> currentScope = scope;
 	while (currentScope != 0)
 	{
-		if (currentScope->contains((char *)symbol.name))
-			return currentScope->get((char *)symbol.name);
+		if (currentScope->contains(symbol))
+			return currentScope->get(symbol);
 		currentScope = currentScope->getParent();
 	}
 	return Symbol();
 }
 
-Symbol SymbolTable::get(Symbol symbol)
+Symbol SymbolTable::get(char* symbol)
 {
 	return get(symbol, currentScope);
 }
 
-bool SymbolTable::contains(Symbol symbol, shared_ptr<Scope> scope)
+bool SymbolTable::contains(char* symbol, shared_ptr<Scope> scope)
 {
 	shared_ptr<Scope> currentScope = scope;
 	while (currentScope != 0)
 	{
-		if (currentScope->contains((char *)symbol.name))
+		if (currentScope->contains(symbol))
 			return true;
 		currentScope = currentScope->getParent();
 	}
 	return false;
 }
 
-bool SymbolTable::contains(Symbol symbol)
+bool SymbolTable::contains(char* symbol)
 {
 	return contains(symbol, currentScope);
 }
