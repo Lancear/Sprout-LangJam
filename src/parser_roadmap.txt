@@ -12,7 +12,7 @@ TODO:
  -> inline event handlers via @ (local, global)
  -> mutable parameters, references, mutable referenced parameters
  -> pattern matching
- -> tenary operator
+ -> [X] tenary operator
  -> templates
  -> [X] do..while
  -> reference syntax
