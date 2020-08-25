@@ -1,8 +1,8 @@
 #include <iostream>
 
 #include "TreeNode.hpp"
+#include "ArithmeticExpressionNode.hpp"
 #include "CodeBlockNode.hpp"
-#include "ExpressionNode.hpp"
 #include "FunctionDeclarationNode.hpp"
 #include "FunctionTypeNode.hpp"
 #include "ParameterNode.hpp"
@@ -39,7 +39,11 @@ unique_ptr<TreeNode> TreeNode::of(struct node * n) {
       return make_unique<CodeBlockNode>(n);
 
     case AddExpression:
-      return make_unique<ExpressionNode>(n);
+    case SubtractExpression:
+    case MultiplyExpression:
+    case DivideExpression:
+    case ModulusExpression:
+      return make_unique<ArithmeticExpressionNode>(n);
 
     case FunctionDeclaration:
       return make_unique<FunctionDeclarationNode>(n);

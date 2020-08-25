@@ -1,16 +1,15 @@
 #include <iostream>
 
-#include "ExpressionNode.hpp"
+#include "TenaryNode.hpp"
 #include "../symboltable/Symbol.hpp"
 
 using namespace std;
-
-Symbol ExpressionNode::analyse(Symbol sym) {
+Symbol TenaryNode::analyse(Symbol sym) {
   cout << "Value: " << value << endl;
   return Symbol();
 }
 
-Symbol ExpressionNode::execute(Symbol sym) {
+Symbol TenaryNode::execute(Symbol sym) {
   cout << "Executing: " << value << endl;
   return Symbol();
 }
