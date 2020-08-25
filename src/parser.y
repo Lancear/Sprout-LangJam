@@ -1,4 +1,5 @@
 %define api.pure full
+%define api.token.raw
 %define parse.error verbose
 %locations
 %param { yyscan_t scanner }
