@@ -19,36 +19,45 @@ shared_ptr<SymbolTable> SymbolTable::getInstance(){
 
 Symbol SymbolTable::get(char* symbol, shared_ptr<Scope> scope)
 {
-	shared_ptr<Scope> currentScope = scope;
-	while (currentScope != 0)
+	shared_ptr<Scope> internalScope = scope;
+	while (internalScope != 0)
 	{
-		if (currentScope->contains(symbol))
-			return currentScope->get(symbol);
-		currentScope = currentScope->getParent();
+		if (internalScope->contains(symbol))
+			return internalScope->get(symbol);
+		internalScope = internalScope->getParent();
 	}
 	return Symbol::EMPTY();
 }
 
 Symbol SymbolTable::get(char* symbol)
 {
-	return get(symbol, currentScope);
+	shared_ptr<Scope> internalScope = currentScope;
+	while (internalScope != 0)
+	{
+		if (internalScope->contains(symbol))
+			return internalScope->get(symbol);
+		internalScope = internalScope->getParent();
+	}
+	return Symbol();
 }
 
-bool SymbolTable::contains(char* symbol, shared_ptr<Scope> scope)
+bool SymbolTable::containsInCurrentScope(char* symbol)
 {
-	shared_ptr<Scope> currentScope = scope;
-	while (currentScope != 0)
-	{
-		if (currentScope->contains(symbol))
-			return true;
-		currentScope = currentScope->getParent();
-	}
+	if (currentScope->contains(symbol))
+		return true;
 	return false;
 }
 
 bool SymbolTable::contains(char* symbol)
 {
-	return contains(symbol, currentScope);
+	shared_ptr<Scope> internalScope = currentScope;
+	while (internalScope != 0)
+	{
+		if (internalScope->contains(symbol))
+			return true;
+		internalScope = internalScope->getParent();
+	}
+	return false;
 }
 
 SymbolTable *SymbolTable::add(Symbol symbol)
