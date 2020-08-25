@@ -7,20 +7,21 @@ using namespace std;
 
 shared_ptr<SymbolTable> SymbolTable::_instance = NULL;
 
-shared_ptr<SymbolTable> SymbolTable::getInstance(){
+weak_ptr<SymbolTable> SymbolTable::getInstance(){
 	if (_instance == NULL)
 	{
 		_instance.reset(new SymbolTable());
 	}
-	return _instance;
+	weak_ptr<SymbolTable> tablePtr = _instance;
+	return tablePtr;
 }
 
 const char *SymbolTable::get(char *name){
 	return get(name, currentScope);
 }
 
-const char* SymbolTable::get(char* name, Scope* scope){
-	Scope* currentScope = scope;
+const char* SymbolTable::get(char* name, shared_ptr<Scope> scope){
+	shared_ptr<Scope> currentScope = scope;
 	while(currentScope != 0){
 		if(currentScope->contains(name))
 			return currentScope->get(name);
@@ -34,9 +35,9 @@ bool SymbolTable::contains(char *name)
 	return contains(name, currentScope);
 }
 
-bool SymbolTable::contains(char *name, Scope* scope)
+bool SymbolTable::contains(char *name, shared_ptr<Scope> scope)
 {
-	Scope *currentScope = scope;
+	shared_ptr<Scope> currentScope = scope;
 	while (currentScope != 0)
 	{
 		if (currentScope->contains(name))
@@ -58,8 +59,7 @@ SymbolTable* SymbolTable::clear(){
 }
 
 SymbolTable * SymbolTable::openNewScope(){
-	//TODO: Check if i the pointer here is a good idea
-	currentScope = new Scope(currentScope);
+	currentScope = std::make_shared<Scope>(currentScope);
 	return this;
 }
 SymbolTable * SymbolTable::closeScope(){

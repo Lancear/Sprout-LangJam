@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <memory>
 using namespace std;
 
 class Scope
@@ -10,15 +11,15 @@ private:
 	map<string, char*> internalMap;
 
 public:
-	Scope *parent;
-	const vector<Scope*> children;
+	shared_ptr<Scope> parent;
+	const vector<shared_ptr<Scope>> children;
 	Scope(){
 		this->parent = NULL;
 	}
-	Scope(Scope * parent){
+	Scope(shared_ptr<Scope> parent){
 		this->parent = parent;
 	}
-	Scope* getParent();
+	shared_ptr<Scope> getParent();
 	void add(char *symbolName, char *symbolType);
 	bool contains(char *symbolName);
 	const char *get(char *symbolName);

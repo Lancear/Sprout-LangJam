@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-Scope * Scope::getParent(){
+shared_ptr<Scope> Scope::getParent(){
 	return parent;
 }
 

@@ -8,33 +8,30 @@ using namespace std;
 class SymbolTable
 { 
 public:
-	static shared_ptr<SymbolTable> getInstance();
+	static weak_ptr<SymbolTable> getInstance();
 	SymbolTable *add(char *name, char *symbolType);
 	bool contains(char *name);
-	bool contains(char *name, Scope *scope);
+	bool contains(char *name, shared_ptr<Scope> scope);
 	const char *get(char *name);
-	const char *get(char *name, Scope *scope);
+	const char *get(char *name, shared_ptr<Scope> scope);
+	//Seeing as i return "this" here, i think a pointer will suffice 
 	SymbolTable *clear();
 	SymbolTable *openNewScope();
 	SymbolTable *closeScope();
 	SymbolTable *resetCursor();
 	SymbolTable *enterScope();
 	SymbolTable *exitScope();
-	~SymbolTable()
-	{
-		delete root;
-		}
 
 private:
 	static shared_ptr<SymbolTable> _instance;
 	SymbolTable()
 	{
-		root = new Scope();
+		root = std::make_shared<Scope>();
 		currentScope = root;
 	}
-	Scope *root, *currentScope;
+	shared_ptr<Scope> root;
+	shared_ptr<Scope> currentScope;
 	std::stack<int> branches;
-	//Dont know what that does yet
 	SymbolTable(const SymbolTable &);
 	SymbolTable &operator=(const SymbolTable &);
 };
