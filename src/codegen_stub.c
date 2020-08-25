@@ -11,7 +11,7 @@ void dispatch(struct node * n) {
     if(!n)
         return;
     
-    INDENT; printf("type: %d\n", n->type);
+    INDENT; printf("[%d @ %d:%d]\n", n->type, n->line, n->col);
     if(n->value)    { INDENT; printf("value: %s\n", n->value); }
     if(n->child)    { INDENT; indent += 1; printf("->\n"); dispatch(n->child); indent -= 1; }
     if(n->brother)  { INDENT; printf("----\n"); dispatch(n->brother); }

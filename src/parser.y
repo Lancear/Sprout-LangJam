@@ -9,6 +9,8 @@
     #include "node.h"
     #include "error.h"
     
+    #define node(a, b, c, d) new_node(a, b, c, d, yyloc.first_line, yyloc.first_column)
+    
     #define YYERROR_VERBOSE 1
 }
 
@@ -28,8 +30,10 @@
     void dispatch(struct node *);
 }
 
-%token<string> NUMERIC_IMMEDIATE IDENTIFIER
-%token<string> STR_CONSTANT CHAR_CONSTANT
+%token END 0 "end of file"
+
+%token<string> NUMERIC_IMMEDIATE "number" IDENTIFIER "identifier"
+%token<string> STR_CONSTANT "string constant" CHAR_CONSTANT "character constant"
 
 %token KEYWORD_LET KEYWORD_WHILE KEYWORD_IF KEYWORD_FN KEYWORD_MUT
 %token KEYWORD_CLASS KEYWORD_MODULE KEYWORD_EMIT KEYWORD_RETURN KEYWORD_EVENT
@@ -112,7 +116,7 @@ IndirectedIdentifier
  */
 TypeNode
 : OP_COLON IndirectedIdentifier[name] {
-    $$ = new_node(TypeCompound, NULL, NULL, $name);
+    $$ = node(TypeCompound, NULL, NULL, $name);
 }
 ;
 
@@ -131,22 +135,22 @@ CodeBlock
  */
 ParameterList
 : OP_LEFT_PAREN ParameterListLoop[loop] OP_RIGHT_PAREN {
-    $$ = new_node(ParameterList, $loop, NULL, NULL);
+    $$ = node(ParameterList, $loop, NULL, NULL);
 }
 | OP_LEFT_PAREN OP_RIGHT_PAREN {
-    $$ = new_node(ParameterList, NULL, NULL, NULL);
+    $$ = node(ParameterList, NULL, NULL, NULL);
 }
 ;
 
 ParameterListLoop
 : IndirectedIdentifier[param_name] TypeNode[type] OP_COMMA ParameterListLoop[next] {
-    $$ = new_node(Parameter,
-        new_node(ParameterType, $type, NULL, NULL)
+    $$ = node(Parameter,
+        node(ParameterType, $type, NULL, NULL)
     , $next, $param_name);
 }
 | IndirectedIdentifier[param_name] TypeNode[type] {
-    $$ = new_node(Parameter,
-        new_node(ParameterType, $type, NULL, NULL)
+    $$ = node(Parameter,
+        node(ParameterType, $type, NULL, NULL)
     , NULL, $param_name);
 }
 ;
@@ -192,7 +196,7 @@ ModuleScope
  */
 ModuleDeclaration
 : KEYWORD_MODULE IndirectedIdentifier[id] OP_LEFT_BRACKET ModuleScope[scope] OP_RIGHT_BRACKET {
-    $$ = new_node(ModuleDeclaration, $scope, NULL, $id);
+    $$ = node(ModuleDeclaration, $scope, NULL, $id);
 }
 ;
 
@@ -201,7 +205,7 @@ ModuleDeclaration
  */
 ClassDeclaration
 : KEYWORD_CLASS IndirectedIdentifier[id] OP_LEFT_BRACKET ClassScope[scope] OP_RIGHT_BRACKET {
-    $$ = new_node(ClassDeclaration, $scope, NULL, $id);
+    $$ = node(ClassDeclaration, $scope, NULL, $id);
 }
 ;
 
@@ -210,11 +214,11 @@ ClassDeclaration
  */
 ImportStatement
 : KEYWORD_IMPORT IndirectedIdentifier[pkg] SEMICOLON {
-    $$ = new_node(ImportDeclaration, NULL, NULL, $pkg);
+    $$ = node(ImportDeclaration, NULL, NULL, $pkg);
 }
 | KEYWORD_IMPORT IndirectedIdentifier[pkg] KEYWORD_AS IndirectedIdentifier[id] SEMICOLON {
-    $$ = new_node(ImportDeclaration,
-        new_node(AsCompound, NULL, NULL, $id),
+    $$ = node(ImportDeclaration,
+        node(AsCompound, NULL, NULL, $id),
     NULL, $pkg);
 }
 ;
@@ -226,7 +230,7 @@ ImportStatement
  */
 FunctionDeclaration
 : KEYWORD_FN IndirectedIdentifier[name] ParameterList[param] CompoundStatement[code] {
-    $$ = new_node(FunctionDeclaration,
+    $$ = node(FunctionDeclaration,
         append_brother(
             $param,
             $code
@@ -234,8 +238,8 @@ FunctionDeclaration
     NULL, $name);
 }
 | KEYWORD_FN IndirectedIdentifier[name] ParameterList[params] TypeNode[return_type] CompoundStatement[code] {
-    $$ = new_node(FunctionDeclaration,
-        new_node(FunctionReturnType, NULL,
+    $$ = node(FunctionDeclaration,
+        node(FunctionReturnType, NULL,
             append_brother(
                 append_brother(
                     $params,
@@ -254,10 +258,10 @@ FunctionDeclaration
  */
 CompoundStatement
 : OP_LEFT_BRACKET StatementList[stmt_list] OP_RIGHT_BRACKET {
-    $$ = new_node(CodeBlock, $stmt_list, NULL, NULL);
+    $$ = node(CodeBlock, $stmt_list, NULL, NULL);
 }
 | OP_LEFT_BRACKET OP_RIGHT_BRACKET {
-    $$ = new_node(CodeBlock, NULL, NULL, NULL);
+    $$ = node(CodeBlock, NULL, NULL, NULL);
 }
 ;
 
@@ -293,7 +297,7 @@ Statement
  */
 WhileStatement
 : KEYWORD_WHILE OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN CodeBlock[code] {
-    $$ = new_node(WhileStatement,
+    $$ = node(WhileStatement,
         append_brother(
             $expr,
             $code
@@ -308,7 +312,7 @@ WhileStatement
  */
 DoWhileStatement
 : KEYWORD_DO CodeBlock[code] KEYWORD_WHILE OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN SEMICOLON {
-    $$ = new_node(DoWhileStatement,
+    $$ = node(DoWhileStatement,
         append_brother(
             $expr,
             $code
@@ -330,42 +334,42 @@ DoWhileStatement
  */
 ForStatement
 : KEYWORD_FOR OP_LEFT_PAREN SEMICOLON SEMICOLON OP_RIGHT_PAREN CodeBlock[code] {
-    $$ = new_node(ForStatement,
+    $$ = node(ForStatement,
         $code,
     NULL, NULL);
 }
 | KEYWORD_FOR OP_LEFT_PAREN DeclarationStatement[decl] SEMICOLON OP_RIGHT_PAREN CodeBlock[code] {
-    $$ = new_node(ForStatement,
+    $$ = node(ForStatement,
         append_brother($decl, $code),
     NULL, NULL);
 }
 | KEYWORD_FOR OP_LEFT_PAREN DeclarationStatement[decl] Expression[e1] SEMICOLON OP_RIGHT_PAREN CodeBlock[code] {
-    $$ = new_node(ForStatement,
+    $$ = node(ForStatement,
         append_brother(append_brother($decl, $code), $e1),
     NULL, NULL);
 }
 | KEYWORD_FOR OP_LEFT_PAREN DeclarationStatement[decl] Expression[e1] SEMICOLON Expression[e2] OP_RIGHT_PAREN CodeBlock[code] {
-    $$ = new_node(ForStatement,
+    $$ = node(ForStatement,
         append_brother(append_brother(append_brother($decl, $code), $e1), $e2),
     NULL, NULL);
 }
 | KEYWORD_FOR OP_LEFT_PAREN SEMICOLON Expression[e1] SEMICOLON Expression[e2] OP_RIGHT_PAREN CodeBlock[code] {
-    $$ = new_node(ForStatement,
+    $$ = node(ForStatement,
         append_brother(append_brother($code, $e1), $e2),
     NULL, NULL);
 }
 | KEYWORD_FOR OP_LEFT_PAREN SEMICOLON SEMICOLON Expression[e2] OP_RIGHT_PAREN CodeBlock[code] {
-    $$ = new_node(ForStatement,
+    $$ = node(ForStatement,
         append_brother($code, $e2),
     NULL, NULL);
 }
 | KEYWORD_FOR OP_LEFT_PAREN SEMICOLON Expression[e1] SEMICOLON OP_RIGHT_PAREN CodeBlock[code] {
-    $$ = new_node(ForStatement,
+    $$ = node(ForStatement,
         append_brother($code, $e1),
     NULL, NULL);
 }
 | KEYWORD_FOR OP_LEFT_PAREN DeclarationStatement[decl] SEMICOLON Expression[e2] OP_RIGHT_PAREN CodeBlock[code] {
-    $$ = new_node(ForStatement,
+    $$ = node(ForStatement,
         append_brother(append_brother($decl, $code), $e2),
     NULL, NULL);
 }
@@ -373,7 +377,7 @@ ForStatement
 
 ConditionalStatement
 : KEYWORD_IF OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN CodeBlock[code] {
-    $$ = new_node(ConditionalStatement,
+    $$ = node(ConditionalStatement,
         append_brother(
             $expr,
             $code
@@ -381,8 +385,8 @@ ConditionalStatement
     NULL, NULL);
 }
 | KEYWORD_IF OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN CodeBlock[code1] KEYWORD_ELSE CodeBlock[code2] {
-    $$ = new_node(ConditionalStatement,
-        new_node(ElseCompound,
+    $$ = node(ConditionalStatement,
+        node(ElseCompound,
             append_brother(
                 $code1,
                 $code2
@@ -394,34 +398,34 @@ ConditionalStatement
 
 DeclarationStatement
 : KEYWORD_LET IndirectedIdentifier[name] OP_EQ Expression[value] SEMICOLON {
-    $$ = new_node(LocalDeclarationStatement, $value, NULL, $name);
+    $$ = node(LocalDeclarationStatement, $value, NULL, $name);
 }
 | KEYWORD_LET IndirectedIdentifier[name] TypeNode[type] OP_EQ Expression[value] SEMICOLON {
-    $$ = new_node(LocalDeclarationStatement,
-        new_node(VariableTypeNode, $type, $value, NULL)
+    $$ = node(LocalDeclarationStatement,
+        node(VariableTypeNode, $type, $value, NULL)
     , NULL, $name);
 }
 | KEYWORD_MUT IndirectedIdentifier[name] OP_EQ Expression[value] SEMICOLON {
-    $$ = new_node(MutableLocalDeclarationStatement, $value, NULL, $name);
+    $$ = node(MutableLocalDeclarationStatement, $value, NULL, $name);
 }
 | KEYWORD_MUT IndirectedIdentifier[name] TypeNode[type] OP_EQ Expression[value] SEMICOLON {
-    $$ = new_node(MutableLocalDeclarationStatement,
-        new_node(VariableTypeNode, $type, $value, NULL),
+    $$ = node(MutableLocalDeclarationStatement,
+        node(VariableTypeNode, $type, $value, NULL),
     NULL, $name);
 }
 | KEYWORD_MUT IndirectedIdentifier[name] TypeNode[type] SEMICOLON {
-    $$ = new_node(MutableLocalDeclarationStatement,
-        new_node(VariableTypeNode, $type, NULL, NULL)
+    $$ = node(MutableLocalDeclarationStatement,
+        node(VariableTypeNode, $type, NULL, NULL)
     , NULL, $name);
 }
 ;
 
 ReturnStatement
 : KEYWORD_RETURN Expression[value] SEMICOLON {
-    $$ = new_node(ReturnStatement, $value, NULL, NULL);
+    $$ = node(ReturnStatement, $value, NULL, NULL);
 }
 | KEYWORD_RETURN SEMICOLON {
-    $$ = new_node(ReturnStatement, NULL, NULL, NULL);
+    $$ = node(ReturnStatement, NULL, NULL, NULL);
 }
 ;
 
@@ -430,19 +434,19 @@ ReturnStatement
 
 Expression
 : NUMERIC_IMMEDIATE[imm] {
-    $$ = new_node(NumericImmediate, NULL, NULL, $imm);
+    $$ = node(NumericImmediate, NULL, NULL, $imm);
 }
 | LValue[ref] {
     $$ = $ref;
 }
 | Expression[expr1] OP_TENARY Expression[expr2] OP_COLON Expression[expr3] {
-    $$ = new_node(Tenary, append_brother(append_brother($expr1, $expr2), $expr3), NULL, NULL);
+    $$ = node(Tenary, append_brother(append_brother($expr1, $expr2), $expr3), NULL, NULL);
 }
 | STR_CONSTANT[str] {
-    $$ = new_node(StringImmediate, NULL, NULL, $str);
+    $$ = node(StringImmediate, NULL, NULL, $str);
 }
 | Expression[expr1] OP_PLUS Expression[expr2] {
-    $$ = new_node(AddExpression,
+    $$ = node(AddExpression,
         append_brother(
             $expr1,
             $expr2
@@ -450,7 +454,7 @@ Expression
     NULL, NULL);
 }
 | Expression[expr1] OP_MINUS Expression[expr2] {
-    $$ = new_node(SubtractExpression,
+    $$ = node(SubtractExpression,
         append_brother(
             $expr1,
             $expr2
@@ -458,7 +462,7 @@ Expression
     NULL, NULL);
 }
 | Expression[expr1] OP_STAR Expression[expr2] {
-    $$ = new_node(MultiplyExpression,
+    $$ = node(MultiplyExpression,
         append_brother(
             $expr1,
             $expr2
@@ -466,7 +470,7 @@ Expression
     NULL, NULL);
 }
 | Expression[expr1] OP_SLASH Expression[expr2] {
-    $$ = new_node(DivideExpression,
+    $$ = node(DivideExpression,
         append_brother(
             $expr1,
             $expr2
@@ -474,7 +478,7 @@ Expression
     NULL, NULL);
 }
 | Expression[expr1] OP_MOD Expression[expr2] {
-    $$ = new_node(ModulusExpression,
+    $$ = node(ModulusExpression,
         append_brother(
             $expr1,
             $expr2
@@ -482,7 +486,7 @@ Expression
     NULL, NULL);
 }
 | Expression[expr1] OP_CMP_EQ Expression[expr2] {
-    $$ = new_node(ComparisonExpresison,
+    $$ = node(ComparisonExpresison,
         append_brother(
             $expr1,
             $expr2
@@ -490,7 +494,7 @@ Expression
     NULL, "==");
 }
 | Expression[expr1] OP_CMP_GE Expression[expr2] {
-    $$ = new_node(ComparisonExpresison,
+    $$ = node(ComparisonExpresison,
         append_brother(
             $expr1,
             $expr2
@@ -498,7 +502,7 @@ Expression
     NULL, ">=");
 }
 | Expression[expr1] OP_CMP_GT Expression[expr2] {
-    $$ = new_node(ComparisonExpresison,
+    $$ = node(ComparisonExpresison,
         append_brother(
             $expr1,
             $expr2
@@ -506,7 +510,7 @@ Expression
     NULL, ">");
 }
 | Expression[expr1] OP_CMP_LT Expression[expr2] {
-    $$ = new_node(ComparisonExpresison,
+    $$ = node(ComparisonExpresison,
         append_brother(
             $expr1,
             $expr2
@@ -514,7 +518,7 @@ Expression
     NULL, "<");
 }
 | Expression[expr1] OP_CMP_LE Expression[expr2] {
-    $$ = new_node(ComparisonExpresison,
+    $$ = node(ComparisonExpresison,
         append_brother(
             $expr1,
             $expr2
@@ -522,7 +526,7 @@ Expression
     NULL, "<=");
 }
 | Expression[expr1] OP_CMP_NE Expression[expr2] {
-    $$ = new_node(ComparisonExpresison,
+    $$ = node(ComparisonExpresison,
         append_brother(
             $expr1,
             $expr2
@@ -530,35 +534,35 @@ Expression
     NULL, "!=");
 }
 | LValue[expr1] OP_INCREMENT {
-    $$ = new_node(PostOp,
+    $$ = node(PostOp,
         $expr1,
     NULL, "++");
 }
 | OP_INCREMENT LValue[expr1] {
-    $$ = new_node(PreOp,
+    $$ = node(PreOp,
         $expr1,
     NULL, "++");
 }
 | LValue[expr1] OP_DECREMENT {
-    $$ = new_node(PostOp,
+    $$ = node(PostOp,
         $expr1,
     NULL, "--");
 }
 | OP_DECREMENT LValue[expr1] {
-    $$ = new_node(PreOp,
+    $$ = node(PreOp,
         $expr1,
     NULL, "--");
 }
 | LValue[expr1] OP_EQ Expression[expr2] {
-    $$ = new_node(AssignmentExpression,
+    $$ = node(AssignmentExpression,
         append_brother($expr1, $expr2),
     NULL, NULL);
 }
 | IndirectedIdentifier[expr1] OP_LEFT_PAREN OP_RIGHT_PAREN {
-    $$ = new_node(FunctionCall, NULL, NULL, $expr1);
+    $$ = node(FunctionCall, NULL, NULL, $expr1);
 }
 | IndirectedIdentifier[expr1] OP_LEFT_PAREN CallParameterList[params] OP_RIGHT_PAREN {
-    $$ = new_node(FunctionCall, $params, NULL, $expr1);
+    $$ = node(FunctionCall, $params, NULL, $expr1);
 }
 | OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN {
     $$ = $expr;
@@ -566,7 +570,7 @@ Expression
 ;
 
 LValue
-: IndirectedIdentifier { $$ = new_node(LValue, NULL, NULL, $1); }
+: IndirectedIdentifier { $$ = node(LValue, NULL, NULL, $1); }
 ;
 
 /* ********************************************************* */
