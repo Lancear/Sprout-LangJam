@@ -1,7 +1,7 @@
 
 #include <stdio.h>
 
-#include "parser/lexer.h"
+#include "./parser/lexer.h"
 
 int main(int argc, char * argv[]) {
     if(argc != 2) {

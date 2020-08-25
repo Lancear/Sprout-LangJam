@@ -3,8 +3,15 @@
 #define NODE_H
 
 enum {
-    ImportNode, AsNode, FunctionDeclaration, ParameterList, Parameter, ParameterType,
-    CodeBlock, StatementList, ReturnStatement, Expression, FnNameNode, EmptyStatement
+    ImportDeclaration, AsCompound, FunctionDeclaration, ParameterList, Parameter, ParameterType,
+    CodeBlock, StatementList, ReturnStatement, NumericImmediate, FunctionReturnType,
+    LocalDeclarationStatement, MutableLocalDeclarationStatement, VariableTypeNode,
+    AddExpression, SubtractExpression, MultiplyExpression, DivideExpression, ModulusExpression,
+    ConditionalStatement, ElseCompound, TypeCompound, StringImmediate, ComparisonExpresison, WhileStatement,
+    ForStatement, ModuleDeclaration, AssignmentExpression, FunctionCall, LValue, DoWhileStatement,
+    /* currently I'm the second one */
+    PostOp, PreOp,
+    ClassDeclaration, Tenary
 };
 
 struct node {

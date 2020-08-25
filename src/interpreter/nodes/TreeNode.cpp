@@ -38,13 +38,13 @@ unique_ptr<TreeNode> TreeNode::of(struct node * n) {
     case CodeBlock:
       return make_unique<CodeBlockNode>(n);
 
-    case Expression:
+    case AddExpression:
       return make_unique<ExpressionNode>(n);
 
     case FunctionDeclaration:
       return make_unique<FunctionDeclarationNode>(n);
 
-    case FnNameNode:
+    case FunctionReturnType:
       return make_unique<FunctionTypeNode>(n);
 
     case Parameter:

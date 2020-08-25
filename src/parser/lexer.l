@@ -21,13 +21,10 @@
 
 %option noinput nounput noyywrap 8bit nodefault
 %option yylineno
-%option debug
 %option reentrant bison-bridge bison-locations
 
 %%
-new         return(KEYWORD_NEW);
 let         return(KEYWORD_LET);
-delete      return(KEYWORD_DELETE);
 while       return(KEYWORD_WHILE);
 if          return(KEYWORD_IF);
 fn          return(KEYWORD_FN);
@@ -85,7 +82,7 @@ as          return(KEYWORD_AS);
 ">"         return(OP_CMP_GT);
 "<"         return(OP_CMP_LT);
 "!="        return(OP_CMP_NE);
-"~"         return(OP_TIDLE);
+"~"         return(OP_TILDE);
 ","         return(OP_COMMA);
 "!"         return(OP_BANG);
 "@"         return(OP_AT);
@@ -101,7 +98,7 @@ as          return(KEYWORD_AS);
     return(STR_CONSTANT);
 }
 
-[A-Za-z_][0-9A-Za-z_\.]*   {
+[A-Za-z_][0-9A-Za-z_]*     {
     yylval->string = strdup(yytext);
     return(IDENTIFIER);
 }
