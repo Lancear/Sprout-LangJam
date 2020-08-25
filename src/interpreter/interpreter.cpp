@@ -23,7 +23,6 @@ void dispatch(struct node *n){
 	test(name);
 
 	//Example of a normal Symbol
-	//TODO; Ask lance if classes should be type class and value hello world
 	Symbol s = Symbol("var1",SymbolType::FUNCTION,"Hello World","string",false,vector<Symbol>());
 	if(s.type == SymbolType::FUNCTION){
 		printf("*Normal Symbol works.\n");
