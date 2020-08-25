@@ -276,6 +276,11 @@ ForStatement
         append_brother($code, $e1),
     NULL, NULL);
 }
+| KEYWORD_FOR OP_LEFT_PAREN DeclarationStatement[decl] SEMICOLON Expression[e2] OP_RIGHT_PAREN CodeBlock[code] {
+    $$ = new_node(ForStatement,
+        append_brother(append_brother($decl, $code), $e2),
+    NULL, NULL);
+}
 ;
 
 ConditionalStatement
