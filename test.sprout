@@ -41,5 +41,10 @@ module penis {
             test3();
         while(test());
     }
+    
+    
+    fn test5():u8 {
+        return 2 ? 3 ? 4 : 5 : 6;
+    }
 }
 
