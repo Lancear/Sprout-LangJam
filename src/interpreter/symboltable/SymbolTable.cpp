@@ -26,7 +26,7 @@ Symbol SymbolTable::get(char* symbol, shared_ptr<Scope> scope)
 			return currentScope->get(symbol);
 		currentScope = currentScope->getParent();
 	}
-	return Symbol();
+	return Symbol::EMPTY();
 }
 
 Symbol SymbolTable::get(char* symbol)

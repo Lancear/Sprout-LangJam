@@ -5,11 +5,11 @@
 
 using namespace std;
 Symbol AssignmentExpressionNode::analyse(Symbol sym) {
-  cout << "Value: " << value << endl;
-  return Symbol();
+  if (value) cout << "Value: " << value << endl;
+  return Symbol::EMPTY();
 }
 
 Symbol AssignmentExpressionNode::execute(Symbol sym) {
   cout << "Executing: " << value << endl;
-  return Symbol();
+  return Symbol::EMPTY();
 }

@@ -48,11 +48,11 @@ TreeNode::TreeNode(struct node * n) {
 }
 
 Symbol TreeNode::analyse() {
-  return this->analyse(Symbol());
+  return this->analyse(Symbol::EMPTY());
 }
 
 Symbol TreeNode::execute() {
-  return this->execute(Symbol());
+  return this->execute(Symbol::EMPTY());
 }
 
 unique_ptr<TreeNode> TreeNode::of(struct node * n) {

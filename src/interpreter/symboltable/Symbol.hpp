@@ -18,9 +18,8 @@ class Symbol {
 			: name(name), type(type), value(value), isReference(isReference), valueType(valueType) {}
 		Symbol(SymbolType type, char *name, char *valueType, char *value)
 			: name(name), type(type), value(value), isReference(false), valueType(valueType) {}
-		Symbol()
-			: name(NULL), type(SymbolType::EMPTY), value(NULL), isReference(false), valueType(NULL) {}
+		
 		static Symbol EMPTY(){
-			return Symbol(SymbolType::EMPTY, NULL,NULL,NULL);
+			return Symbol(SymbolType::EMPTY, NULL, NULL, NULL);
 		}
 };

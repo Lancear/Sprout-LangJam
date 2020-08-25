@@ -6,11 +6,11 @@
 using namespace std;
 
 Symbol ArithmeticExpressionNode::analyse(Symbol sym) {
-  cout << "Value: " << value << endl;
-  return Symbol();
+  if (value) cout << "Value: " << value << endl;
+  return Symbol::EMPTY();
 }
 
 Symbol ArithmeticExpressionNode::execute(Symbol sym) {
   cout << "Executing: " << value << endl;
-  return Symbol();
+  return Symbol::EMPTY();
 }

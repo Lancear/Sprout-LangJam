@@ -8,10 +8,10 @@ using namespace std;
 Symbol FunctionDeclarationNode::analyse(Symbol sym) {
   cout << "Function: " << value << endl;
   children[1]->analyse();
-  return Symbol();
+  return Symbol::EMPTY();
 }
 
 Symbol FunctionDeclarationNode::execute(Symbol sym) {
   cout << "Executing: " << value << endl;
-  return Symbol();
+  return Symbol::EMPTY();
 }

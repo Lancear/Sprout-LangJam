@@ -6,11 +6,11 @@
 using namespace std;
 
 Symbol ReturnStatementNode::analyse(Symbol sym) {
-  cout << "Value: " << value << endl;
-  return Symbol();
+  if (value) cout << "Value: " << value << endl;
+  return Symbol::EMPTY();
 }
 
 Symbol ReturnStatementNode::execute(Symbol sym) {
   cout << "Executing: " << value << endl;
-  return Symbol();
+  return Symbol::EMPTY();
 }

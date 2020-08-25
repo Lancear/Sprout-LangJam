@@ -12,10 +12,10 @@ Symbol ParameterListNode::analyse(Symbol sym) {
     children[i]->analyse();
   }
   
-  return Symbol();
+  return Symbol::EMPTY();
 }
 
 Symbol ParameterListNode::execute(Symbol sym) {
   cout << "Executing: " << value << endl;
-  return Symbol();
+  return Symbol::EMPTY();
 }

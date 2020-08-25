@@ -6,11 +6,11 @@
 using namespace std;
 
 Symbol CodeBlockNode::analyse(Symbol sym) {
-  cout << "Value: " << value << endl;
-  return Symbol();
+  if (value) cout << "Value: " << value << endl;
+  return Symbol::EMPTY();
 }
 
 Symbol CodeBlockNode::execute(Symbol sym) {
   cout << "Executing: " << value << endl;
-  return Symbol();
+  return Symbol::EMPTY();
 }
