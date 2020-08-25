@@ -50,6 +50,7 @@
 
 %type<string> IndirectedIdentifier
 
+%left OP_TENARY OP_COLON
 %left OP_LOG_OR
 %left OP_LOG_AND
 %left OP_BIN_OR
@@ -340,6 +341,9 @@ Expression
 }
 | LValue[ref] {
     $$ = $ref;
+}
+| Expression[expr1] OP_TENARY Expression[expr2] OP_COLON Expression[expr3] {
+    $$ = new_node(Tenary, append_brother(append_brother($expr1, $expr2), $expr3), NULL, NULL);
 }
 | STR_CONSTANT[str] {
     $$ = new_node(StringImmediate, NULL, NULL, $str);
