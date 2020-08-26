@@ -6,8 +6,9 @@
 using namespace std;
 
 Symbol ParameterTypeNode::analyse(Symbol symParam) {
-  if (value) cout << "Value: " << value << endl;
-  return Symbol::EMPTY();
+  //Go straight to the value
+  cout << "Paramtype: ";
+  return children[0]->analyse();
 }
 
 Symbol ParameterTypeNode::execute(Symbol sym) {

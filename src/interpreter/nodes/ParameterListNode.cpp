@@ -2,16 +2,16 @@
 
 #include "ParameterListNode.hpp"
 #include "../symboltable/Symbol.hpp"
+#include "../symboltable/SymbolTable.hpp"
 
 using namespace std;
 
 Symbol ParameterListNode::analyse(Symbol symParam) {
   cout << "Params: " << children.size() << endl;
-  
   for (int i = 0; i < children.size(); i++) {
-    children[i]->analyse();
+    Symbol parameter = children[i]->analyse();
+	SymbolTable::getInstance()->add(parameter);
   }
-  
   return Symbol::EMPTY();
 }
 
