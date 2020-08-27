@@ -51,7 +51,7 @@
 %type<ast> Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock
 %type<ast> ConditionalStatement TypeNode WhileStatement ForStatement ModuleDeclaration TopLevelScope
 %type<ast> CallParameterList LValue DoWhileStatement ClassDeclaration ModuleScope ClassScope ImmutableDeclaration
-%type<ast> TypeList TypeListLoop EventDeclaration FunctionCall
+%type<ast> TypeList TypeListLoop EventDeclaration FunctionCall EmitStatement
 
 %type<string> IndirectedIdentifier
 
@@ -316,7 +316,14 @@ Statement
 | DoWhileStatement     { $$ = $1; }
 | ForStatement         { $$ = $1; }
 | Expression SEMICOLON { $$ = $1; }
+| EmitStatement        { $$ = $1; }
 | SEMICOLON            { $$ = NULL; }
+;
+
+EmitStatement
+: KEYWORD_EMIT FunctionCall[call] SEMICOLON {
+    $$ = node(EmitStatement, $call, NULL, NULL);
+}
 ;
 
 /**

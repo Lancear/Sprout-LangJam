@@ -14,6 +14,10 @@ module crap {
         let b:u8 = 32;
         
         event something(Type1, Type2);
+        
+        fn smth():void {
+            emit something(nil, nil);
+        }
     }
     
     fn main():u8 {
