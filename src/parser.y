@@ -50,7 +50,7 @@
 %type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop CompoundStatement
 %type<ast> Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock
 %type<ast> ConditionalStatement TypeNode WhileStatement ForStatement ModuleDeclaration TopLevelScope
-%type<ast> CallParameterList LValue DoWhileStatement ClassDeclaration ModuleScope ClassScope
+%type<ast> CallParameterList LValue DoWhileStatement ClassDeclaration ModuleScope ClassScope ImmutableDeclaration
 
 %type<string> IndirectedIdentifier
 
@@ -175,6 +175,7 @@ TopLevelScope
  */
 ClassScope
 : FunctionDeclaration[decl] ClassScope { $$ = append_brother($decl, $2); }
+| DeclarationStatement[decl] ClassScope { $$ = append_brother($decl, $2); }
 | %empty { $$ = NULL; }
 ;
 
@@ -188,6 +189,7 @@ ModuleScope
 : ImportStatement[decl] ModuleScope { $$ = append_brother($decl, $2); }
 | FunctionDeclaration[decl] ModuleScope { $$ = append_brother($decl, $2); }
 | ClassDeclaration[decl] ModuleScope { $$ = append_brother($decl, $2); }
+| ImmutableDeclaration[decl] ModuleScope { $$ = append_brother($decl, $2); }
 | %empty { $$ = NULL; }
 ;
 
@@ -397,14 +399,7 @@ ConditionalStatement
 ;
 
 DeclarationStatement
-: KEYWORD_LET IndirectedIdentifier[name] OP_EQ Expression[value] SEMICOLON {
-    $$ = node(LocalDeclarationStatement, $value, NULL, $name);
-}
-| KEYWORD_LET IndirectedIdentifier[name] TypeNode[type] OP_EQ Expression[value] SEMICOLON {
-    $$ = node(LocalDeclarationStatement,
-        node(VariableTypeNode, $type, $value, NULL)
-    , NULL, $name);
-}
+: ImmutableDeclaration { $$ = $1; }
 | KEYWORD_MUT IndirectedIdentifier[name] OP_EQ Expression[value] SEMICOLON {
     $$ = node(MutableLocalDeclarationStatement, $value, NULL, $name);
 }
@@ -416,6 +411,17 @@ DeclarationStatement
 | KEYWORD_MUT IndirectedIdentifier[name] TypeNode[type] SEMICOLON {
     $$ = node(MutableLocalDeclarationStatement,
         node(VariableTypeNode, $type, NULL, NULL)
+    , NULL, $name);
+}
+;
+
+ImmutableDeclaration
+: KEYWORD_LET IndirectedIdentifier[name] OP_EQ Expression[value] SEMICOLON {
+    $$ = node(LocalDeclarationStatement, $value, NULL, $name);
+}
+| KEYWORD_LET IndirectedIdentifier[name] TypeNode[type] OP_EQ Expression[value] SEMICOLON {
+    $$ = node(LocalDeclarationStatement,
+        node(VariableTypeNode, $type, $value, NULL)
     , NULL, $name);
 }
 ;
