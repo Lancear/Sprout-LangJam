@@ -257,7 +257,7 @@ ImportStatement
  *  `fn blah(...) {`
  */
 FunctionDeclaration
-: KEYWORD_FN IndirectedIdentifier[name] ParameterList[param] CompoundStatement[code] {
+: KEYWORD_FN IDENTIFIER[name] ParameterList[param] CompoundStatement[code] {
     $$ = node(FunctionDeclaration,
         append_brother(
             $param,
@@ -265,7 +265,7 @@ FunctionDeclaration
         ),
     NULL, $name);
 }
-| KEYWORD_FN IndirectedIdentifier[name] ParameterList[params] TypeNode[return_type] CompoundStatement[code] {
+| KEYWORD_FN IDENTIFIER[name] ParameterList[params] TypeNode[return_type] CompoundStatement[code] {
     $$ = node(FunctionDeclaration,
         node(FunctionReturnType, NULL,
             append_brother(
