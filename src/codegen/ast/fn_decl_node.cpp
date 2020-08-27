@@ -29,6 +29,8 @@ llvm::Value *ast::fn_decl_node::codegen(node* n)
     unsigned int arg_size = get_arg_info(n).second;
     auto fn_return_type_node = ast::tree_node::construct_tree_node(n->child);
     auto fn_return_val_node = ast::tree_node::construct_tree_node(n->child->brother->brother->child->child->child);
+    //auto fn_variable_node = ast::tree_node::construct_tree_node(n->child->brother->brother->child);
+    //std::cout << "val: " << n->child->brother->brother->value;
 
     std::vector<llvm::Type*> args(arg_size, llvm::Type::getVoidTy(context));
 
@@ -43,8 +45,14 @@ llvm::Value *ast::fn_decl_node::codegen(node* n)
     llvm::BasicBlock *BB = llvm::BasicBlock::Create(context, "body", func);
     builder.SetInsertPoint(BB);
 
-    llvm::ConstantInt *zero = llvm::ConstantInt::get(llvm::IntegerType::getInt32Ty(context), std::stoi(fn_return_val_node->value)); //TODO fix
-    builder.CreateRet(zero);
+    //llvm::Constant *a = llvm::ConstantInt::get(llvm::Type::getInt32Ty(context), 5);
+    //llvm::Constant *b = llvm::ConstantInt::get(llvm::Type::getInt32Ty(context), 3);
+
+    //llvm::Instruction *mul = llvm::BinaryOperator::Create(llvm::Instruction::Mul, a, a, "mulresult", (llvm::Instruction*)nullptr);
+
+    llvm::Constant *ret = llvm::ConstantInt::get(get_type(fn_return_type_node->value, context), std::stoi(fn_return_val_node->value));
+    //builder.CreateRet(builder.CreateFAdd(mul, b, "add"));
+    builder.CreateRet(ret);
 
     llvm::verifyFunction(*func);
 
