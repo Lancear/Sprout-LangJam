@@ -51,6 +51,7 @@
 %type<ast> Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock
 %type<ast> ConditionalStatement TypeNode WhileStatement ForStatement ModuleDeclaration TopLevelScope
 %type<ast> CallParameterList LValue DoWhileStatement ClassDeclaration ModuleScope ClassScope ImmutableDeclaration
+%type<ast> TypeList TypeListLoop EventDeclaration
 
 %type<string> IndirectedIdentifier
 
@@ -155,6 +156,24 @@ ParameterListLoop
 }
 ;
 
+TypeList
+: OP_LEFT_PAREN TypeListLoop[loop] OP_RIGHT_PAREN {
+    $$ = node(TypeList, $loop, NULL, NULL);
+}
+| OP_LEFT_PAREN OP_RIGHT_PAREN {
+    $$ = node(TypeList, NULL, NULL, NULL);
+}
+;
+
+TypeListLoop
+: IndirectedIdentifier[type] OP_COMMA TypeListLoop[next] {
+    $$ = node(TypeList, NULL, $next, $type);
+}
+| IndirectedIdentifier[type] {
+    $$ = node(TypeList, NULL, NULL, $type);
+}
+;
+
 /* ********************************************************* */
 /* TOPLEVEL SCOPE */
 
@@ -176,6 +195,7 @@ TopLevelScope
 ClassScope
 : FunctionDeclaration[decl] ClassScope { $$ = append_brother($decl, $2); }
 | DeclarationStatement[decl] ClassScope { $$ = append_brother($decl, $2); }
+| EventDeclaration[decl] ClassScope { $$ = append_brother($decl, $2); }
 | %empty { $$ = NULL; }
 ;
 
@@ -199,6 +219,12 @@ ModuleScope
 ModuleDeclaration
 : KEYWORD_MODULE IndirectedIdentifier[id] OP_LEFT_BRACKET ModuleScope[scope] OP_RIGHT_BRACKET {
     $$ = node(ModuleDeclaration, $scope, NULL, $id);
+}
+;
+
+EventDeclaration
+: KEYWORD_EVENT IndirectedIdentifier[id] TypeList[type] SEMICOLON {
+    $$ = node(EventDeclaration, $type, NULL, $id);
 }
 ;
 

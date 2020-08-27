@@ -1,10 +1,19 @@
 
+class bruh {
+    mut a:u8 = 23;
+    let b:u8 = 32;
+    
+    event something(Type1, Type2);
+}
+
 module crap {
     import penis;
     
     class bruh {
         mut a:u8 = 23;
         let b:u8 = 32;
+        
+        event something(Type1, Type2);
     }
     
     fn main():u8 {

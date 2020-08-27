@@ -11,7 +11,7 @@ enum {
     ForStatement, ModuleDeclaration, AssignmentExpression, FunctionCall, LValue, DoWhileStatement,
     /* currently I'm the second one */
     PostOp, PreOp,
-    ClassDeclaration, Tenary
+    ClassDeclaration, Tenary, EventDeclaration, TypeList
 };
 
 struct node {
