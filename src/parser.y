@@ -51,7 +51,7 @@
 %type<ast> Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock
 %type<ast> ConditionalStatement TypeNode WhileStatement ForStatement ModuleDeclaration TopLevelScope
 %type<ast> CallParameterList LValue DoWhileStatement ClassDeclaration ModuleScope ClassScope ImmutableDeclaration
-%type<ast> TypeList TypeListLoop EventDeclaration
+%type<ast> TypeList TypeListLoop EventDeclaration FunctionCall
 
 %type<string> IndirectedIdentifier
 
@@ -590,14 +590,20 @@ Expression
         append_brother($expr1, $expr2),
     NULL, NULL);
 }
-| IndirectedIdentifier[expr1] OP_LEFT_PAREN OP_RIGHT_PAREN {
+| FunctionCall[call] {
+    $$ = $call;
+}
+| OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN {
+    $$ = $expr;
+}
+;
+
+FunctionCall
+: IndirectedIdentifier[expr1] OP_LEFT_PAREN OP_RIGHT_PAREN {
     $$ = node(FunctionCall, NULL, NULL, $expr1);
 }
 | IndirectedIdentifier[expr1] OP_LEFT_PAREN CallParameterList[params] OP_RIGHT_PAREN {
     $$ = node(FunctionCall, $params, NULL, $expr1);
-}
-| OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN {
-    $$ = $expr;
 }
 ;
 
