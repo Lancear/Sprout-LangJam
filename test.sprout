@@ -2,6 +2,11 @@
 module crap {
     import penis;
     
+    class bruh {
+        mut a:u8 = 23;
+        let b:u8 = 32;
+    }
+    
     fn main():u8 {
         return penis.CONSTANT;
     }
