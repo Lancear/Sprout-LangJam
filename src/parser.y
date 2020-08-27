@@ -154,6 +154,16 @@ ParameterListLoop
         node(ParameterType, $type, NULL, NULL)
     , NULL, $param_name);
 }
+| KEYWORD_MUT IDENTIFIER[param_name] TypeNode[type] OP_COMMA ParameterListLoop[next] {
+    $$ = node(MutableParameter,
+        node(ParameterType, $type, NULL, NULL)
+    , $next, $param_name);
+}
+| KEYWORD_MUT IDENTIFIER[param_name] TypeNode[type] {
+    $$ = node(MutableParameter,
+        node(ParameterType, $type, NULL, NULL)
+    , NULL, $param_name);
+}
 ;
 
 TypeList
