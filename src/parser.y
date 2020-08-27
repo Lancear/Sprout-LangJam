@@ -122,6 +122,9 @@ TypeNode
 | OP_COLON OP_BIN_AND IndirectedIdentifier[name] {
     $$ = node(ImmutableReferenceTypeCompound, NULL, NULL, $name);
 }
+| OP_COLON OP_BIN_AND KEYWORD_MUT IndirectedIdentifier[name] {
+    $$ = node(MutableReferenceTypeCompound, NULL, NULL, $name);
+}
 ;
 
 /**

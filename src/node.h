@@ -12,7 +12,7 @@ enum {
     /* currently I'm the second one */
     PostOp, PreOp,
     ClassDeclaration, Tenary, EventDeclaration, TypeList, EmitStatement, MutableParameter,
-    ImmutableReferenceTypeCompound
+    ImmutableReferenceTypeCompound, MutableReferenceTypeCompound
 };
 
 struct node {
