@@ -1,6 +1,6 @@
 
 TODO:
- -> event handler declaration, emit statementy
+ -> emit statementy
  -> inline event handlers via @ (local, global)
  -> mutable parameters, references, mutable referenced parameters
  -> pattern matching
