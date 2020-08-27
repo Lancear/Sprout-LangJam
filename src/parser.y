@@ -114,6 +114,7 @@ IndirectedIdentifier
 
 /**
  * A type compound is just an indirected identifier preceded with a colon.
+ * Note: Mutable references and immutable references.
  */
 TypeNode
 : OP_COLON IndirectedIdentifier[name] {

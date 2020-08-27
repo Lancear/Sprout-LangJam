@@ -3,7 +3,6 @@ TODO:
  -> inline event handlers via @ (local, global)
  -> pattern matching
  -> templates
- -> reference syntax
  -> lambda syntax (single expression makes implicit braces and return)
 
 Optional TODOs:
