@@ -426,15 +426,15 @@ ConditionalStatement
 
 DeclarationStatement
 : ImmutableDeclaration { $$ = $1; }
-| KEYWORD_MUT IndirectedIdentifier[name] OP_EQ Expression[value] SEMICOLON {
+| KEYWORD_MUT IDENTIFIER[name] OP_EQ Expression[value] SEMICOLON {
     $$ = node(MutableLocalDeclarationStatement, $value, NULL, $name);
 }
-| KEYWORD_MUT IndirectedIdentifier[name] TypeNode[type] OP_EQ Expression[value] SEMICOLON {
+| KEYWORD_MUT IDENTIFIER[name] TypeNode[type] OP_EQ Expression[value] SEMICOLON {
     $$ = node(MutableLocalDeclarationStatement,
         node(VariableTypeNode, $type, $value, NULL),
     NULL, $name);
 }
-| KEYWORD_MUT IndirectedIdentifier[name] TypeNode[type] SEMICOLON {
+| KEYWORD_MUT IDENTIFIER[name] TypeNode[type] SEMICOLON {
     $$ = node(MutableLocalDeclarationStatement,
         node(VariableTypeNode, $type, NULL, NULL)
     , NULL, $name);
