@@ -144,12 +144,12 @@ ParameterList
 ;
 
 ParameterListLoop
-: IndirectedIdentifier[param_name] TypeNode[type] OP_COMMA ParameterListLoop[next] {
+: IDENTIFIER[param_name] TypeNode[type] OP_COMMA ParameterListLoop[next] {
     $$ = node(Parameter,
         node(ParameterType, $type, NULL, NULL)
     , $next, $param_name);
 }
-| IndirectedIdentifier[param_name] TypeNode[type] {
+| IDENTIFIER[param_name] TypeNode[type] {
     $$ = node(Parameter,
         node(ParameterType, $type, NULL, NULL)
     , NULL, $param_name);
