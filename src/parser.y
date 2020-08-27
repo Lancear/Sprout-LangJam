@@ -223,7 +223,7 @@ ModuleDeclaration
 ;
 
 EventDeclaration
-: KEYWORD_EVENT IndirectedIdentifier[id] TypeList[type] SEMICOLON {
+: KEYWORD_EVENT IDENTIFIER[id] TypeList[type] SEMICOLON {
     $$ = node(EventDeclaration, $type, NULL, $id);
 }
 ;
@@ -232,7 +232,7 @@ EventDeclaration
  * Class declaration syntax.
  */
 ClassDeclaration
-: KEYWORD_CLASS IndirectedIdentifier[id] OP_LEFT_BRACKET ClassScope[scope] OP_RIGHT_BRACKET {
+: KEYWORD_CLASS IDENTIFIER[id] OP_LEFT_BRACKET ClassScope[scope] OP_RIGHT_BRACKET {
     $$ = node(ClassDeclaration, $scope, NULL, $id);
 }
 ;
