@@ -244,7 +244,7 @@ ImportStatement
 : KEYWORD_IMPORT IndirectedIdentifier[pkg] SEMICOLON {
     $$ = node(ImportDeclaration, NULL, NULL, $pkg);
 }
-| KEYWORD_IMPORT IndirectedIdentifier[pkg] KEYWORD_AS IndirectedIdentifier[id] SEMICOLON {
+| KEYWORD_IMPORT IndirectedIdentifier[pkg] KEYWORD_AS IDENTIFIER[id] SEMICOLON {
     $$ = node(ImportDeclaration,
         node(AsCompound, NULL, NULL, $id),
     NULL, $pkg);
