@@ -1,9 +1,4 @@
 
-quirks the codegen team should be aware of:
- -> currently 'let name1.param = 3` is valid syntax; although next revisions
-    of the parser will fix this problem.
- -> this problem appears in other contexts too.
-
 TODO:
  -> event handler declaration, emit statementy
  -> inline event handlers via @ (local, global)
