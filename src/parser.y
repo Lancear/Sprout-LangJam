@@ -442,10 +442,10 @@ DeclarationStatement
 ;
 
 ImmutableDeclaration
-: KEYWORD_LET IndirectedIdentifier[name] OP_EQ Expression[value] SEMICOLON {
+: KEYWORD_LET IDENTIFIER[name] OP_EQ Expression[value] SEMICOLON {
     $$ = node(LocalDeclarationStatement, $value, NULL, $name);
 }
-| KEYWORD_LET IndirectedIdentifier[name] TypeNode[type] OP_EQ Expression[value] SEMICOLON {
+| KEYWORD_LET IDENTIFIER[name] TypeNode[type] OP_EQ Expression[value] SEMICOLON {
     $$ = node(LocalDeclarationStatement,
         node(VariableTypeNode, $type, $value, NULL)
     , NULL, $name);
