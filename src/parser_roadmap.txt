@@ -6,7 +6,6 @@ quirks the codegen team should be aware of:
 
 TODO:
  -> event handler declaration, emit statementy
- -> class members
  -> inline event handlers via @ (local, global)
  -> mutable parameters, references, mutable referenced parameters
  -> pattern matching
