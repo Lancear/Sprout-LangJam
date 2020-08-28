@@ -637,6 +637,14 @@ Expression
         ),
     NULL, NULL);
 }
+| Expression[expr1] OP_MOD_EQ Expression[expr2] {
+    $$ = node(ModulusAssignExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
 | Expression[expr1] OP_SHL Expression[expr2] {
     $$ = node(LeftShiftExpression,
         append_brother(

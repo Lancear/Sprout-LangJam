@@ -15,7 +15,8 @@ enum {
     ImmutableReferenceTypeCompound, MutableReferenceTypeCompound, LeftShiftExpression, 
     RightShiftExpression, BitwiseAndExpression, BitwiseOrExpression, BitwiseXorExpression,
     EmptyStatement, LogicalOrExpression, LogicalAndExpression,
-    AddAssignExpression, SubtractAssignExpression, MultiplyAssignExpression, DivideAssignExpression
+    AddAssignExpression, SubtractAssignExpression, MultiplyAssignExpression, DivideAssignExpression,
+    ModulusAssignExpression
 };
 
 struct node {
