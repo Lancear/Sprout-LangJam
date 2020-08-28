@@ -15,6 +15,9 @@ clean:
 
 rebuild: clean sprout
 
+run: rebuild
+	./sprout ./test.sprout
+
 src/parser/lex.yy.c: src/parser/lexer.l src/parser/parser.tab.h
 	flex -o $@ $^
 

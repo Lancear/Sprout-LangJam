@@ -8,7 +8,7 @@ using namespace std;
 Symbol ParameterNode::analyse(Symbol symParam) {
   cout << "Param " << value << endl;
   Symbol type = children[0]->analyse();
-  return Symbol(SymbolType::IMMUTABLE,value,type.value,NULL);
+  return Symbol(SymbolType::IMMUTABLE,value,type.name);
 }
 
 Symbol ParameterNode::execute(Symbol sym) {

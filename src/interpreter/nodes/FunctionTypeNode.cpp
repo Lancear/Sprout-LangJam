@@ -6,7 +6,7 @@
 using namespace std;
 
 Symbol FunctionTypeNode::analyse(Symbol symParam) {
-  if (value) cout << "Value: " << value << endl;
+  cout << "Value: " << value << endl;
   return Symbol::EMPTY();
 }
 

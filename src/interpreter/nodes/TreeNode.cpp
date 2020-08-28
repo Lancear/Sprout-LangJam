@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 #include "TreeNode.hpp"
 #include "ArithmeticExpressionNode.hpp"
@@ -70,9 +71,10 @@
 using namespace std;
 
 TreeNode::TreeNode(struct node * n) {
-  value = n->value;
+  value = n->value ? string(n->value) : "";
   line = n->line;
   col = n->col;
+
   n = n->child;
   while (n) {
     children.push_back(TreeNode::of(n));

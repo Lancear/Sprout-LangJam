@@ -1,8 +1,10 @@
 #pragma once
+
 #include <string>
 #include <vector>
 #include <map>
 #include <memory>
+
 #include "Symbol.hpp"
 using namespace std;
 
@@ -22,7 +24,7 @@ public:
 	}
 	shared_ptr<Scope> getParent();
 	void add(Symbol symbol);
-	bool contains(char *symbolName);
-	Symbol get(char *symbolName);
+	bool contains(string symbolName);
+	Symbol get(string symbolName);
 	void clear();
 };

@@ -5,7 +5,7 @@
 
 using namespace std;
 Symbol MutableLocalDeclarationStatementNode::analyse(Symbol symParam) {
-  if (value) cout << "Value: " << value << endl;
+  cout << "Value: " << value << endl;
   return Symbol::EMPTY();
 }
 

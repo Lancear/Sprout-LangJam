@@ -1,15 +1,17 @@
-#include "Scope.hpp"
 #include <unordered_map>
 #include <iostream>
 #include <string>
+
+#include "Scope.hpp"
 #include "Symbol.hpp"
+
 using namespace std;
 
 shared_ptr<Scope> Scope::getParent(){
 	return parent;
 }
 
-bool Scope::contains(char *symbolName){
+bool Scope::contains(string symbolName){
 	std::string symbolNameAsString(symbolName);
 	auto search = internalMap.find(symbolNameAsString);
 	return search != internalMap.end();
@@ -22,7 +24,7 @@ void Scope::add(Symbol symbol)
 	internalMap.insert(std::make_pair(symbolNameAsString,symbol));
 }
 
-Symbol Scope::get(char * name)
+Symbol Scope::get(string name)
 {
 	std::string symbolNameAsString(name);
 	return internalMap.at(symbolNameAsString);

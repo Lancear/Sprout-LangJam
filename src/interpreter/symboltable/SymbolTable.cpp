@@ -1,9 +1,11 @@
-#include "SymbolTable.hpp"
-#include "Scope.hpp"
 #include <unordered_map>
 #include <stdexcept>
 #include <iostream>
 #include <optional>
+#include <string>
+
+#include "SymbolTable.hpp"
+#include "Scope.hpp"
 #include "Symbol.hpp"
 using namespace std;
 
@@ -17,7 +19,7 @@ shared_ptr<SymbolTable> SymbolTable::getInstance(){
 	return _instance;
 }
 
-Symbol SymbolTable::get(char* symbol, shared_ptr<Scope> scope)
+Symbol SymbolTable::get(string symbol, shared_ptr<Scope> scope)
 {
 	shared_ptr<Scope> internalScope = scope;
 	while (internalScope != 0)
@@ -29,7 +31,7 @@ Symbol SymbolTable::get(char* symbol, shared_ptr<Scope> scope)
 	return Symbol::EMPTY();
 }
 
-Symbol SymbolTable::get(char* symbol)
+Symbol SymbolTable::get(string symbol)
 {
 	shared_ptr<Scope> internalScope = currentScope;
 	while (internalScope != 0)
@@ -41,14 +43,14 @@ Symbol SymbolTable::get(char* symbol)
 	return Symbol::EMPTY();
 }
 
-bool SymbolTable::containsInCurrentScope(char* symbol)
+bool SymbolTable::containsInCurrentScope(string symbol)
 {
 	if (currentScope->contains(symbol))
 		return true;
 	return false;
 }
 
-bool SymbolTable::contains(char* symbol)
+bool SymbolTable::contains(string symbol)
 {
 	shared_ptr<Scope> internalScope = currentScope;
 	while (internalScope != 0)

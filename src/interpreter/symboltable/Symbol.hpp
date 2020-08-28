@@ -1,35 +1,44 @@
 #pragma once
 #include <vector>
 #include <iostream>
+#include <string>
+
 #include "Symbol.hpp"
+#include "Any.hpp"
+
 using namespace std;
 
-enum class SymbolType{EMPTY,EXPRESSION,MUTABLE,IMMUTABLE,FUNCTION,MODULE};
+enum class SymbolType{EMPTY,EXPRESSION,MUTABLE,IMMUTABLE,FUNCTION,MODULE,TYPE};
 
 class Symbol {
 	public:
-		char *name;
+		string name;
 		SymbolType type;
-		char *value;
-		char *valueType;
+		AnyType value;
+		string valueType;
 		bool isReference;
 		vector<Symbol> children = vector<Symbol>();
-		Symbol(SymbolType type, char *name, char *valueType,char *value,bool isReference)
+		Symbol(SymbolType type, string name, string valueType,AnyType value,bool isReference)
 			: name(name), type(type), value(value), isReference(isReference), valueType(valueType) {}
-		Symbol(SymbolType type, char *name, char *valueType, char *value)
+		Symbol(SymbolType type, string name, string valueType, AnyType value)
 			: name(name), type(type), value(value), isReference(false), valueType(valueType) {}
+
+		Symbol(SymbolType type, string name, string valueType)
+			: name(name), type(type), value(value), isReference(false) {}
 		
-		bool IsError();
+		bool isError();
 		bool isEmpty();
 		bool isFunction();
 		bool isModule();
 		bool isMutable();
 		bool isImmutable();
+		bool isExpression();
 
 		static Symbol EMPTY();
 		static Symbol ERROR();
-		static Symbol MODULE(char* name);
-		static Symbol FUNCTION(char *name, char *returnType);
-		static Symbol EXPRESSION(char* value);
-		static Symbol EXPRESSION();
+		static Symbol MODULE(string name);
+		static Symbol FUNCTION(string name, string returnType);
+		static Symbol EXPRESSION(string valueType, AnyType value);
+		static Symbol EXPRESSION(string valueType);
+		static Symbol TYPE(string valueType);
 };

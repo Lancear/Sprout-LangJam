@@ -2,6 +2,8 @@
 
 #include <memory>
 #include <vector>
+#include <string>
+
 #include "../../parser/node.h"
 #include "../symboltable/Symbol.hpp"
 
@@ -9,9 +11,9 @@ using namespace std;
 
 class TreeNode {
   public:
-    char * value;
-	unsigned int line;
-	unsigned int col;
+    string value;
+    unsigned int line;
+    unsigned int col;
     vector<unique_ptr<TreeNode>> children;
 
     explicit TreeNode(struct node * n);

@@ -1,9 +1,13 @@
 #pragma once
-#include "Scope.hpp"
+
 #include <stack>
 #include <iostream>
 #include <memory>
+#include <string>
+
+#include "Scope.hpp"
 #include "Symbol.hpp"
+
 using namespace std;
 
 class SymbolTable
@@ -11,10 +15,10 @@ class SymbolTable
 public:
 	static shared_ptr<SymbolTable> getInstance();
 	SymbolTable *add(Symbol symbol);
-	bool containsInCurrentScope(char *symbol);
-	bool contains(char* symbol);
-	Symbol get(char* symbol, shared_ptr<Scope> scope);
-	Symbol get(char* symbol);
+	bool containsInCurrentScope(string symbol);
+	bool contains(string symbol);
+	Symbol get(string symbol, shared_ptr<Scope> scope);
+	Symbol get(string symbol);
 	//Seeing as i return "this" here, i think a pointer will suffice 
 	SymbolTable *clear();
 	SymbolTable *openNewScope();
