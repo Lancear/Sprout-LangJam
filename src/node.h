@@ -13,7 +13,8 @@ enum {
     PostOp, PreOp,
     ClassDeclaration, Tenary, EventDeclaration, TypeList, EmitStatement, MutableParameter,
     ImmutableReferenceTypeCompound, MutableReferenceTypeCompound, LeftShiftExpression, 
-    RightShiftExpression, BitwiseAndExpression, BitwiseOrExpression, BitwiseXorExpression
+    RightShiftExpression, BitwiseAndExpression, BitwiseOrExpression, BitwiseXorExpression,
+    EmptyStatement
 };
 
 struct node {
