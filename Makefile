@@ -14,7 +14,7 @@ clean:
 	flex --full -o $@ $^
 
 ./src/parser.tab.c: ./src/parser.y
-	bison -d -v -o $@ $^
+	bison -d -v -Wcounterexamples -o $@ $^
 
 bin:
 	mkdir -p ./bin

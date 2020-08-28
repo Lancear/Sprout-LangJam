@@ -56,6 +56,7 @@
 
 %type<string> IndirectedIdentifier
 
+%left OP_ADD_EQ OP_SUB_EQ OP_MUL_EQ OP_DIV_EQ OP_MOD_EQ OP_AND_EQ OP_OR_EQ OP_XOR_EQ OP_SHL_EQ OP_SHR_EQ
 %left OP_TENARY OP_COLON
 %left OP_LOG_OR
 %left OP_LOG_AND
@@ -67,6 +68,7 @@
 %left OP_SHL OP_SHR
 %left OP_PLUS OP_MINUS
 %left OP_STAR OP_SLASH OP_MOD
+%precedence NEG
 %left OP_BANG OP_TILDE
 %left OP_DOT OP_ARROW
 %left OP_LEFT_SQPAREN OP_RIGHT_SQPAREN
@@ -810,12 +812,17 @@ Expression
     NULL, "--");
 }
 | OP_TILDE Expression[expr] {
-    $$ = node(NegationExpression,
+    $$ = node(BitwiseNegationExpression,
         $expr,
     NULL, NULL);
 }
 | OP_BANG Expression[expr] {
     $$ = node(LogicalNegationExpression,
+        $expr,
+    NULL, NULL);
+}
+| OP_MINUS Expression[expr] %prec NEG {
+    $$ = node(UnaryMinusExpression,
         $expr,
     NULL, NULL);
 }
