@@ -637,6 +637,22 @@ Expression
         ),
     NULL, NULL);
 }
+| Expression[expr1] OP_LOG_AND Expression[expr2] {
+    $$ = node(LogicalAndExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
+| Expression[expr1] OP_LOG_OR Expression[expr2] {
+    $$ = node(LogicalOrExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
 | Expression[expr1] OP_XOR Expression[expr2] {
     $$ = node(BitwiseXorExpression,
         append_brother(

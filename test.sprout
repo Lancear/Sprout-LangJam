@@ -78,5 +78,9 @@ module penis {
     fn bitop(a:u8):u8 {
         return a>>3<<4&5|8^9;
     }
+
+    fn log(a:u8):u8 {
+        return a&&a||a&&a;
+    }
 }
 
