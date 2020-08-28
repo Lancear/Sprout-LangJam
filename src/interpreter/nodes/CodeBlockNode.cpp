@@ -6,7 +6,9 @@
 using namespace std;
 
 Symbol CodeBlockNode::analyse(Symbol symParam) {
-  if (value) cout << "Value: " << value << endl;
+  for(int i = 0; i < children.size(); i++){
+	  children[i]->analyse();
+  }
   return Symbol::EMPTY();
 }
 

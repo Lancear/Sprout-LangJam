@@ -6,7 +6,7 @@
 using namespace std;
 Symbol TypeCompoundNode::analyse(Symbol symParam) {
   if (value) cout << "Value: " << value << endl;
-  return Symbol::EMPTY();
+  return Symbol::EXPRESSION(value);
 }
 
 Symbol TypeCompoundNode::execute(Symbol sym) {
