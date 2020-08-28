@@ -76,12 +76,12 @@ as          return(KEYWORD_AS);
 "-="        return(OP_SUB_EQ);
 "*="        return(OP_MUL_EQ);
 "/="        return(OP_DIV_EQ);
+"%="        return(OP_MOD_EQ);
 
 "->"        return(OP_ARROW);
 
 "<<="       return(OP_SHL_EQ);
 ">>="       return(OP_SHR_EQ);
-"%="        return(OP_MOD_EQ);
 "&="        return(OP_AND_EQ);
 "|="        return(OP_OR_EQ);
 "^="        return(OP_XOR_EQ);
