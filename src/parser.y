@@ -573,8 +573,24 @@ Expression
         ),
     NULL, NULL);
 }
+| Expression[expr1] OP_ADD_EQ Expression[expr2] {
+    $$ = node(AddAssignExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
 | Expression[expr1] OP_MINUS Expression[expr2] {
     $$ = node(SubtractExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
+| Expression[expr1] OP_SUB_EQ Expression[expr2] {
+    $$ = node(SubtractAssignExpression,
         append_brother(
             $expr1,
             $expr2
@@ -589,8 +605,24 @@ Expression
         ),
     NULL, NULL);
 }
+| Expression[expr1] OP_MUL_EQ Expression[expr2] {
+    $$ = node(MultiplyAssignExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
 | Expression[expr1] OP_SLASH Expression[expr2] {
     $$ = node(DivideExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
+| Expression[expr1] OP_DIV_EQ Expression[expr2] {
+    $$ = node(DivideAssignExpression,
         append_brother(
             $expr1,
             $expr2

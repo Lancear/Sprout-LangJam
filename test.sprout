@@ -65,6 +65,8 @@ module penis {
             test3();
         } while(test());
         
+        a += a -= a *= a /= a;
+
         do
             test3();
         while(test());

@@ -68,11 +68,13 @@ as          return(KEYWORD_AS);
 "&"         return(OP_BIN_AND);
 "|"         return(OP_BIN_OR);
 "^"         return(OP_XOR);
+"&&"        return(OP_LOG_AND);
+"||"        return(OP_LOG_OR);
+"="         return(OP_EQ);
+";"         return(SEMICOLON);
 
 "->"        return(OP_ARROW);
 
-"&&"        return(OP_LOG_AND);
-"||"        return(OP_LOG_OR);
 "+="        return(OP_ADD_EQ);
 "-="        return(OP_SUB_EQ);
 "<<="       return(OP_SHL_EQ);
@@ -83,12 +85,10 @@ as          return(KEYWORD_AS);
 "&="        return(OP_AND_EQ);
 "|="        return(OP_OR_EQ);
 "^="        return(OP_XOR_EQ);
-"="         return(OP_EQ);
 "~"         return(OP_TILDE);
 ","         return(OP_COMMA);
 "!"         return(OP_BANG);
 "@"         return(OP_AT);
-";"         return(SEMICOLON);
 
 \'\\?.\'                   {
     yylval->string = strdup(yytext);

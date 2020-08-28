@@ -14,7 +14,8 @@ enum {
     ClassDeclaration, Tenary, EventDeclaration, TypeList, EmitStatement, MutableParameter,
     ImmutableReferenceTypeCompound, MutableReferenceTypeCompound, LeftShiftExpression, 
     RightShiftExpression, BitwiseAndExpression, BitwiseOrExpression, BitwiseXorExpression,
-    EmptyStatement, LogicalOrExpression, LogicalAndExpression
+    EmptyStatement, LogicalOrExpression, LogicalAndExpression,
+    AddAssignExpression, SubtractAssignExpression, MultiplyAssignExpression, DivideAssignExpression
 };
 
 struct node {
