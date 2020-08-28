@@ -653,8 +653,24 @@ Expression
         ),
     NULL, NULL);
 }
+| Expression[expr1] OP_SHL_EQ Expression[expr2] {
+    $$ = node(LeftShiftAssignExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
 | Expression[expr1] OP_SHR Expression[expr2] {
-    $$ = node(LeftShiftExpression,
+    $$ = node(RightShiftExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
+| Expression[expr1] OP_SHR Expression[expr2] {
+    $$ = node(RightShiftAssignExpression,
         append_brother(
             $expr1,
             $expr2
