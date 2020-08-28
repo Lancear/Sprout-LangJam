@@ -2,10 +2,11 @@
 TODO:
  -> inline event handlers via @ (local, global)
  -> pattern matching
- -> templates
+ -> generics
  -> lambda syntax (single expression makes implicit braces and return)
  -> more expr types (unary minuts, tilde, bitops, etc...)
 
 Optional TODOs:
  -> add some checks to the parser (to take off some work from the codegen guys)
  -> adapt to RE/flex
+ -> constant merging

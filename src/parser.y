@@ -558,6 +558,22 @@ Expression
         ),
     NULL, NULL);
 }
+| Expression[expr1] OP_BIN_AND Expression[expr2] {
+    $$ = node(BitwiseAndExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
+| Expression[expr1] OP_BIN_OR Expression[expr2] {
+    $$ = node(BitwiseOrExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
 | Expression[expr1] OP_CMP_EQ Expression[expr2] {
     $$ = node(ComparisonExpresison,
         append_brother(

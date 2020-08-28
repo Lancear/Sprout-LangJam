@@ -63,9 +63,9 @@ as          return(KEYWORD_AS);
 "}"         return(OP_RIGHT_BRACKET);
 "?"         return(OP_TENARY);
 ":"         return(OP_COLON);
-
 ">>"        return(OP_SHR);
 "<<"        return(OP_SHL);
+
 "->"        return(OP_ARROW);
 "&"         return(OP_BIN_AND);
 "|"         return(OP_BIN_OR);
