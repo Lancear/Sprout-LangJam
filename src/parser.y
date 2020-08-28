@@ -40,12 +40,13 @@
 %token KEYWORD_DO "do" KEYWORD_ELSE "else" KEYWORD_MATCH "match" KEYWORD_FOR "for" KEYWORD_IMPORT "import" KEYWORD_AS "as"
 
 %token OP_LEFT_PAREN "(" OP_RIGHT_PAREN ")" OP_LEFT_SQPAREN "[" OP_RIGHT_SQPAREN "]" OP_LEFT_BRACKET "{" OP_RIGHT_BRACKET "}"
-%token OP_PLUS OP_MINUS OP_SHR OP_SHL OP_MOD OP_SLASH OP_STAR OP_BIN_AND OP_BIN_OR OP_LOG_AND OP_LOG_OR OP_XOR
-%token OP_TENARY OP_COLON OP_ARROW OP_INCREMENT OP_DECREMENT OP_DOT OP_EQ OP_TILDE OP_BANG
-%token OP_ADD_EQ OP_SUB_EQ OP_SHL_EQ OP_SHR_EQ OP_MUL_EQ OP_DIV_EQ OP_MOD_EQ OP_AND_EQ OP_OR_EQ OP_XOR_EQ
-%token OP_CMP_EQ OP_CMP_GE OP_CMP_LE OP_CMP_GT OP_CMP_LT OP_CMP_NE
-%token OP_COMMA OP_AT
-%token SEMICOLON
+%token OP_PLUS "+" OP_MINUS "-" OP_SHR ">>" OP_SHL "<<" OP_MOD "%" OP_SLASH "/" OP_STAR "*" OP_BIN_AND "&" OP_BIN_OR "|"
+%token OP_LOG_AND "&&" OP_LOG_OR "||" OP_XOR "^" OP_TENARY "tenary operator" OP_COLON ":" OP_ARROW "->" OP_INCREMENT "++"
+%token OP_DECREMENT "--" OP_DOT "." OP_EQ "=" OP_TILDE "~" OP_BANG "!" OP_ADD_EQ "+=" OP_SUB_EQ "-=" OP_SHL_EQ "<<=" OP_SHR_EQ ">>="
+%token OP_MUL_EQ "*=" OP_DIV_EQ "/=" OP_MOD_EQ "%=" OP_AND_EQ "&=" OP_OR_EQ "|=" OP_XOR_EQ "^=" OP_CMP_EQ "==" OP_CMP_GE ">="
+%token OP_CMP_LE "<=" OP_CMP_GT ">" OP_CMP_LT "<" OP_CMP_NE "!="
+%token OP_COMMA "," OP_AT "@"
+%token SEMICOLON ";"
 
 %type<ast> ImportStatement FunctionDeclaration ParameterList ParameterListLoop CompoundStatement
 %type<ast> Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock
@@ -535,6 +536,22 @@ Expression
 }
 | Expression[expr1] OP_MOD Expression[expr2] {
     $$ = node(ModulusExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
+| Expression[expr1] OP_SHL Expression[expr2] {
+    $$ = node(LeftShiftExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
+| Expression[expr1] OP_SHR Expression[expr2] {
+    $$ = node(LeftShiftExpression,
         append_brother(
             $expr1,
             $expr2
