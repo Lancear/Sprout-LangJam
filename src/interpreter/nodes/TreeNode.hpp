@@ -10,6 +10,8 @@ using namespace std;
 class TreeNode {
   public:
     char * value;
+	unsigned int line;
+	unsigned int col;
     vector<unique_ptr<TreeNode>> children;
 
     explicit TreeNode(struct node * n);

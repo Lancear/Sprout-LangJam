@@ -11,16 +11,28 @@ enum {
     ForStatement, ModuleDeclaration, AssignmentExpression, FunctionCall, LValue, DoWhileStatement,
     /* currently I'm the second one */
     PostOp, PreOp,
-    ClassDeclaration, Tenary
+    ClassDeclaration, Tenary, EventDeclaration, TypeList, EmitStatement, MutableParameter,
+    ImmutableReferenceTypeCompound, MutableReferenceTypeCompound, LeftShiftExpression, 
+    RightShiftExpression, BitwiseAndExpression, BitwiseOrExpression, BitwiseXorExpression,
+    EmptyStatement, LogicalOrExpression, LogicalAndExpression,
+    AddAssignExpression, SubtractAssignExpression, MultiplyAssignExpression, DivideAssignExpression,
+    ModulusAssignExpression, RightShiftAssignExpression, LeftShiftAssignExpression, BitwiseAndAssignExpression,
+    BitwiseOrAssignExpression, BitwiseXorAssignExpression, LogicalNegationExpression, BitwiseNegationExpression,
+    UnaryMinusExpression
 };
 
 struct node {
     struct node * child, * brother;
     char * value;
     unsigned int type;
+	unsigned int line, col;
 };
 
-struct node * new_node(unsigned int type, struct node * child, struct node * brother, char * value);
+struct node *new_node(
+	unsigned int type,
+	struct node *child, struct node *brother,
+	char *value,
+	unsigned int line, unsigned int col);
 struct node * append_brother(struct node * parent, struct node * brother);
 
 #endif

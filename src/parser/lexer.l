@@ -1,6 +1,6 @@
 %{
 
-#include "../error.h"
+#include "error.h"
 #include "lexer.h"
 
 #include "parser.tab.h"
@@ -48,45 +48,47 @@ as          return(KEYWORD_AS);
 "."         return(OP_DOT);
 "+"         return(OP_PLUS);
 "-"         return(OP_MINUS);
-">>"        return(OP_SHR);
-"<<"        return(OP_SHL);
-"%"         return(OP_MOD);
 "/"         return(OP_SLASH);
 "*"         return(OP_STAR);
-"{"         return(OP_LEFT_BRACKET);
-"}"         return(OP_RIGHT_BRACKET);
-"?"         return(OP_TENARY);
-":"         return(OP_COLON);
-"->"        return(OP_ARROW);
-"++"        return(OP_INCREMENT);
-"--"        return(OP_DECREMENT);
-"&"         return(OP_BIN_AND);
-"|"         return(OP_BIN_OR);
-"&&"        return(OP_LOG_AND);
-"||"        return(OP_LOG_OR);
-"^"         return(OP_XOR);
-"+="        return(OP_ADD_EQ);
-"-="        return(OP_SUB_EQ);
-"<<="       return(OP_SHL_EQ);
-">>="       return(OP_SHR_EQ);
-"*="        return(OP_MUL_EQ);
-"/="        return(OP_DIV_EQ);
-"%="        return(OP_MOD_EQ);
-"&="        return(OP_AND_EQ);
-"|="        return(OP_OR_EQ);
-"^="        return(OP_XOR_EQ);
-"="         return(OP_EQ);
+"%"         return(OP_MOD);
 "=="        return(OP_CMP_EQ);
 ">="        return(OP_CMP_GE);
 "<="        return(OP_CMP_LE);
 ">"         return(OP_CMP_GT);
 "<"         return(OP_CMP_LT);
 "!="        return(OP_CMP_NE);
+"++"        return(OP_INCREMENT);
+"--"        return(OP_DECREMENT);
+"{"         return(OP_LEFT_BRACKET);
+"}"         return(OP_RIGHT_BRACKET);
+"?"         return(OP_TENARY);
+":"         return(OP_COLON);
+">>"        return(OP_SHR);
+"<<"        return(OP_SHL);
+"&"         return(OP_BIN_AND);
+"|"         return(OP_BIN_OR);
+"^"         return(OP_XOR);
+"&&"        return(OP_LOG_AND);
+"||"        return(OP_LOG_OR);
+"="         return(OP_EQ);
+";"         return(SEMICOLON);
+"+="        return(OP_ADD_EQ);
+"-="        return(OP_SUB_EQ);
+"*="        return(OP_MUL_EQ);
+"/="        return(OP_DIV_EQ);
+"%="        return(OP_MOD_EQ);
+"<<="       return(OP_SHL_EQ);
+">>="       return(OP_SHR_EQ);
+"&="        return(OP_AND_EQ);
+"|="        return(OP_OR_EQ);
+"^="        return(OP_XOR_EQ);
+
+"->"        return(OP_ARROW);
+
 "~"         return(OP_TILDE);
 ","         return(OP_COMMA);
 "!"         return(OP_BANG);
 "@"         return(OP_AT);
-";"         return(SEMICOLON);
 
 \'\\?.\'                   {
     yylval->string = strdup(yytext);
