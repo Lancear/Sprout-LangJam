@@ -573,7 +573,7 @@ Expression
         ),
     NULL, NULL);
 }
-| Expression[expr1] OP_ADD_EQ Expression[expr2] {
+| LValue[expr1] OP_ADD_EQ Expression[expr2] {
     $$ = node(AddAssignExpression,
         append_brother(
             $expr1,
@@ -589,7 +589,7 @@ Expression
         ),
     NULL, NULL);
 }
-| Expression[expr1] OP_SUB_EQ Expression[expr2] {
+| LValue[expr1] OP_SUB_EQ Expression[expr2] {
     $$ = node(SubtractAssignExpression,
         append_brother(
             $expr1,
@@ -605,7 +605,7 @@ Expression
         ),
     NULL, NULL);
 }
-| Expression[expr1] OP_MUL_EQ Expression[expr2] {
+| LValue[expr1] OP_MUL_EQ Expression[expr2] {
     $$ = node(MultiplyAssignExpression,
         append_brother(
             $expr1,
@@ -621,7 +621,7 @@ Expression
         ),
     NULL, NULL);
 }
-| Expression[expr1] OP_DIV_EQ Expression[expr2] {
+| LValue[expr1] OP_DIV_EQ Expression[expr2] {
     $$ = node(DivideAssignExpression,
         append_brother(
             $expr1,
@@ -637,7 +637,7 @@ Expression
         ),
     NULL, NULL);
 }
-| Expression[expr1] OP_MOD_EQ Expression[expr2] {
+| LValue[expr1] OP_MOD_EQ Expression[expr2] {
     $$ = node(ModulusAssignExpression,
         append_brother(
             $expr1,
@@ -653,7 +653,7 @@ Expression
         ),
     NULL, NULL);
 }
-| Expression[expr1] OP_SHL_EQ Expression[expr2] {
+| LValue[expr1] OP_SHL_EQ Expression[expr2] {
     $$ = node(LeftShiftAssignExpression,
         append_brother(
             $expr1,
@@ -669,7 +669,7 @@ Expression
         ),
     NULL, NULL);
 }
-| Expression[expr1] OP_SHR Expression[expr2] {
+| LValue[expr1] OP_SHR_EQ Expression[expr2] {
     $$ = node(RightShiftAssignExpression,
         append_brother(
             $expr1,
@@ -685,8 +685,24 @@ Expression
         ),
     NULL, NULL);
 }
+| LValue[expr1] OP_AND_EQ Expression[expr2] {
+    $$ = node(BitwiseAndAssignExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
 | Expression[expr1] OP_BIN_OR Expression[expr2] {
     $$ = node(BitwiseOrExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
+| LValue[expr1] OP_OR_EQ Expression[expr2] {
+    $$ = node(BitwiseOrAssignExpression,
         append_brother(
             $expr1,
             $expr2
