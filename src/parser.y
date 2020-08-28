@@ -574,6 +574,14 @@ Expression
         ),
     NULL, NULL);
 }
+| Expression[expr1] OP_XOR Expression[expr2] {
+    $$ = node(BitwiseXorExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
 | Expression[expr1] OP_CMP_EQ Expression[expr2] {
     $$ = node(ComparisonExpresison,
         append_brother(
