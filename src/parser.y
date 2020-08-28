@@ -733,6 +733,14 @@ Expression
         ),
     NULL, NULL);
 }
+| LValue[expr1] OP_XOR_EQ Expression[expr2] {
+    $$ = node(BitwiseXorAssignExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
 | Expression[expr1] OP_CMP_EQ Expression[expr2] {
     $$ = node(ComparisonExpresison,
         append_brother(
