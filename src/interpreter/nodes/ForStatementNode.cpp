@@ -8,22 +8,18 @@ using namespace std;
 Symbol ForStatementNode::analyse(Symbol symParam) {
 	cout << "For > " << endl;
 	SymbolTable::getInstance()->openNewScope();
-	for(int i = 0; i < children.size(); i++){
-		cout << "call!" << endl;
-		children[i]->analyse();
-	}
-	SymbolTable::getInstance()->closeScope();
-	/*
-	Symbol whileExp = children[0]->analyse();
-	if (whileExp.type != SymbolType::EXPRESSION || whileExp.valueType != "boolean")
+	Symbol exp0 = children[0]->analyse();
+	Symbol exp1 = children[1]->analyse();
+	Symbol exp2 = children[2]->analyse();
+	Symbol codeBlock = children[3]->analyse();
+
+	
+	if (exp1.type == SymbolType::EMPTY || exp1.valueType != "boolean")
 	{
-		cerr << "While structure expects an Expression of type boolean, instead got " << whileExp.valueType;
+		cerr << "While structure expects an Expression of type boolean";
 		return Symbol::ERROR();
 	}
-
-	//Processing the remaining child in a new scope
-	children[1]->analyse();
-	*/
+	SymbolTable::getInstance()->closeScope();
 	return Symbol::EMPTY();
 }
 

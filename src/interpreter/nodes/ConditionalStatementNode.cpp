@@ -13,16 +13,12 @@ Symbol ConditionalStatementNode::analyse(Symbol symParam) {
 	  cerr << "Function `" << value << "` expects an Expression of type boolean, instead got " << ifValue.valueType;
 	  return Symbol::ERROR();
   }
-
-  SymbolTable::getInstance()->openNewScope();
   
   //Processing the remaining children in a new scope
   for (int i = 1; i < children.size(); i++)
   {
 	  children[i]->analyse();
   }
-
-  SymbolTable::getInstance()->closeScope();
 
   return Symbol::EMPTY();
 }

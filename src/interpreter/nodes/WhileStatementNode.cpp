@@ -15,9 +15,7 @@ Symbol WhileStatementNode::analyse(Symbol symParam) {
 	}
 
 	//Processing the remaining child in a new scope
-	SymbolTable::getInstance()->openNewScope();
 	children[1]->analyse();
-	SymbolTable::getInstance()->closeScope();
 
 	return Symbol::EMPTY();
 }

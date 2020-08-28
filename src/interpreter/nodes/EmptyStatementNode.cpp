@@ -8,7 +8,6 @@
 using namespace std;
 
 Symbol EmptyStatementNode::analyse(Symbol param) {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   return Symbol::EMPTY();
 }
 
