@@ -809,6 +809,16 @@ Expression
         $expr1,
     NULL, "--");
 }
+| OP_TILDE Expression[expr] {
+    $$ = node(NegationExpression,
+        $expr,
+    NULL, NULL);
+}
+| OP_BANG Expression[expr] {
+    $$ = node(LogicalNegationExpression,
+        $expr,
+    NULL, NULL);
+}
 | LValue[expr1] OP_EQ Expression[expr2] {
     $$ = node(AssignmentExpression,
         append_brother($expr1, $expr2),

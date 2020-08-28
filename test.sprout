@@ -65,7 +65,7 @@ module penis {
             test3();
         } while(test());
         
-        a += a -= a *= a /= a %= a &= a |= a ^= a;
+        a += a -= a *= a /= a %= a &= a |= a ^= ~a;
 
         do
             test3();
@@ -82,7 +82,7 @@ module penis {
     }
 
     fn log(a:u8):u8 {
-        return a&&a||a&&a;
+        return !a&&a||a&&!a;
     }
 }
 
