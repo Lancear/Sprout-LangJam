@@ -1,7 +1,7 @@
 #include "interpreter.hpp"
 #include "./nodes/TreeNode.hpp"
 #include "./nodes/FileNode.hpp"
-#include <iostream>
+#include "./SymbolTable/SymbolTable.hpp"
 
 void dispatch(struct node *n){
 	if(!n) return;
@@ -9,5 +9,6 @@ void dispatch(struct node *n){
     unique_ptr<TreeNode> tree = make_unique<FileNode>(n);
 
     tree->addSymbols();
-    // tree->execute(); // interpreter execution
+    tree->sematicCheck();
+    // SymbolTable::instance()->get("main").value->execute();
 }
