@@ -52,7 +52,8 @@
 %type<ast> Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock
 %type<ast> ConditionalStatement TypeNode WhileStatement ForStatement ModuleDeclaration TopLevelScope
 %type<ast> CallParameterList LValue DoWhileStatement ClassDeclaration ModuleScope ClassScope ImmutableDeclaration
-%type<ast> TypeList TypeListLoop EventDeclaration FunctionCall EmitStatement InlineOnStatement
+%type<ast> TypeList TypeListLoop EventDeclaration FunctionCall EmitStatement InlineOnStatement Lambda
+%type<ast> LambdaCall
 
 %type<string> IndirectedIdentifier
 
@@ -73,7 +74,9 @@
 %left OP_STAR OP_SLASH OP_MOD
 %precedence NEG
 %left OP_BANG OP_TILDE
-%left OP_DOT OP_ARROW
+%left OP_DOT
+%precedence LAMBDA_CALL
+%precedence LAMBDA
 %left OP_LEFT_SQPAREN OP_RIGHT_SQPAREN
 %left OP_LEFT_PAREN OP_RIGHT_PAREN
 %left OP_INCREMENT OP_DECREMENT
@@ -132,6 +135,9 @@ TypeNode
 | OP_COLON OP_BIN_AND KEYWORD_MUT IndirectedIdentifier[name] {
     $$ = node(MutableReferenceTypeCompound, NULL, NULL, $name);
 }
+| OP_COLON KEYWORD_MUT IndirectedIdentifier[name] {
+    $$ = node(MutableTypeCompound, NULL, NULL, $name);
+}
 ;
 
 /**
@@ -164,16 +170,6 @@ ParameterListLoop
 }
 | IDENTIFIER[param_name] TypeNode[type] {
     $$ = node(Parameter,
-        node(ParameterType, $type, NULL, NULL)
-    , NULL, $param_name);
-}
-| KEYWORD_MUT IDENTIFIER[param_name] TypeNode[type] OP_COMMA ParameterListLoop[next] {
-    $$ = node(MutableParameter,
-        node(ParameterType, $type, NULL, NULL)
-    , $next, $param_name);
-}
-| KEYWORD_MUT IDENTIFIER[param_name] TypeNode[type] {
-    $$ = node(MutableParameter,
         node(ParameterType, $type, NULL, NULL)
     , NULL, $param_name);
 }
@@ -857,8 +853,25 @@ Expression
 | FunctionCall[call] {
     $$ = $call;
 }
+| LambdaCall[call] %prec LAMBDA_CALL {
+    $$ = $call;
+}
 | OP_LEFT_PAREN Expression[expr] OP_RIGHT_PAREN {
     $$ = $expr;
+}
+| Lambda %prec LAMBDA {
+    $$ = $1;
+}
+;
+
+Lambda
+: ParameterList[params] OP_ARROW CodeBlock[blocc] {
+    $$ = node(Lambda,
+        append_brother(
+            $params,
+            $blocc
+        ),
+    NULL, NULL);
 }
 ;
 
@@ -868,6 +881,20 @@ FunctionCall
 }
 | IndirectedIdentifier[expr1] OP_LEFT_PAREN CallParameterList[params] OP_RIGHT_PAREN {
     $$ = node(FunctionCall, $params, NULL, $expr1);
+}
+;
+
+LambdaCall
+: OP_LEFT_PAREN Lambda[lam] OP_RIGHT_PAREN OP_LEFT_PAREN OP_RIGHT_PAREN {
+    $$ = node(FunctionCall, $lam, NULL, NULL);
+}
+| OP_LEFT_PAREN Lambda[lam] OP_RIGHT_PAREN OP_LEFT_PAREN CallParameterList[broh] OP_RIGHT_PAREN {
+    $$ = node(FunctionCall, 
+        append_brother(
+            $lam,
+            $broh
+        ),
+    NULL, NULL);
 }
 ;
 

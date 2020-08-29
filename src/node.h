@@ -11,14 +11,14 @@ enum {
     ForStatement, ModuleDeclaration, AssignmentExpression, FunctionCall, LValue, DoWhileStatement,
     /* currently I'm the second one */
     PostOp, PreOp,
-    ClassDeclaration, Tenary, EventDeclaration, TypeList, EmitStatement, MutableParameter,
+    ClassDeclaration, Tenary, EventDeclaration, TypeList, EmitStatement,
     ImmutableReferenceTypeCompound, MutableReferenceTypeCompound, LeftShiftExpression, 
     RightShiftExpression, BitwiseAndExpression, BitwiseOrExpression, BitwiseXorExpression,
     EmptyStatement, LogicalOrExpression, LogicalAndExpression,
     AddAssignExpression, SubtractAssignExpression, MultiplyAssignExpression, DivideAssignExpression,
     ModulusAssignExpression, RightShiftAssignExpression, LeftShiftAssignExpression, BitwiseAndAssignExpression,
     BitwiseOrAssignExpression, BitwiseXorAssignExpression, LogicalNegationExpression, BitwiseNegationExpression,
-    UnaryMinusExpression, CommaExpression, InlineOn
+    UnaryMinusExpression, CommaExpression, InlineOn, Lambda, MutableTypeCompound
 };
 
 struct node {
