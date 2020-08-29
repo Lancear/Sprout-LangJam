@@ -8,12 +8,9 @@
 using namespace std;
 
 void ElseNode::addSymbols() {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
-
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->addSymbols();
-  }
+	SymbolTable::getInstance()->openNewScope();
+	children[0]->addSymbols();
+	SymbolTable::getInstance()->closeScope();
 }
 
 Symbol ElseNode::sematicCheck(Symbol sym) {

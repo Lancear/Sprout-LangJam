@@ -8,12 +8,12 @@
 using namespace std;
 
 void ForNode::addSymbols() {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
-
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->addSymbols();
-  }
+	SymbolTable::getInstance()->openNewScope();
+	for (int i = 0; i < children.size(); i++)
+	{
+		children[i]->addSymbols();
+	}
+	SymbolTable::getInstance()->closeScope();
 }
 
 Symbol ForNode::sematicCheck(Symbol sym) {

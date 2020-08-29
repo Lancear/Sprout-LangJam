@@ -6,6 +6,7 @@ CPPFILES := $(shell find src -name *.cpp)
 OBJFILES := $(patsubst src/%.c, obj/%.o, $(CFILES)) $(patsubst src/%.cpp, obj/%.o, $(CPPFILES))
 
 CFLAGS=-Ofast -march=native -funroll-loops
+CPPFLAGS=-std=c++17
 
 all: sprout
 

@@ -11,7 +11,6 @@ class TypeNode : public TreeNode {
     bool isRef = false;
 
     TypeNode(struct node * n, bool isRef);
-    void addSymbols();
     Symbol sematicCheck(Symbol sym);
     Symbol execute(Symbol sym);
 };

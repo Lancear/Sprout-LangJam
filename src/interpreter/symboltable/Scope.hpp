@@ -6,13 +6,10 @@
 #include <memory>
 
 #include "Symbol.hpp"
+#include "SimpleScope.hpp"
 using namespace std;
 
-class Scope
-{
-private:
-	map<string, Symbol> internalMap;
-
+class Scope : public SimpleScope{
 public:
 	shared_ptr<Scope> parent;
 	vector<shared_ptr<Scope>> children;
@@ -27,4 +24,5 @@ public:
 	bool contains(string symbolName);
 	Symbol get(string symbolName);
 	void clear();
+	map<string, Symbol> internalMap;
 };

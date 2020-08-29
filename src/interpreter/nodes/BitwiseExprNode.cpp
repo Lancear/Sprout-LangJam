@@ -7,15 +7,6 @@
 
 using namespace std;
 
-void BitwiseExprNode::addSymbols() {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
-
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->addSymbols();
-  }
-}
-
 Symbol BitwiseExprNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;

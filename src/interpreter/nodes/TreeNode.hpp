@@ -6,10 +6,11 @@
 
 #include "../symboltable/Symbol.hpp"
 #include "../../parser/node.h"
+#include "SimpleTreeNode.hpp"
 
 using namespace std;
 
-class TreeNode {
+class TreeNode : public SimpleTreeNode{
   public:
     unsigned int line;
     unsigned int col;

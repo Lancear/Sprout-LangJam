@@ -1,5 +1,5 @@
 #include <string>
-
+#include <map>
 #include "Symbol.hpp"
 
 static string EMPTYSTRING = "<EMPTY>";
@@ -34,26 +34,99 @@ bool Symbol::isExpression() {
 }
 
 Symbol Symbol::EMPTY(){
-	return Symbol(SymbolType::EMPTY, EMPTYSTRING, EMPTYSTRING);
+	Symbol s = Symbol();
+	s.name = "<EMPTY>";
+	s.dataType = "<EMPTY>";
+	s.type = SymbolType::EMPTY;
+	return s;
 }
+
 Symbol Symbol::ERROR(){
-	return Symbol(SymbolType::EMPTY, ERRORSTRING, ERRORSTRING);
+	Symbol s = Symbol();
+	s.name = "<ERROR>";
+	s.dataType = "<ERROR>";
+	s.type = SymbolType::ERROR;
+	return s;
 }
-Symbol Symbol::MODULE(string name){
-	return Symbol(SymbolType::MODULE, name, string("<Module>"));
-}
-Symbol Symbol::FUNCTION(string name, string returnType){
-	return Symbol(SymbolType::FUNCTION, name,returnType);
-}
-
-Symbol Symbol::EXPRESSION(string valueType, AnyType value){
-	return Symbol(SymbolType::EXPRESSION, string("<Expression>"), valueType, value);
-}
-Symbol Symbol::EXPRESSION(string valueType)
+Symbol Symbol::MODULE(string name, SimpleScope value)
 {
-	return Symbol(SymbolType::EXPRESSION, string("<Expression>"), valueType);
+	Symbol s = Symbol();
+	s.name = name;
+	s.value = value;
+	s.dataType = "<MODULE>";
+	s.type = SymbolType::MODULE;
+	return s;
 }
-
-Symbol Symbol::TYPE(string valueType) {
-	return Symbol(SymbolType::TYPE, valueType, valueType);
+Symbol Symbol::MODULE(string name, SimpleScope value)
+{
+	Symbol s = Symbol();
+	s.name = name;
+	s.value = value;
+	s.dataType = "<MODULE>";
+	s.type = SymbolType::MODULE;
+	return s;
+}
+Symbol Symbol::FUNCTION(string name, string returnType, SimpleTreeNode body)
+{
+	Symbol s = Symbol();
+	s.name = name;
+	s.value = body;
+	s.dataType = returnType;
+	s.type = SymbolType::FUNCTION;
+	return s;
+}
+Symbol Symbol::EXPRESSION(string dataType, int value){
+	Symbol s = Symbol();
+	s.name = "<EXPRESSION>";
+	s.value = value;
+	s.dataType = dataType;
+	s.type = SymbolType::EXPRESSION;
+	return s;
+}
+Symbol Symbol::EXPRESSION(string dataType, string value){
+	Symbol s = Symbol();
+	s.name = "<EXPRESSION>";
+	s.value = value;
+	s.dataType = dataType;
+	s.type = SymbolType::EXPRESSION;
+	return s;
+}
+Symbol Symbol::MUTABLE(string name, string dataType, int value){
+	Symbol s = Symbol();
+	s.name = name;
+	s.value = value;
+	s.dataType = dataType;
+	s.type = SymbolType::MUTABLE;
+	return s;
+}
+Symbol Symbol::MUTABLE(string name, string dataType, string value){
+	Symbol s = Symbol();
+	s.name = name;
+	s.value = value;
+	s.dataType = dataType;
+	s.type = SymbolType::MUTABLE;
+	return s;
+}
+Symbol Symbol::IMMUTABLE(string name, string dataType, int value){
+	Symbol s = Symbol();
+	s.name = name;
+	s.value = value;
+	s.dataType = dataType;
+	s.type = SymbolType::IMMUTABLE;
+	return s;
+}
+Symbol Symbol::IMMUTABLE(string name, string dataType, string value){
+	Symbol s = Symbol();
+	s.name = name;
+	s.value = value;
+	s.dataType = dataType;
+	s.type = SymbolType::IMMUTABLE;
+	return s;
+}
+Symbol Symbol::TYPE(string dataType){
+	Symbol s = Symbol();
+	s.name = "<TYPE>";
+	s.dataType = dataType;
+	s.type = SymbolType::TYPE;
+	return s;
 }

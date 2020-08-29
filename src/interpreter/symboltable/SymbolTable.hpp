@@ -26,8 +26,6 @@ public:
 	SymbolTable *resetCursor();
 	SymbolTable *enterScope();
 	SymbolTable *exitScope();
-
-private:
 	static shared_ptr<SymbolTable> _instance;
 	SymbolTable()
 	{

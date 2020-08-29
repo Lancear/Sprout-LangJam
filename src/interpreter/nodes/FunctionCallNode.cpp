@@ -7,15 +7,6 @@
 
 using namespace std;
 
-void FunctionCallNode::addSymbols() {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << " (" << children.size() << ")" << endl;
-
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->addSymbols();
-  }
-}
-
 Symbol FunctionCallNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;

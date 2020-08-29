@@ -8,12 +8,10 @@
 using namespace std;
 
 void DoWhileNode::addSymbols() {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
-
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->addSymbols();
-  }
+  SymbolTable::getInstance()->openNewScope();
+  children[0]->addSymbols();
+  SymbolTable::getInstance()->closeScope();
+  children[1]->addSymbols();
 }
 
 Symbol DoWhileNode::sematicCheck(Symbol sym) {

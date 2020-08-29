@@ -13,12 +13,13 @@ DeclarationNode::DeclarationNode(struct node * n, bool mut) : DeclarationNode(n)
 }
 
 void DeclarationNode::addSymbols() {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << ", isMut: " << isMut << endl;
-
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->addSymbols();
-  }
+	Symbol s;
+	if(isMut){
+		s = Symbol::MUTABLE(value,"?","?");
+	}else{
+		s = Symbol::IMMUTABLE(value,"?","?");
+	}
+	SymbolTable::getInstance()->add(s);
 }
 
 Symbol DeclarationNode::sematicCheck(Symbol sym) {
