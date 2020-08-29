@@ -17,6 +17,7 @@ module crap {
         
         fn smth():void {
             emit something(nil, nil);
+            return 2, 3;
         }
     }
     
@@ -32,7 +33,7 @@ module penis {
         mut x:par2 = 3;
         let y:par1 = 4;
         mut z:par3 = y;
-        
+
         if(1) {
             return (5 * x + (y + z) - 5 / y) % 256;
         } else {
@@ -83,6 +84,10 @@ module penis {
 
     fn log(a:u8):u8 {
         return !a&&a||a&&!a;
+
+        call(2, 3, 4);
+
+        return 2, 3;
     }
 }
 

@@ -82,12 +82,12 @@ as          return(KEYWORD_AS);
 "&="        return(OP_AND_EQ);
 "|="        return(OP_OR_EQ);
 "^="        return(OP_XOR_EQ);
+"~"         return(OP_TILDE);
+"!"         return(OP_BANG);
 
 "->"        return(OP_ARROW);
 
-"~"         return(OP_TILDE);
 ","         return(OP_COMMA);
-"!"         return(OP_BANG);
 "@"         return(OP_AT);
 
 \'\\?.\'                   {

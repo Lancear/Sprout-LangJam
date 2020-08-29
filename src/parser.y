@@ -56,6 +56,9 @@
 
 %type<string> IndirectedIdentifier
 
+%left OP_COMMA
+%precedence PARAMS
+%precedence COMMA_EXPR
 %left OP_ADD_EQ OP_SUB_EQ OP_MUL_EQ OP_DIV_EQ OP_MOD_EQ OP_AND_EQ OP_OR_EQ OP_XOR_EQ OP_SHL_EQ OP_SHR_EQ
 %left OP_TENARY OP_COLON
 %left OP_LOG_OR
@@ -791,6 +794,14 @@ Expression
         ),
     NULL, "!=");
 }
+| Expression[expr1] OP_COMMA Expression[expr2] %prec COMMA_EXPR {
+    $$ = node(CommaExpression,
+        append_brother(
+            $expr1,
+            $expr2
+        ),
+    NULL, NULL);
+}
 | LValue[expr1] OP_INCREMENT {
     $$ = node(PostOp,
         $expr1,
@@ -856,10 +867,10 @@ LValue
 /* MISC */
 
 CallParameterList
-: CallParameterList OP_COMMA Expression {
+: CallParameterList OP_COMMA Expression %prec PARAMS {
     $$ = append_brother($1, $3);
 }
-| Expression {
+| Expression %prec PARAMS {
     $$ = $1;
 }
 ;
