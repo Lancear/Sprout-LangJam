@@ -57,7 +57,7 @@ Symbol Symbol::MODULE(string name, SimpleScope value)
 	s.type = SymbolType::MODULE;
 	return s;
 }
-Symbol Symbol::MODULE(string name, SimpleScope value)
+Symbol Symbol::CLASS(string name, SimpleScope value)
 {
 	Symbol s = Symbol();
 	s.name = name;
