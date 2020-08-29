@@ -18,7 +18,7 @@ enum {
     AddAssignExpression, SubtractAssignExpression, MultiplyAssignExpression, DivideAssignExpression,
     ModulusAssignExpression, RightShiftAssignExpression, LeftShiftAssignExpression, BitwiseAndAssignExpression,
     BitwiseOrAssignExpression, BitwiseXorAssignExpression, LogicalNegationExpression, BitwiseNegationExpression,
-    UnaryMinusExpression, CommaExpression
+    UnaryMinusExpression, CommaExpression, InlineOn
 };
 
 struct node {

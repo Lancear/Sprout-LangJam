@@ -52,7 +52,7 @@
 %type<ast> Statement StatementList ReturnStatement Expression DeclarationStatement CodeBlock
 %type<ast> ConditionalStatement TypeNode WhileStatement ForStatement ModuleDeclaration TopLevelScope
 %type<ast> CallParameterList LValue DoWhileStatement ClassDeclaration ModuleScope ClassScope ImmutableDeclaration
-%type<ast> TypeList TypeListLoop EventDeclaration FunctionCall EmitStatement
+%type<ast> TypeList TypeListLoop EventDeclaration FunctionCall EmitStatement InlineOnStatement
 
 %type<string> IndirectedIdentifier
 
@@ -340,6 +340,7 @@ Statement
 | ForStatement         { $$ = $1; }
 | Expression SEMICOLON { $$ = $1; }
 | EmitStatement        { $$ = $1; }
+| InlineOnStatement    { $$ = $1; }
 | SEMICOLON            { $$ = NULL; }
 ;
 
@@ -359,6 +360,17 @@ WhileStatement
         append_brother(
             $expr,
             $code
+        ),
+    NULL, NULL);
+}
+;
+
+InlineOnStatement
+: OP_AT FunctionCall[a] CompoundStatement[b] {
+    $$ = node(InlineOn,
+        append_brother(
+            $a,
+            $b
         ),
     NULL, NULL);
 }

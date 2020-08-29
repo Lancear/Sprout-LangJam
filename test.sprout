@@ -83,6 +83,10 @@ module penis {
     
     
     fn test5():u8 {
+        @some.object(broh1, broh2) {
+            return broh1, broh2;
+        }
+
         return 2 ? 3 ? 4 : 5 : 6;
     }
 
