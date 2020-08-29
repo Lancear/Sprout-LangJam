@@ -1,6 +1,5 @@
 
 TODO:
- -> inline event handlers via @ (local, global)
  -> pattern matching
  -> generics
  -> lambda syntax (single expression makes implicit braces and return)

@@ -93,9 +93,9 @@ as          return(KEYWORD_AS);
 "~"         return(OP_TILDE);
 "!"         return(OP_BANG);
 ","         return(OP_COMMA);
+"@"         return(OP_AT);
 
 "->"        return(OP_ARROW);
-"@"         return(OP_AT);
 
 \'\\?.\'                   {
     yylval->string = strdup(yytext);
