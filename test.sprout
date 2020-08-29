@@ -1,50 +1,55 @@
+import std.Console as console;
+import std.Collections;
 
-module penis {
-    fn test(arg1:par1, arg2:par2):void {
-        mut x:par2 = 3;
-        let y:par1 = 4;
-        mut z:par3 = y;
-        
-        if(1) {
-            return (5 * x + (y + z) - 5 / y) % 256;
-        } else {
-            if(0)
-                return 3;
-            else
-                if(2)
-                    return 6;
+module test {
+    fn add(x: &i32, mut y: i32): i32 {
+        mut x: char;
+        let y: u32 = -(1 + 5);
+        let z = "hello world!";
+        z = "hell no world!";
+        y >>= 4;
+        y |= ~4;
+    }
+
+    fn inc(mut value: &mut i32, by: i32) {
+        if (value != null) {
+            return value + by;
         }
-    }
-
-    fn test2(arg1:par1  .name, arg2:par2   .very.           long    . type .  name):void {
-        while(arg1)
-            arg1 = dispatch(x, y, z);
-    }
-    
-    fn test3(i:u8, j:u8):void {
-        for(mut a = 0; a < i; a = a + 1)
-            dispatch();
-    }
-    
-    fn test4():void {
-        mut a = 13;
-        
-        a++;
-        
-        a = ++a + a++;
-    
-        do {
-            test3();
-        } while(test());
-        
-        do
-            test3();
-        while(test());
-    }
-    
-    
-    fn test5():u8 {
-        return 2 ? 3 ? 4 : 5 : 6;
+        else if (value > true) {
+            add(value, by);
+        }
+        else {
+            return 420;
+        }
     }
 }
 
+class Todo {
+  mut text: string;
+  let done = false;
+
+  event completed(Todo, int);
+
+  fn Todo(text: string) {
+    this.text= text;
+  }
+
+  fn complete() {
+    let todo = Todo(this.text, next);
+    emit completed(todo, 2);
+    return todo;
+  }
+}
+
+
+fn main() {
+    for (mut x = 0; x < 12; x += 2);
+    for (mut x = 0;; x++) return 69;
+
+    while (true != false && !false) {
+        return 5 - 4 * 7 / 12 % 0;
+    }
+
+    console.log( true ? false : true );
+    console.log("arg1", "arg2", 3, true);
+}

@@ -273,7 +273,7 @@ ImportStatement
 
 /**
  * Function declaration:
- *  `fn blah(...):blah {'
+ *  `fn blah(...):blah {`
  *  `fn blah(...) {`
  */
 FunctionDeclaration

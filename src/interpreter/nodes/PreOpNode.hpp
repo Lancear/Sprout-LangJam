@@ -5,7 +5,9 @@
 
 class PreOpNode : public TreeNode {
   using TreeNode::TreeNode;
+
   public:
-    Symbol analyse(Symbol sym);
+    void addSymbols();
+    Symbol sematicCheck(Symbol sym);
     Symbol execute(Symbol sym);
 };

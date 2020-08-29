@@ -1,22 +1,27 @@
 #include <string>
 #include <memory>
 
-#include "CodeBlockNode.hpp"
+#include "DeclarationNode.hpp"
 #include "../symboltable/SymbolTable.hpp"
 #include "../symboltable/Symbol.hpp"
+#include "../../parser/node.h"
 
 using namespace std;
 
-void CodeBlockNode::addSymbols() {
+DeclarationNode::DeclarationNode(struct node * n, bool mut) : DeclarationNode(n) {
+  isMut = mut;
+}
+
+void DeclarationNode::addSymbols() {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
+  cout << type << ":  " << value << ", isMut: " << isMut << endl;
 
   for (int i = 0; i < children.size(); i++) {
     children[i]->addSymbols();
   }
 }
 
-Symbol CodeBlockNode::sematicCheck(Symbol sym) {
+Symbol DeclarationNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;
   
@@ -27,7 +32,7 @@ Symbol CodeBlockNode::sematicCheck(Symbol sym) {
   return Symbol::EMPTY();
 }
 
-Symbol CodeBlockNode::execute(Symbol sym) {
+Symbol DeclarationNode::execute(Symbol sym) {
   for (int i = 0; i < children.size(); i++) {
     children[i]->execute();
   }

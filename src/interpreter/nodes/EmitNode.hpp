@@ -3,9 +3,9 @@
 #include "TreeNode.hpp"
 #include "../symboltable/Symbol.hpp"
 
-class CodeBlockNode : public TreeNode {
+class EmitNode : public TreeNode {
   using TreeNode::TreeNode;
-  
+
   public:
     void addSymbols();
     Symbol sematicCheck(Symbol sym);

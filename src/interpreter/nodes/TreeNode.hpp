@@ -4,24 +4,32 @@
 #include <vector>
 #include <string>
 
-#include "../../parser/node.h"
 #include "../symboltable/Symbol.hpp"
+#include "../../parser/node.h"
 
 using namespace std;
 
 class TreeNode {
   public:
-    string value;
     unsigned int line;
     unsigned int col;
+    
+    string value;
+    int type;
+
     vector<unique_ptr<TreeNode>> children;
 
     explicit TreeNode(struct node * n);
     static unique_ptr<TreeNode> of(struct node * n);
 
-    virtual Symbol analyse(Symbol sym) = 0;
-    Symbol analyse();
+    virtual void addSymbols();
 
-    virtual Symbol execute(Symbol sym) = 0;
+    virtual Symbol sematicCheck(Symbol sym);
+    Symbol sematicCheck();
+
+    virtual Symbol execute(Symbol sym);
     Symbol execute();
+
+  protected:
+    explicit TreeNode() {};
 };

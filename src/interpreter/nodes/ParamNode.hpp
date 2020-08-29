@@ -2,11 +2,15 @@
 
 #include "TreeNode.hpp"
 #include "../symboltable/Symbol.hpp"
+#include "../../parser/node.h"
 
-class CodeBlockNode : public TreeNode {
+class ParamNode : public TreeNode {
   using TreeNode::TreeNode;
-  
+
   public:
+    bool isMut = false;
+
+    ParamNode(struct node * n, bool isMut);
     void addSymbols();
     Symbol sematicCheck(Symbol sym);
     Symbol execute(Symbol sym);

@@ -1,13 +1,13 @@
 #include <string>
 #include <memory>
 
-#include "CodeBlockNode.hpp"
+#include "ClassNode.hpp"
 #include "../symboltable/SymbolTable.hpp"
 #include "../symboltable/Symbol.hpp"
 
 using namespace std;
 
-void CodeBlockNode::addSymbols() {
+void ClassNode::addSymbols() {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;
 
@@ -16,7 +16,7 @@ void CodeBlockNode::addSymbols() {
   }
 }
 
-Symbol CodeBlockNode::sematicCheck(Symbol sym) {
+Symbol ClassNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;
   
@@ -27,7 +27,7 @@ Symbol CodeBlockNode::sematicCheck(Symbol sym) {
   return Symbol::EMPTY();
 }
 
-Symbol CodeBlockNode::execute(Symbol sym) {
+Symbol ClassNode::execute(Symbol sym) {
   for (int i = 0; i < children.size(); i++) {
     children[i]->execute();
   }

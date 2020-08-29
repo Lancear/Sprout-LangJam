@@ -1,22 +1,26 @@
 #include <string>
 #include <memory>
 
-#include "CodeBlockNode.hpp"
+#include "TypeNode.hpp"
 #include "../symboltable/SymbolTable.hpp"
 #include "../symboltable/Symbol.hpp"
 
 using namespace std;
 
-void CodeBlockNode::addSymbols() {
+TypeNode::TypeNode(struct node * n, bool ref) : TypeNode(n) {
+  isRef = ref;
+}
+
+void TypeNode::addSymbols() {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
+  cout << type << ":  " << value << ", isRef: " << isRef << endl;
 
   for (int i = 0; i < children.size(); i++) {
     children[i]->addSymbols();
   }
 }
 
-Symbol CodeBlockNode::sematicCheck(Symbol sym) {
+Symbol TypeNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;
   
@@ -27,7 +31,7 @@ Symbol CodeBlockNode::sematicCheck(Symbol sym) {
   return Symbol::EMPTY();
 }
 
-Symbol CodeBlockNode::execute(Symbol sym) {
+Symbol TypeNode::execute(Symbol sym) {
   for (int i = 0; i < children.size(); i++) {
     children[i]->execute();
   }
