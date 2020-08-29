@@ -37,7 +37,7 @@ asdjkhasdl
 module penis {
     let CONSTANT:u8 = 1337;
     
-    fn test(mut arg1:par1, arg2:&par2):void {
+    fn test(arg1:mut par1, arg2:&par2):void {
         mut x:par2 = 3;
         let y:par1 = 4;
         mut z:par3 = y;
@@ -90,11 +90,11 @@ module penis {
         return 2 ? 3 ? 4 : 5 : 6;
     }
 
-    fn bitop(a:u8):u8 {
+    fn bitop(a:mut u8):u8 {
         return a>>3<<4&5|8^9;
     }
 
-    fn log(a:u8):u8 {
+    fn log(a:&mut u8):u8 {
         return !a&&a||a&&!a;
 
         call(2, 3, 4);
