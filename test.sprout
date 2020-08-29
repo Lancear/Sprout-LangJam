@@ -19,12 +19,20 @@ module crap {
             emit something(nil, nil);
             return 2, 3;
         }
-    }
+    } //broh
     
     fn main():u8 {
         return penis.CONSTANT;
     }
 }
+
+/* asdjkhasdl */
+
+/*
+
+asdjkhasdl
+
+*/
 
 module penis {
     let CONSTANT:u8 = 1337;
