@@ -74,7 +74,8 @@ Symbol ArithmeticExprNode::execute(Symbol sym) {
       result = lhs - rhs * (lhs / rhs);
       break;
     default:
-      break;
+      ErrorHandler::error(value + " operator not found");
+      return Symbol::ERROR();
   }
 
   return Symbol::EXPRESSION("int", result);

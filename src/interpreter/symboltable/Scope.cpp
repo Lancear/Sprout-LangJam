@@ -12,22 +12,22 @@ Scope* Scope::getParent(){
 }
 
 bool Scope::contains(string symbolName){
-	std::string symbolNameAsString(symbolName);
-	auto search = internalMap.find(symbolNameAsString);
+	auto search = internalMap.find(symbolName);
 	return search != internalMap.end();
 }
 
 void Scope::add(Symbol symbol)
 {
-	//Using a string here because pointers as keys could be a bit chaotic
-	std::string symbolNameAsString(symbol.name);
-	internalMap.insert(std::make_pair(symbolNameAsString,symbol));
+	if (contains(symbol.name)) {
+		internalMap.erase(symbol.name);
+	}
+
+	internalMap.insert(std::make_pair(symbol.name,symbol));
 }
 
 Symbol Scope::get(string name)
 {
-	std::string symbolNameAsString(name);
-	return internalMap.at(symbolNameAsString);
+	return internalMap.at(name);
 }
 
 void Scope::clear(){

@@ -5,7 +5,7 @@ fn square(x: int): int {
     return x * x;
 }
 
-fn main() {
+fn main(): int {
     let a = true;
     let b = a ? "true" : "false";
     let c = 1 + 3;
@@ -14,18 +14,17 @@ fn main() {
     let f = !a;
     let h = c++;
     let i = --c;
-    let j = b + ", yeah!";
-    mut x = "hello";
-    mut y = x = "hell no";
-    mut z = x += " world";
+    mut k = "hello";
+    mut l = k = "hell no";
 
     for (mut x = 0; x < 12; x += 2);
     for (mut x = 0;; x++) return 69;
 
     while (true != false && !false) {
-        return 5 - 4 * 7 / 12 % 0;
+        return 5 - 4 * 7 / 12 % 10;
     }
 
-    console.log( true ? false : true );
-    console.log("arg1", "arg2", 3, true);
+    let x = true;
+    let y = 3;
+    return 3 + square(7);
 }

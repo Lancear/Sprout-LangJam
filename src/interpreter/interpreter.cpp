@@ -13,16 +13,19 @@ using namespace std;
 void dispatch(struct node *n){
 	if(!n) return;
     
-    unique_ptr<TreeNode> tree = make_unique<FileNode>(n);
+  unique_ptr<TreeNode> tree = make_unique<FileNode>(n);
 
-    tree->addSymbols();
-    SymbolTable::getInstance()->resetCursor();
-    tree->sematicCheck();
+  tree->addSymbols();
+  SymbolTable::getInstance()->resetCursor();
+  tree->sematicCheck();
 
-    if (ErrorHandler::hadError) return;
-    
-    SymbolTable::getInstance()->resetCursor();
-    FunctionNode* main = (FunctionNode*)get<void*>( SymbolTable::getInstance()->get("main").value );
-    Symbol args[0];
-    main->execute(args);
+  if (ErrorHandler::hadError) return;
+  
+  SymbolTable::getInstance()->resetCursor();
+  FunctionNode* main = (FunctionNode*)get<void*>( SymbolTable::getInstance()->get("main").value );
+  Symbol args[0];
+  Symbol retVal = main->execute(args);
+
+  if (!retVal.isEmpty())
+    cout << get<int>(retVal.value) << endl;
 }
