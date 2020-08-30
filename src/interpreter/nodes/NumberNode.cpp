@@ -17,9 +17,5 @@ Symbol NumberNode::sematicCheck(Symbol sym) {
 }
 
 Symbol NumberNode::execute(Symbol sym) {
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->execute();
-  }
-
-  return Symbol::EMPTY();
+  return Symbol::EXPRESSION("int", stoi(value));
 }
