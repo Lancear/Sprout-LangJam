@@ -35,9 +35,16 @@ Symbol LogicalExprNode::sematicCheck(Symbol param) {
 }
 
 Symbol LogicalExprNode::execute(Symbol sym) {
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->execute();
+  int lhs = get<int>(children[0]->execute().value);
+  int rhs = get<int>(children[1]->execute().value);
+  int result = 0;
+
+  if(value == "||") result = lhs || rhs;
+  else if(value == "&&") result = lhs && rhs;
+  else {
+    ErrorHandler::error(value + " operator not found");
+    return Symbol::ERROR();
   }
 
-  return Symbol::EMPTY();
+  return Symbol::EXPRESSION("int", result);
 }
