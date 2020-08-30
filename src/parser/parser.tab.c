@@ -577,19 +577,19 @@ union yyalloc
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    89,    89,   104,   107,   123,   126,   129,   138,   139,
-     148,   151,   157,   162,   167,   172,   180,   183,   189,   192,
-     205,   206,   207,   208,   209,   216,   217,   218,   219,   229,
-     230,   231,   232,   233,   240,   246,   255,   264,   267,   280,
-     288,   308,   311,   320,   323,   332,   333,   334,   335,   336,
-     337,   338,   339,   340,   344,   354,   369,   391,   396,   410,
-     424,   438,   452,   466,   480,   497,   505,   518,   519,   522,
-     527,   535,   538,   546,   549,   558,   561,   564,   567,   570,
-     573,   581,   589,   597,   605,   613,   621,   629,   637,   645,
-     653,   661,   669,   677,   685,   693,   701,   709,   717,   725,
-     733,   741,   749,   757,   765,   773,   781,   789,   797,   802,
-     807,   812,   817,   822,   827,   832,   837,   840,   846,   849,
-     855,   862,   865
+       0,    88,    88,   103,   106,   122,   125,   128,   137,   138,
+     147,   150,   156,   161,   166,   171,   179,   182,   188,   191,
+     204,   205,   206,   207,   208,   215,   216,   217,   218,   228,
+     229,   230,   231,   232,   239,   245,   254,   263,   266,   279,
+     287,   307,   310,   319,   322,   331,   332,   333,   334,   335,
+     336,   337,   338,   339,   343,   353,   368,   390,   395,   409,
+     423,   437,   451,   465,   479,   496,   504,   517,   518,   521,
+     526,   534,   537,   545,   548,   557,   560,   563,   566,   569,
+     572,   580,   588,   596,   604,   612,   620,   628,   636,   644,
+     652,   660,   668,   676,   684,   692,   700,   708,   716,   724,
+     732,   740,   748,   756,   764,   772,   780,   788,   796,   801,
+     806,   811,   816,   821,   826,   831,   836,   839,   845,   848,
+     854,   861,   864
 };
 #endif
 
@@ -670,7 +670,7 @@ static const yytype_int16 yypact[] =
       10,   101,   166,   -95,   115,   450,   492,   -95,   -95,   215,
      227,   274,   -95,   -95,   893,   -15,   134,   134,   255,   255,
      -95,   -95,   -95,  1036,   991,   979,   942,  1028,   879,   474,
-     418,   418,   418,   418,   474,   -95,   893,   893,   893,   893,
+     418,   418,   418,   418,   474,   893,   893,   893,   893,   893,
      893,   893,   893,   893,   893,   893,   -95,   720,   410,   733,
      410,   -95,   -95,   171,   224,   -95,   -95,   191,   191,   410,
      340,   773,   350,   786,   -95,   410,   410,   -95,   826,   -95,
@@ -1832,13 +1832,13 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 89 "src/parser/parser.y"
+#line 88 "src/parser/parser.y"
                 { dispatch((yyvsp[0].ast)); }
 #line 1838 "src/parser/parser.tab.c"
     break;
 
   case 3:
-#line 104 "src/parser/parser.y"
+#line 103 "src/parser/parser.y"
              {
     (yyval.string) = strdup((yyvsp[0].string));
 }
@@ -1846,7 +1846,7 @@ yyreduce:
     break;
 
   case 4:
-#line 107 "src/parser/parser.y"
+#line 106 "src/parser/parser.y"
                                          {
     char * p;
     
@@ -1860,7 +1860,7 @@ yyreduce:
     break;
 
   case 5:
-#line 123 "src/parser/parser.y"
+#line 122 "src/parser/parser.y"
                                       {
     (yyval.ast) = node(TypeCompound, NULL, NULL, (yyvsp[0].string));
 }
@@ -1868,7 +1868,7 @@ yyreduce:
     break;
 
   case 6:
-#line 126 "src/parser/parser.y"
+#line 125 "src/parser/parser.y"
                                                  {
     (yyval.ast) = node(ImmutableReferenceTypeCompound, NULL, NULL, (yyvsp[0].string));
 }
@@ -1876,7 +1876,7 @@ yyreduce:
     break;
 
   case 7:
-#line 129 "src/parser/parser.y"
+#line 128 "src/parser/parser.y"
                                                              {
     (yyval.ast) = node(MutableReferenceTypeCompound, NULL, NULL, (yyvsp[0].string));
 }
@@ -1884,19 +1884,19 @@ yyreduce:
     break;
 
   case 8:
-#line 138 "src/parser/parser.y"
+#line 137 "src/parser/parser.y"
                     { (yyval.ast) = (yyvsp[0].ast); }
 #line 1890 "src/parser/parser.tab.c"
     break;
 
   case 9:
-#line 139 "src/parser/parser.y"
+#line 138 "src/parser/parser.y"
             { (yyval.ast) = (yyvsp[0].ast); }
 #line 1896 "src/parser/parser.tab.c"
     break;
 
   case 10:
-#line 148 "src/parser/parser.y"
+#line 147 "src/parser/parser.y"
                                                        {
     (yyval.ast) = node(ParameterList, (yyvsp[-1].ast), NULL, NULL);
 }
@@ -1904,7 +1904,7 @@ yyreduce:
     break;
 
   case 11:
-#line 151 "src/parser/parser.y"
+#line 150 "src/parser/parser.y"
                                {
     (yyval.ast) = node(ParameterList, NULL, NULL, NULL);
 }
@@ -1912,7 +1912,7 @@ yyreduce:
     break;
 
   case 12:
-#line 157 "src/parser/parser.y"
+#line 156 "src/parser/parser.y"
                                                                          {
     (yyval.ast) = node(Parameter,
         node(ParameterType, (yyvsp[-2].ast), NULL, NULL)
@@ -1922,7 +1922,7 @@ yyreduce:
     break;
 
   case 13:
-#line 162 "src/parser/parser.y"
+#line 161 "src/parser/parser.y"
                                         {
     (yyval.ast) = node(Parameter,
         node(ParameterType, (yyvsp[0].ast), NULL, NULL)
@@ -1932,7 +1932,7 @@ yyreduce:
     break;
 
   case 14:
-#line 167 "src/parser/parser.y"
+#line 166 "src/parser/parser.y"
                                                                                      {
     (yyval.ast) = node(MutableParameter,
         node(ParameterType, (yyvsp[-2].ast), NULL, NULL)
@@ -1942,7 +1942,7 @@ yyreduce:
     break;
 
   case 15:
-#line 172 "src/parser/parser.y"
+#line 171 "src/parser/parser.y"
                                                     {
     (yyval.ast) = node(MutableParameter,
         node(ParameterType, (yyvsp[0].ast), NULL, NULL)
@@ -1952,7 +1952,7 @@ yyreduce:
     break;
 
   case 16:
-#line 180 "src/parser/parser.y"
+#line 179 "src/parser/parser.y"
                                                   {
     (yyval.ast) = node(TypeList, (yyvsp[-1].ast), NULL, NULL);
 }
@@ -1960,7 +1960,7 @@ yyreduce:
     break;
 
   case 17:
-#line 183 "src/parser/parser.y"
+#line 182 "src/parser/parser.y"
                                {
     (yyval.ast) = node(TypeList, NULL, NULL, NULL);
 }
@@ -1968,7 +1968,7 @@ yyreduce:
     break;
 
   case 18:
-#line 189 "src/parser/parser.y"
+#line 188 "src/parser/parser.y"
                                                          {
     (yyval.ast) = node(TypeList, NULL, (yyvsp[0].ast), (yyvsp[-2].string));
 }
@@ -1976,7 +1976,7 @@ yyreduce:
     break;
 
   case 19:
-#line 192 "src/parser/parser.y"
+#line 191 "src/parser/parser.y"
                              {
     (yyval.ast) = node(TypeList, NULL, NULL, (yyvsp[0].string));
 }
@@ -1984,91 +1984,91 @@ yyreduce:
     break;
 
   case 20:
-#line 205 "src/parser/parser.y"
+#line 204 "src/parser/parser.y"
                                       { (yyval.ast) = append_brother((yyvsp[-1].ast), (yyvsp[0].ast)); }
 #line 1990 "src/parser/parser.tab.c"
     break;
 
   case 21:
-#line 206 "src/parser/parser.y"
+#line 205 "src/parser/parser.y"
                                           { (yyval.ast) = append_brother((yyvsp[-1].ast), (yyvsp[0].ast)); }
 #line 1996 "src/parser/parser.tab.c"
     break;
 
   case 22:
-#line 207 "src/parser/parser.y"
+#line 206 "src/parser/parser.y"
                                         { (yyval.ast) = append_brother((yyvsp[-1].ast), (yyvsp[0].ast)); }
 #line 2002 "src/parser/parser.tab.c"
     break;
 
   case 23:
-#line 208 "src/parser/parser.y"
+#line 207 "src/parser/parser.y"
                                        { (yyval.ast) = append_brother((yyvsp[-1].ast), (yyvsp[0].ast)); }
 #line 2008 "src/parser/parser.tab.c"
     break;
 
   case 24:
-#line 209 "src/parser/parser.y"
+#line 208 "src/parser/parser.y"
          { (yyval.ast) = NULL; }
 #line 2014 "src/parser/parser.tab.c"
     break;
 
   case 25:
-#line 216 "src/parser/parser.y"
+#line 215 "src/parser/parser.y"
                                        { (yyval.ast) = append_brother((yyvsp[-1].ast), (yyvsp[0].ast)); }
 #line 2020 "src/parser/parser.tab.c"
     break;
 
   case 26:
-#line 217 "src/parser/parser.y"
+#line 216 "src/parser/parser.y"
                                         { (yyval.ast) = append_brother((yyvsp[-1].ast), (yyvsp[0].ast)); }
 #line 2026 "src/parser/parser.tab.c"
     break;
 
   case 27:
-#line 218 "src/parser/parser.y"
+#line 217 "src/parser/parser.y"
                                     { (yyval.ast) = append_brother((yyvsp[-1].ast), (yyvsp[0].ast)); }
 #line 2032 "src/parser/parser.tab.c"
     break;
 
   case 28:
-#line 219 "src/parser/parser.y"
+#line 218 "src/parser/parser.y"
          { (yyval.ast) = NULL; }
 #line 2038 "src/parser/parser.tab.c"
     break;
 
   case 29:
-#line 229 "src/parser/parser.y"
+#line 228 "src/parser/parser.y"
                                     { (yyval.ast) = append_brother((yyvsp[-1].ast), (yyvsp[0].ast)); }
 #line 2044 "src/parser/parser.tab.c"
     break;
 
   case 30:
-#line 230 "src/parser/parser.y"
+#line 229 "src/parser/parser.y"
                                         { (yyval.ast) = append_brother((yyvsp[-1].ast), (yyvsp[0].ast)); }
 #line 2050 "src/parser/parser.tab.c"
     break;
 
   case 31:
-#line 231 "src/parser/parser.y"
+#line 230 "src/parser/parser.y"
                                      { (yyval.ast) = append_brother((yyvsp[-1].ast), (yyvsp[0].ast)); }
 #line 2056 "src/parser/parser.tab.c"
     break;
 
   case 32:
-#line 232 "src/parser/parser.y"
+#line 231 "src/parser/parser.y"
                                          { (yyval.ast) = append_brother((yyvsp[-1].ast), (yyvsp[0].ast)); }
 #line 2062 "src/parser/parser.tab.c"
     break;
 
   case 33:
-#line 233 "src/parser/parser.y"
+#line 232 "src/parser/parser.y"
          { (yyval.ast) = NULL; }
 #line 2068 "src/parser/parser.tab.c"
     break;
 
   case 34:
-#line 240 "src/parser/parser.y"
+#line 239 "src/parser/parser.y"
                                                                                               {
     (yyval.ast) = node(ModuleDeclaration, (yyvsp[-1].ast), NULL, (yyvsp[-3].string));
 }
@@ -2076,7 +2076,7 @@ yyreduce:
     break;
 
   case 35:
-#line 246 "src/parser/parser.y"
+#line 245 "src/parser/parser.y"
                                                         {
     (yyval.ast) = node(EventDeclaration, (yyvsp[-1].ast), NULL, (yyvsp[-2].string));
 }
@@ -2084,7 +2084,7 @@ yyreduce:
     break;
 
   case 36:
-#line 255 "src/parser/parser.y"
+#line 254 "src/parser/parser.y"
                                                                                   {
     (yyval.ast) = node(ClassDeclaration, (yyvsp[-1].ast), NULL, (yyvsp[-3].string));
 }
@@ -2092,7 +2092,7 @@ yyreduce:
     break;
 
   case 37:
-#line 264 "src/parser/parser.y"
+#line 263 "src/parser/parser.y"
                                                      {
     (yyval.ast) = node(ImportDeclaration, NULL, NULL, (yyvsp[-1].string));
 }
@@ -2100,7 +2100,7 @@ yyreduce:
     break;
 
   case 38:
-#line 267 "src/parser/parser.y"
+#line 266 "src/parser/parser.y"
                                                                                {
     (yyval.ast) = node(ImportDeclaration,
         node(AsCompound, NULL, NULL, (yyvsp[-1].string)),
@@ -2110,7 +2110,7 @@ yyreduce:
     break;
 
   case 39:
-#line 280 "src/parser/parser.y"
+#line 279 "src/parser/parser.y"
                                                                            {
     (yyval.ast) = node(FunctionDeclaration,
         append_brother(
@@ -2123,7 +2123,7 @@ yyreduce:
     break;
 
   case 40:
-#line 288 "src/parser/parser.y"
+#line 287 "src/parser/parser.y"
                                                                                                   {
     (yyval.ast) = node(FunctionDeclaration,
         node(FunctionReturnType, NULL,
@@ -2140,7 +2140,7 @@ yyreduce:
     break;
 
   case 41:
-#line 308 "src/parser/parser.y"
+#line 307 "src/parser/parser.y"
                                                             {
     (yyval.ast) = node(CodeBlock, (yyvsp[-1].ast), NULL, NULL);
 }
@@ -2148,7 +2148,7 @@ yyreduce:
     break;
 
   case 42:
-#line 311 "src/parser/parser.y"
+#line 310 "src/parser/parser.y"
                                    {
     (yyval.ast) = node(CodeBlock, NULL, NULL, NULL);
 }
@@ -2156,7 +2156,7 @@ yyreduce:
     break;
 
   case 43:
-#line 320 "src/parser/parser.y"
+#line 319 "src/parser/parser.y"
                   {
     (yyval.ast) = (yyvsp[0].ast);
 }
@@ -2164,7 +2164,7 @@ yyreduce:
     break;
 
   case 44:
-#line 323 "src/parser/parser.y"
+#line 322 "src/parser/parser.y"
                                       {
     (yyval.ast) = append_brother((yyvsp[-1].ast), (yyvsp[0].ast));
 }
@@ -2172,61 +2172,61 @@ yyreduce:
     break;
 
   case 45:
-#line 332 "src/parser/parser.y"
+#line 331 "src/parser/parser.y"
                        { (yyval.ast) = (yyvsp[0].ast); }
 #line 2178 "src/parser/parser.tab.c"
     break;
 
   case 46:
-#line 333 "src/parser/parser.y"
+#line 332 "src/parser/parser.y"
                        { (yyval.ast) = (yyvsp[0].ast); }
 #line 2184 "src/parser/parser.tab.c"
     break;
 
   case 47:
-#line 334 "src/parser/parser.y"
+#line 333 "src/parser/parser.y"
                        { (yyval.ast) = (yyvsp[0].ast); }
 #line 2190 "src/parser/parser.tab.c"
     break;
 
   case 48:
-#line 335 "src/parser/parser.y"
+#line 334 "src/parser/parser.y"
                        { (yyval.ast) = (yyvsp[0].ast); }
 #line 2196 "src/parser/parser.tab.c"
     break;
 
   case 49:
-#line 336 "src/parser/parser.y"
+#line 335 "src/parser/parser.y"
                        { (yyval.ast) = (yyvsp[0].ast); }
 #line 2202 "src/parser/parser.tab.c"
     break;
 
   case 50:
-#line 337 "src/parser/parser.y"
+#line 336 "src/parser/parser.y"
                        { (yyval.ast) = (yyvsp[0].ast); }
 #line 2208 "src/parser/parser.tab.c"
     break;
 
   case 51:
-#line 338 "src/parser/parser.y"
+#line 337 "src/parser/parser.y"
                        { (yyval.ast) = (yyvsp[-1].ast); }
 #line 2214 "src/parser/parser.tab.c"
     break;
 
   case 52:
-#line 339 "src/parser/parser.y"
+#line 338 "src/parser/parser.y"
                        { (yyval.ast) = (yyvsp[0].ast); }
 #line 2220 "src/parser/parser.tab.c"
     break;
 
   case 53:
-#line 340 "src/parser/parser.y"
+#line 339 "src/parser/parser.y"
                        { (yyval.ast) = NULL; }
 #line 2226 "src/parser/parser.tab.c"
     break;
 
   case 54:
-#line 344 "src/parser/parser.y"
+#line 343 "src/parser/parser.y"
                                             {
     (yyval.ast) = node(EmitStatement, (yyvsp[-1].ast), NULL, NULL);
 }
@@ -2234,7 +2234,7 @@ yyreduce:
     break;
 
   case 55:
-#line 354 "src/parser/parser.y"
+#line 353 "src/parser/parser.y"
                                                                               {
     (yyval.ast) = node(WhileStatement,
         append_brother(
@@ -2247,7 +2247,7 @@ yyreduce:
     break;
 
   case 56:
-#line 369 "src/parser/parser.y"
+#line 368 "src/parser/parser.y"
                                                                                                    {
     (yyval.ast) = node(DoWhileStatement,
         append_brother(
@@ -2260,7 +2260,7 @@ yyreduce:
     break;
 
   case 57:
-#line 391 "src/parser/parser.y"
+#line 390 "src/parser/parser.y"
                                                                                {
     (yyval.ast) = node(ForStatement,
         (yyvsp[0].ast),
@@ -2270,7 +2270,7 @@ yyreduce:
     break;
 
   case 58:
-#line 396 "src/parser/parser.y"
+#line 395 "src/parser/parser.y"
                                                                                                 {
     (yyval.ast) = node(ForStatement,
         append_brother(
@@ -2289,7 +2289,7 @@ yyreduce:
     break;
 
   case 59:
-#line 410 "src/parser/parser.y"
+#line 409 "src/parser/parser.y"
                                                                                                                {
     (yyval.ast) = node(ForStatement,
         append_brother(
@@ -2308,7 +2308,7 @@ yyreduce:
     break;
 
   case 60:
-#line 424 "src/parser/parser.y"
+#line 423 "src/parser/parser.y"
                                                                                                                               {
     (yyval.ast) = node(ForStatement,
         append_brother(
@@ -2327,7 +2327,7 @@ yyreduce:
     break;
 
   case 61:
-#line 438 "src/parser/parser.y"
+#line 437 "src/parser/parser.y"
                                                                                                              {
     (yyval.ast) = node(ForStatement,
         append_brother(
@@ -2346,7 +2346,7 @@ yyreduce:
     break;
 
   case 62:
-#line 452 "src/parser/parser.y"
+#line 451 "src/parser/parser.y"
                                                                                               {
     (yyval.ast) = node(ForStatement,
         append_brother(
@@ -2365,7 +2365,7 @@ yyreduce:
     break;
 
   case 63:
-#line 466 "src/parser/parser.y"
+#line 465 "src/parser/parser.y"
                                                                                               {
     (yyval.ast) = node(ForStatement,
         append_brother(
@@ -2384,7 +2384,7 @@ yyreduce:
     break;
 
   case 64:
-#line 480 "src/parser/parser.y"
+#line 479 "src/parser/parser.y"
                                                                                                                {
     (yyval.ast) = node(ForStatement,
         append_brother(
@@ -2403,7 +2403,7 @@ yyreduce:
     break;
 
   case 65:
-#line 497 "src/parser/parser.y"
+#line 496 "src/parser/parser.y"
                                                                            {
     (yyval.ast) = node(ConditionalStatement,
         append_brother(
@@ -2416,7 +2416,7 @@ yyreduce:
     break;
 
   case 66:
-#line 505 "src/parser/parser.y"
+#line 504 "src/parser/parser.y"
                                                                                                           {
     (yyval.ast) = node(ConditionalStatement,
         node(ElseCompound,
@@ -2431,13 +2431,13 @@ yyreduce:
     break;
 
   case 67:
-#line 518 "src/parser/parser.y"
+#line 517 "src/parser/parser.y"
                        { (yyval.ast) = (yyvsp[0].ast); }
 #line 2437 "src/parser/parser.tab.c"
     break;
 
   case 68:
-#line 519 "src/parser/parser.y"
+#line 518 "src/parser/parser.y"
                                                                  {
     (yyval.ast) = node(MutableLocalDeclarationStatement, (yyvsp[-1].ast), NULL, (yyvsp[-3].string));
 }
@@ -2445,7 +2445,7 @@ yyreduce:
     break;
 
   case 69:
-#line 522 "src/parser/parser.y"
+#line 521 "src/parser/parser.y"
                                                                                 {
     (yyval.ast) = node(MutableLocalDeclarationStatement,
         node(VariableTypeNode, (yyvsp[-3].ast), (yyvsp[-1].ast), NULL),
@@ -2455,7 +2455,7 @@ yyreduce:
     break;
 
   case 70:
-#line 527 "src/parser/parser.y"
+#line 526 "src/parser/parser.y"
                                                         {
     (yyval.ast) = node(MutableLocalDeclarationStatement,
         node(VariableTypeNode, (yyvsp[-1].ast), NULL, NULL)
@@ -2465,7 +2465,7 @@ yyreduce:
     break;
 
   case 71:
-#line 535 "src/parser/parser.y"
+#line 534 "src/parser/parser.y"
                                                                  {
     (yyval.ast) = node(LocalDeclarationStatement, (yyvsp[-1].ast), NULL, (yyvsp[-3].string));
 }
@@ -2473,7 +2473,7 @@ yyreduce:
     break;
 
   case 72:
-#line 538 "src/parser/parser.y"
+#line 537 "src/parser/parser.y"
                                                                                 {
     (yyval.ast) = node(LocalDeclarationStatement,
         node(VariableTypeNode, (yyvsp[-3].ast), (yyvsp[-1].ast), NULL)
@@ -2483,7 +2483,7 @@ yyreduce:
     break;
 
   case 73:
-#line 546 "src/parser/parser.y"
+#line 545 "src/parser/parser.y"
                                              {
     (yyval.ast) = node(ReturnStatement, (yyvsp[-1].ast), NULL, NULL);
 }
@@ -2491,7 +2491,7 @@ yyreduce:
     break;
 
   case 74:
-#line 549 "src/parser/parser.y"
+#line 548 "src/parser/parser.y"
                            {
     (yyval.ast) = node(ReturnStatement, NULL, NULL, NULL);
 }
@@ -2499,7 +2499,7 @@ yyreduce:
     break;
 
   case 75:
-#line 558 "src/parser/parser.y"
+#line 557 "src/parser/parser.y"
                          {
     (yyval.ast) = node(NumericImmediate, NULL, NULL, (yyvsp[0].string));
 }
@@ -2507,7 +2507,7 @@ yyreduce:
     break;
 
   case 76:
-#line 561 "src/parser/parser.y"
+#line 560 "src/parser/parser.y"
                    {
     (yyval.ast) = node(CharacterConstant, NULL, NULL, (yyvsp[0].string));
 }
@@ -2515,7 +2515,7 @@ yyreduce:
     break;
 
   case 77:
-#line 564 "src/parser/parser.y"
+#line 563 "src/parser/parser.y"
               {
     (yyval.ast) = (yyvsp[0].ast);
 }
@@ -2523,7 +2523,7 @@ yyreduce:
     break;
 
   case 78:
-#line 567 "src/parser/parser.y"
+#line 566 "src/parser/parser.y"
                                                                            {
     (yyval.ast) = node(Tenary, append_brother(append_brother((yyvsp[-4].ast), (yyvsp[-2].ast)), (yyvsp[0].ast)), NULL, NULL);
 }
@@ -2531,7 +2531,7 @@ yyreduce:
     break;
 
   case 79:
-#line 570 "src/parser/parser.y"
+#line 569 "src/parser/parser.y"
                     {
     (yyval.ast) = node(StringImmediate, NULL, NULL, (yyvsp[0].string));
 }
@@ -2539,7 +2539,7 @@ yyreduce:
     break;
 
   case 80:
-#line 573 "src/parser/parser.y"
+#line 572 "src/parser/parser.y"
                                               {
     (yyval.ast) = node(AddExpression,
         append_brother(
@@ -2552,7 +2552,7 @@ yyreduce:
     break;
 
   case 81:
-#line 581 "src/parser/parser.y"
+#line 580 "src/parser/parser.y"
                                             {
     (yyval.ast) = node(AddAssignExpression,
         append_brother(
@@ -2565,7 +2565,7 @@ yyreduce:
     break;
 
   case 82:
-#line 589 "src/parser/parser.y"
+#line 588 "src/parser/parser.y"
                                                {
     (yyval.ast) = node(SubtractExpression,
         append_brother(
@@ -2578,7 +2578,7 @@ yyreduce:
     break;
 
   case 83:
-#line 597 "src/parser/parser.y"
+#line 596 "src/parser/parser.y"
                                             {
     (yyval.ast) = node(SubtractAssignExpression,
         append_brother(
@@ -2591,7 +2591,7 @@ yyreduce:
     break;
 
   case 84:
-#line 605 "src/parser/parser.y"
+#line 604 "src/parser/parser.y"
                                               {
     (yyval.ast) = node(MultiplyExpression,
         append_brother(
@@ -2604,7 +2604,7 @@ yyreduce:
     break;
 
   case 85:
-#line 613 "src/parser/parser.y"
+#line 612 "src/parser/parser.y"
                                             {
     (yyval.ast) = node(MultiplyAssignExpression,
         append_brother(
@@ -2617,7 +2617,7 @@ yyreduce:
     break;
 
   case 86:
-#line 621 "src/parser/parser.y"
+#line 620 "src/parser/parser.y"
                                                {
     (yyval.ast) = node(DivideExpression,
         append_brother(
@@ -2630,7 +2630,7 @@ yyreduce:
     break;
 
   case 87:
-#line 629 "src/parser/parser.y"
+#line 628 "src/parser/parser.y"
                                             {
     (yyval.ast) = node(DivideAssignExpression,
         append_brother(
@@ -2643,7 +2643,7 @@ yyreduce:
     break;
 
   case 88:
-#line 637 "src/parser/parser.y"
+#line 636 "src/parser/parser.y"
                                              {
     (yyval.ast) = node(ModulusExpression,
         append_brother(
@@ -2656,7 +2656,7 @@ yyreduce:
     break;
 
   case 89:
-#line 645 "src/parser/parser.y"
+#line 644 "src/parser/parser.y"
                                             {
     (yyval.ast) = node(ModulusAssignExpression,
         append_brother(
@@ -2669,7 +2669,7 @@ yyreduce:
     break;
 
   case 90:
-#line 653 "src/parser/parser.y"
+#line 652 "src/parser/parser.y"
                                              {
     (yyval.ast) = node(LeftShiftExpression,
         append_brother(
@@ -2682,7 +2682,7 @@ yyreduce:
     break;
 
   case 91:
-#line 661 "src/parser/parser.y"
+#line 660 "src/parser/parser.y"
                                             {
     (yyval.ast) = node(LeftShiftAssignExpression,
         append_brother(
@@ -2695,7 +2695,7 @@ yyreduce:
     break;
 
   case 92:
-#line 669 "src/parser/parser.y"
+#line 668 "src/parser/parser.y"
                                              {
     (yyval.ast) = node(RightShiftExpression,
         append_brother(
@@ -2708,7 +2708,7 @@ yyreduce:
     break;
 
   case 93:
-#line 677 "src/parser/parser.y"
+#line 676 "src/parser/parser.y"
                                             {
     (yyval.ast) = node(RightShiftAssignExpression,
         append_brother(
@@ -2721,7 +2721,7 @@ yyreduce:
     break;
 
   case 94:
-#line 685 "src/parser/parser.y"
+#line 684 "src/parser/parser.y"
                                                  {
     (yyval.ast) = node(BitwiseAndExpression,
         append_brother(
@@ -2734,7 +2734,7 @@ yyreduce:
     break;
 
   case 95:
-#line 693 "src/parser/parser.y"
+#line 692 "src/parser/parser.y"
                                             {
     (yyval.ast) = node(BitwiseAndAssignExpression,
         append_brother(
@@ -2747,7 +2747,7 @@ yyreduce:
     break;
 
   case 96:
-#line 701 "src/parser/parser.y"
+#line 700 "src/parser/parser.y"
                                                 {
     (yyval.ast) = node(BitwiseOrExpression,
         append_brother(
@@ -2760,7 +2760,7 @@ yyreduce:
     break;
 
   case 97:
-#line 709 "src/parser/parser.y"
+#line 708 "src/parser/parser.y"
                                            {
     (yyval.ast) = node(BitwiseOrAssignExpression,
         append_brother(
@@ -2773,7 +2773,7 @@ yyreduce:
     break;
 
   case 98:
-#line 717 "src/parser/parser.y"
+#line 716 "src/parser/parser.y"
                                                  {
     (yyval.ast) = node(LogicalAndExpression,
         append_brother(
@@ -2786,7 +2786,7 @@ yyreduce:
     break;
 
   case 99:
-#line 725 "src/parser/parser.y"
+#line 724 "src/parser/parser.y"
                                                 {
     (yyval.ast) = node(LogicalOrExpression,
         append_brother(
@@ -2799,7 +2799,7 @@ yyreduce:
     break;
 
   case 100:
-#line 733 "src/parser/parser.y"
+#line 732 "src/parser/parser.y"
                                              {
     (yyval.ast) = node(BitwiseXorExpression,
         append_brother(
@@ -2812,7 +2812,7 @@ yyreduce:
     break;
 
   case 101:
-#line 741 "src/parser/parser.y"
+#line 740 "src/parser/parser.y"
                                             {
     (yyval.ast) = node(BitwiseXorAssignExpression,
         append_brother(
@@ -2825,7 +2825,7 @@ yyreduce:
     break;
 
   case 102:
-#line 749 "src/parser/parser.y"
+#line 748 "src/parser/parser.y"
                                                 {
     (yyval.ast) = node(ComparisonExpresison,
         append_brother(
@@ -2838,7 +2838,7 @@ yyreduce:
     break;
 
   case 103:
-#line 757 "src/parser/parser.y"
+#line 756 "src/parser/parser.y"
                                                 {
     (yyval.ast) = node(ComparisonExpresison,
         append_brother(
@@ -2851,7 +2851,7 @@ yyreduce:
     break;
 
   case 104:
-#line 765 "src/parser/parser.y"
+#line 764 "src/parser/parser.y"
                                                 {
     (yyval.ast) = node(ComparisonExpresison,
         append_brother(
@@ -2864,7 +2864,7 @@ yyreduce:
     break;
 
   case 105:
-#line 773 "src/parser/parser.y"
+#line 772 "src/parser/parser.y"
                                                 {
     (yyval.ast) = node(ComparisonExpresison,
         append_brother(
@@ -2877,7 +2877,7 @@ yyreduce:
     break;
 
   case 106:
-#line 781 "src/parser/parser.y"
+#line 780 "src/parser/parser.y"
                                                 {
     (yyval.ast) = node(ComparisonExpresison,
         append_brother(
@@ -2890,7 +2890,7 @@ yyreduce:
     break;
 
   case 107:
-#line 789 "src/parser/parser.y"
+#line 788 "src/parser/parser.y"
                                                 {
     (yyval.ast) = node(ComparisonExpresison,
         append_brother(
@@ -2903,7 +2903,7 @@ yyreduce:
     break;
 
   case 108:
-#line 797 "src/parser/parser.y"
+#line 796 "src/parser/parser.y"
                              {
     (yyval.ast) = node(PostOp,
         (yyvsp[-1].ast),
@@ -2913,7 +2913,7 @@ yyreduce:
     break;
 
   case 109:
-#line 802 "src/parser/parser.y"
+#line 801 "src/parser/parser.y"
                              {
     (yyval.ast) = node(PreOp,
         (yyvsp[0].ast),
@@ -2923,7 +2923,7 @@ yyreduce:
     break;
 
   case 110:
-#line 807 "src/parser/parser.y"
+#line 806 "src/parser/parser.y"
                              {
     (yyval.ast) = node(PostOp,
         (yyvsp[-1].ast),
@@ -2933,7 +2933,7 @@ yyreduce:
     break;
 
   case 111:
-#line 812 "src/parser/parser.y"
+#line 811 "src/parser/parser.y"
                              {
     (yyval.ast) = node(PreOp,
         (yyvsp[0].ast),
@@ -2943,7 +2943,7 @@ yyreduce:
     break;
 
   case 112:
-#line 817 "src/parser/parser.y"
+#line 816 "src/parser/parser.y"
                             {
     (yyval.ast) = node(BitwiseNegationExpression,
         (yyvsp[0].ast),
@@ -2953,7 +2953,7 @@ yyreduce:
     break;
 
   case 113:
-#line 822 "src/parser/parser.y"
+#line 821 "src/parser/parser.y"
                            {
     (yyval.ast) = node(LogicalNegationExpression,
         (yyvsp[0].ast),
@@ -2963,7 +2963,7 @@ yyreduce:
     break;
 
   case 114:
-#line 827 "src/parser/parser.y"
+#line 826 "src/parser/parser.y"
                                       {
     (yyval.ast) = node(UnaryMinusExpression,
         (yyvsp[0].ast),
@@ -2973,7 +2973,7 @@ yyreduce:
     break;
 
   case 115:
-#line 832 "src/parser/parser.y"
+#line 831 "src/parser/parser.y"
                                         {
     (yyval.ast) = node(AssignmentExpression,
         append_brother((yyvsp[-2].ast), (yyvsp[0].ast)),
@@ -2983,7 +2983,7 @@ yyreduce:
     break;
 
   case 116:
-#line 837 "src/parser/parser.y"
+#line 836 "src/parser/parser.y"
                      {
     (yyval.ast) = (yyvsp[0].ast);
 }
@@ -2991,7 +2991,7 @@ yyreduce:
     break;
 
   case 117:
-#line 840 "src/parser/parser.y"
+#line 839 "src/parser/parser.y"
                                                 {
     (yyval.ast) = (yyvsp[-1].ast);
 }
@@ -2999,7 +2999,7 @@ yyreduce:
     break;
 
   case 118:
-#line 846 "src/parser/parser.y"
+#line 845 "src/parser/parser.y"
                                                            {
     (yyval.ast) = node(FunctionCall, NULL, NULL, (yyvsp[-2].string));
 }
@@ -3007,7 +3007,7 @@ yyreduce:
     break;
 
   case 119:
-#line 849 "src/parser/parser.y"
+#line 848 "src/parser/parser.y"
                                                                                      {
     (yyval.ast) = node(FunctionCall, (yyvsp[-1].ast), NULL, (yyvsp[-3].string));
 }
@@ -3015,13 +3015,13 @@ yyreduce:
     break;
 
   case 120:
-#line 855 "src/parser/parser.y"
+#line 854 "src/parser/parser.y"
                        { (yyval.ast) = node(LValue, NULL, NULL, (yyvsp[0].string)); }
 #line 3021 "src/parser/parser.tab.c"
     break;
 
   case 121:
-#line 862 "src/parser/parser.y"
+#line 861 "src/parser/parser.y"
                                         {
     (yyval.ast) = append_brother((yyvsp[-2].ast), (yyvsp[0].ast));
 }
@@ -3029,7 +3029,7 @@ yyreduce:
     break;
 
   case 122:
-#line 865 "src/parser/parser.y"
+#line 864 "src/parser/parser.y"
              {
     (yyval.ast) = (yyvsp[0].ast);
 }
@@ -3275,7 +3275,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 870 "src/parser/parser.y"
+#line 869 "src/parser/parser.y"
 
 
 void yyerror(YYLTYPE * yyllocp, yyscan_t unused, const char * msg) {

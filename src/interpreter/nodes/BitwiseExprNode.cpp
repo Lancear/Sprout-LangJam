@@ -13,8 +13,8 @@ Symbol BitwiseExprNode::addSymbols() {
 }
 
 Symbol BitwiseExprNode::sematicCheck(Symbol param) {
-  string lhs = children[0]->addSymbols().dataType;
-  string rhs = children[1]->addSymbols().dataType;
+  string lhs = children[0]->sematicCheck().dataType;
+  string rhs = children[1]->sematicCheck().dataType;
   Symbol sym = Symbol::TYPE("int");
 
   if (lhs.compare("int") != 0) {

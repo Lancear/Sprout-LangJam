@@ -56,7 +56,7 @@
 
 %type<string> IndirectedIdentifier
 
-%left OP_ADD_EQ OP_SUB_EQ OP_MUL_EQ OP_DIV_EQ OP_MOD_EQ OP_AND_EQ OP_OR_EQ OP_XOR_EQ OP_SHL_EQ OP_SHR_EQ
+%left OP_EQ OP_ADD_EQ OP_SUB_EQ OP_MUL_EQ OP_DIV_EQ OP_MOD_EQ OP_AND_EQ OP_OR_EQ OP_XOR_EQ OP_SHL_EQ OP_SHR_EQ
 %left OP_TENARY OP_COLON
 %left OP_LOG_OR
 %left OP_LOG_AND
@@ -77,7 +77,6 @@
 
 /* Shut the fuck up the dangling else shift-reduce conflict. */
 %nonassoc KEYWORD_ELSE
-%nonassoc OP_EQ
 
 %start Start
 %%

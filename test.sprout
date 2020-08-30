@@ -1,48 +1,20 @@
 import std.Console as console;
 import std.Collections;
 
-module test {
-    fn add(x: &i32, mut y: i32): i32 {
-        mut x: char;
-        let y: u32 = -(1 + 5);
-        let z = "hello world!";
-        z = "hell no world!";
-        y >>= 4;
-        y |= ~4;
-    }
-
-    fn inc(mut value: &mut i32, by: i32) {
-        if (value != null) {
-            return value + by;
-        }
-        else if (value > true) {
-            add(value, by);
-        }
-        else {
-            return 420;
-        }
-    }
-}
-
-class Todo {
-  mut text: string;
-  let done = false;
-
-  event completed(Todo, int);
-
-  fn Todo(text: string) {
-    this.text= text;
-  }
-
-  fn complete() {
-    let todo = Todo(this.text, next);
-    emit completed(todo, 2);
-    return todo;
-  }
-}
-
-
 fn main() {
+    let a = true;
+    let b = a ? "true" : "false";
+    let c = 1 + 3;
+    let d = a && c > 2;
+    let e = -2 < 0;
+    let f = !a;
+    let h = c++;
+    let i = --c;
+    let j = b + ", yeah!";
+    mut x = "hello";
+    mut y = x = "hell no";
+    mut z = x += " world";
+
     for (mut x = 0; x < 12; x += 2);
     for (mut x = 0;; x++) return 69;
 

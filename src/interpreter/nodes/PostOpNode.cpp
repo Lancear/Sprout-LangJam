@@ -13,11 +13,15 @@ Symbol PostOpNode::addSymbols() {
 }
 
 Symbol PostOpNode::sematicCheck(Symbol param) {
-  string expr = children[0]->addSymbols().dataType;
+  Symbol expr = children[0]->sematicCheck();
   Symbol sym = Symbol::TYPE("int");
 
-  if (expr.compare("int") != 0) {
-    ErrorHandler::error("expr is not an integer");
+  if (expr.isError()) {
+    return Symbol::ERROR();
+  }
+
+  if (expr.dataType.compare("int") != 0) {
+    ErrorHandler::error(value + " expr is not an integer");
     sym = Symbol::ERROR();
   }
 
