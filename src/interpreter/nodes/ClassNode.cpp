@@ -10,7 +10,7 @@ using namespace std;
 Symbol ClassNode::addSymbols() {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   syms->openNewScope();
-  Symbol s = Symbol::CLASS(value,*(syms->currentScope));
+  Symbol s = Symbol::CLASS(value, (void*)(syms->currentScope));
   syms->currentScope->parent->add(s);
    for (int i = 0; i < children.size(); i++) {
     children[i]->addSymbols();

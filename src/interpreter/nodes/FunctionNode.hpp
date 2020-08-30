@@ -9,5 +9,5 @@ class FunctionNode : public TreeNode {
   public:
     Symbol addSymbols();
     Symbol sematicCheck(Symbol sym);
-    Symbol execute(Symbol sym);
+    Symbol execute(Symbol args[]);
 };

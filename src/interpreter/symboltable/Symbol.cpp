@@ -1,5 +1,6 @@
 #include <string>
 #include <map>
+
 #include "Symbol.hpp"
 
 static string EMPTYSTRING = "<EMPTY>";
@@ -48,7 +49,7 @@ Symbol Symbol::ERROR(){
 	s.type = SymbolType::ERROR;
 	return s;
 }
-Symbol Symbol::MODULE(string name, SimpleScope value)
+Symbol Symbol::MODULE(string name, void* value)
 {
 	Symbol s = Symbol();
 	s.name = name;
@@ -57,7 +58,7 @@ Symbol Symbol::MODULE(string name, SimpleScope value)
 	s.type = SymbolType::MODULE;
 	return s;
 }
-Symbol Symbol::CLASS(string name, SimpleScope value)
+Symbol Symbol::CLASS(string name, void* value)
 {
 	Symbol s = Symbol();
 	s.name = name;
@@ -66,7 +67,7 @@ Symbol Symbol::CLASS(string name, SimpleScope value)
 	s.type = SymbolType::MODULE;
 	return s;
 }
-Symbol Symbol::FUNCTION(string name, string returnType, SimpleTreeNode body)
+Symbol Symbol::FUNCTION(string name, string returnType, void* body)
 {
 	Symbol s = Symbol();
 	s.name = name;

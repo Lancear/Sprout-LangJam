@@ -4,14 +4,13 @@
 #include <vector>
 #include <string>
 
-#include "SimpleTreeNode.hpp"
 #include "../symboltable/Symbol.hpp"
 #include "../../parser/node.h"
 
 
 using namespace std;
 
-class TreeNode : public SimpleTreeNode {
+class TreeNode {
   public:
     unsigned int line;
     unsigned int col;

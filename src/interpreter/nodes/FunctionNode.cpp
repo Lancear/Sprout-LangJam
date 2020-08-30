@@ -10,7 +10,7 @@ using namespace std;
 Symbol FunctionNode::addSymbols() {
 	shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
 	syms->openNewScope();
-	Symbol s = Symbol::FUNCTION(value, "?", *this);
+	Symbol s = Symbol::FUNCTION(value, "?", (void*)this);
 	syms->currentScope->parent->add(s);
 	for (int i = 0; i < children.size(); i++)
 	{
@@ -34,7 +34,7 @@ Symbol FunctionNode::sematicCheck(Symbol sym) {
   return Symbol::EMPTY();
 }
 
-Symbol FunctionNode::execute(Symbol sym) {
+Symbol FunctionNode::execute(Symbol args[]) {
 	cout << "Executing ... " << endl;
 
   for (int i = 0; i < children.size(); i++) {

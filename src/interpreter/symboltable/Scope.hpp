@@ -6,10 +6,9 @@
 #include <memory>
 
 #include "Symbol.hpp"
-#include "SimpleScope.hpp"
 using namespace std;
 
-class Scope : public SimpleScope{
+class Scope {
 public:
 	Scope* parent;
 	vector<shared_ptr<Scope>> children;
