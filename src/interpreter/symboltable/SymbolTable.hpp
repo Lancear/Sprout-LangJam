@@ -31,6 +31,16 @@ public:
 	{
 		root = std::make_shared<Scope>();
 		currentScope = root.get();
+
+		add(Symbol::TYPE("int"));
+		add(Symbol::TYPE("bool"));
+		add(Symbol::TYPE("char"));
+		add(Symbol::TYPE("string"));
+		add(Symbol::IMMUTABLE("true", "bool", "true"));
+		add(Symbol::IMMUTABLE("false", "bool", "false"));
+		openNewScope();
+
+
 	}
 	shared_ptr<Scope> root;
 	Scope* currentScope;

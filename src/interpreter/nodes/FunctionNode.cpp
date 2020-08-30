@@ -35,6 +35,8 @@ Symbol FunctionNode::sematicCheck(Symbol sym) {
 }
 
 Symbol FunctionNode::execute(Symbol sym) {
+	cout << "Executing ... " << endl;
+
   for (int i = 0; i < children.size(); i++) {
     children[i]->execute();
   }

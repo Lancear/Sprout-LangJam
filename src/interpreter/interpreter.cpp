@@ -1,7 +1,14 @@
+#include <variant>
+
 #include "interpreter.hpp"
+#include "./nodes/SimpleTreeNode.hpp"
 #include "./nodes/TreeNode.hpp"
 #include "./nodes/FileNode.hpp"
-#include "./SymbolTable/SymbolTable.hpp"
+#include "./nodes/FunctionNode.hpp"
+#include "./symboltable/SymbolTable.hpp"
+#include "./symboltable/Symbol.hpp"
+
+using namespace std;
 
 void dispatch(struct node *n){
 	if(!n) return;
@@ -12,5 +19,6 @@ void dispatch(struct node *n){
     SymbolTable::getInstance()->resetCursor();
     tree->sematicCheck();
     
-    //SymbolTable::getInstance()->get("main").value->execute();
+    SymbolTable::getInstance()->resetCursor();
+    cout << SymbolTable::getInstance()->get("main").dataType << endl;
 }

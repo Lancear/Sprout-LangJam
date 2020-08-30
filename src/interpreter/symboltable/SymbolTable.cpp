@@ -83,6 +83,7 @@ SymbolTable * SymbolTable::resetCursor(){
 	currentScope = root.get();
 	branches = stack<int>();
 	branches.push(0);
+	enterScope();
 	return this;
 }
 
