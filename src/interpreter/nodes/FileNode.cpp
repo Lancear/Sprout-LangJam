@@ -1,6 +1,7 @@
 #include <string>
 
 #include "FileNode.hpp"
+#include "../ErrorHandler.hpp"
 #include "../symboltable/SymbolTable.hpp"
 #include "../symboltable/Symbol.hpp"
 #include "../../parser/node.h"

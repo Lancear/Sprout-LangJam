@@ -19,6 +19,7 @@ const cppFile =(name)=>
 #include <memory>
 
 #include "${name}.hpp"
+#include "../ErrorHandler.hpp"
 #include "../symboltable/SymbolTable.hpp"
 #include "../symboltable/Symbol.hpp"
 

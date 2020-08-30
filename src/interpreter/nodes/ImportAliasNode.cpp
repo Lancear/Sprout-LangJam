@@ -2,6 +2,7 @@
 #include <memory>
 
 #include "ImportAliasNode.hpp"
+#include "../ErrorHandler.hpp"
 #include "../symboltable/SymbolTable.hpp"
 #include "../symboltable/Symbol.hpp"
 

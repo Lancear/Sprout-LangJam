@@ -67,6 +67,8 @@ SymbolTable* SymbolTable::clear(){
 	return this;
 }
 
+
+
 SymbolTable * SymbolTable::openNewScope(){
 	currentScope = new Scope(currentScope);
 	return this;
@@ -79,13 +81,22 @@ SymbolTable * SymbolTable::closeScope(){
 	return this;
 }
 
+
+
 SymbolTable * SymbolTable::resetCursor(){
-	currentScope = root.get();
+	// skip scope with predefined symbols
+	currentScope = root->children.at(0).get();
+
 	branches = stack<int>();
 	branches.push(0);
-	enterScope();
+
+	callstack = stack<Scope>();
+	callstack.push(*currentScope);
+
 	return this;
 }
+
+
 
 SymbolTable* SymbolTable::enterScope(){
 	currentScope = currentScope->children.at(branches.top()).get();
@@ -99,5 +110,19 @@ SymbolTable* SymbolTable::exitScope(){
 	int top = branches.top();
 	branches.pop();
 	branches.push(top + 1);
+	return this;
+}
+
+
+
+SymbolTable* SymbolTable::pushScope(Scope scope) {
+	callstack.push(scope);
+	currentScope = &callstack.top();
+	return this;
+}
+
+SymbolTable* SymbolTable::popScope(){
+	callstack.pop();
+	currentScope = &callstack.top();
 	return this;
 }
