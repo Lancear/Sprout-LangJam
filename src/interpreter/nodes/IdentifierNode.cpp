@@ -8,6 +8,10 @@
 
 using namespace std;
 
+Symbol IdentifierNode::addSymbols() {
+  return (SymbolTable::getInstance()->contains(value)) ? SymbolTable::getInstance()->get(value) : Symbol::EMPTY();
+}
+
 Symbol IdentifierNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;

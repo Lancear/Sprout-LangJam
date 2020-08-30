@@ -8,6 +8,10 @@
 
 using namespace std;
 
+Symbol ShiftExprNode::addSymbols() {
+  return Symbol::TYPE("int");
+}
+
 Symbol ShiftExprNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;

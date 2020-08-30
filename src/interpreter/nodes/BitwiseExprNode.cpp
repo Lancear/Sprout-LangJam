@@ -8,6 +8,10 @@
 
 using namespace std;
 
+Symbol BitwiseExprNode::addSymbols() {
+  return Symbol::TYPE("int");
+}
+
 Symbol BitwiseExprNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;

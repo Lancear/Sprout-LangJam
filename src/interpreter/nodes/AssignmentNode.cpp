@@ -8,6 +8,10 @@
 
 using namespace std;
 
+Symbol AssignmentNode::addSymbols() {
+  return children[1]->addSymbols();
+}
+
 Symbol AssignmentNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;

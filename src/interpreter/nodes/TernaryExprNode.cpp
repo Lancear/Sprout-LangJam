@@ -8,6 +8,10 @@
 
 using namespace std;
 
+Symbol TernaryExprNode::addSymbols() {
+  return children[1]->addSymbols();
+}
+
 Symbol TernaryExprNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;

@@ -8,6 +8,10 @@
 
 using namespace std;
 
+Symbol ArithmeticExprNode::addSymbols() {
+  return Symbol::TYPE("int");
+}
+
 Symbol ArithmeticExprNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;

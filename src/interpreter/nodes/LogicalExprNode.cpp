@@ -8,6 +8,10 @@
 
 using namespace std;
 
+Symbol LogicalExprNode::addSymbols() {
+  return Symbol::TYPE("bool");
+}
+
 Symbol LogicalExprNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;
