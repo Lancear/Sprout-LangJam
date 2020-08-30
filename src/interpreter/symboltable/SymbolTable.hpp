@@ -68,8 +68,8 @@ class SymbolTable
 			add(Symbol::TYPE("bool"));
 			add(Symbol::TYPE("char"));
 			add(Symbol::TYPE("string"));
-			add(Symbol::IMMUTABLE("true", "bool", "true"));
-			add(Symbol::IMMUTABLE("false", "bool", "false"));
+			add(Symbol::IMMUTABLE("true", "bool", 1));
+			add(Symbol::IMMUTABLE("false", "bool", 0));
 			openNewScope();
 
 

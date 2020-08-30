@@ -17,10 +17,21 @@ Symbol DeclarationNode::addSymbols() {
 	Symbol s;
   string type = children[0]->addSymbols().dataType;
 
-	if(isMut){
-		s = Symbol::MUTABLE(value,type,"?");
-	}else{
-		s = Symbol::IMMUTABLE(value,type,"?");
+	if (isMut) {
+    if (type.compare("string") == 0) {
+      s = Symbol::MUTABLE(value,type,"");
+    }
+    else {
+      s = Symbol::MUTABLE(value,type,0);
+    }
+	}
+  else {
+		if (type.compare("string") == 0) {
+      s = Symbol::MUTABLE(value,type,"");
+    }
+    else {
+      s = Symbol::MUTABLE(value,type,0);
+    }
 	}
 
 	SymbolTable::getInstance()->add(s);

@@ -9,7 +9,7 @@
 using namespace std;
 
 Symbol CharNode::addSymbols() {
-  return Symbol::EXPRESSION("char", value);
+  return Symbol::EXPRESSION("char", (int)value[0]);
 }
 
 Symbol CharNode::sematicCheck(Symbol sym) {
