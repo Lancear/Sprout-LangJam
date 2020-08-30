@@ -1,6 +1,10 @@
 import std.Console as console;
 import std.Collections;
 
+fn square(x: int): int {
+    return x * x;
+}
+
 fn main() {
     let a = true;
     let b = a ? "true" : "false";
