@@ -66,6 +66,11 @@ Symbol ArithmeticExprNode::execute(Symbol sym) {
       result = lhs / rhs;
       break;
     case '%':
+      if(rhs == 0) {
+        ErrorHandler::error("x mod 0 is undefined");
+        return Symbol::ERROR();
+      }
+
       result = lhs - rhs * (lhs / rhs);
       break;
     default:
