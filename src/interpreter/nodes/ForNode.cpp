@@ -51,7 +51,7 @@ Symbol ForNode::sematicCheck(Symbol sym) {
 
 Symbol ForNode::execute(Symbol sym) {
 	SymbolTable::getInstance()->enterScope();
-	Scope s = *SymbolTable::getInstance()->currentScope;
+	Scope * s = SymbolTable::getInstance()->currentScope;
 	SymbolTable::getInstance()->exitScope();
 	if (children.size() == 1)
 	{

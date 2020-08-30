@@ -32,7 +32,7 @@ Symbol DoWhileNode::sematicCheck(Symbol sym) {
 
 Symbol DoWhileNode::execute(Symbol sym) {
 	SymbolTable::getInstance()->enterScope();
-	Scope s = *SymbolTable::getInstance()->currentScope;
+	Scope * s = SymbolTable::getInstance()->currentScope;
 	SymbolTable::getInstance()->exitScope();
 	do{
 		SymbolTable::getInstance()->pushScope(s);
