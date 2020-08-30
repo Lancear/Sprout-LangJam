@@ -1,5 +1,6 @@
 #include <string>
 #include <memory>
+#include <algorithm>
 
 #include "ArithmeticExprNode.hpp"
 #include "../ErrorHandler.hpp"
@@ -47,36 +48,55 @@ Symbol ArithmeticExprNode::sematicCheck(Symbol param) {
 
 Symbol ArithmeticExprNode::execute(Symbol sym) {
   char op = value[0];
-  int lhs = get<int>(children[0]->execute().value);
-  int rhs = get<int>(children[1]->execute().value);
 
-  int result = 0;
+  if(children[0]->execute().dataType == "int" && children[1]->execute().dataType == "int") {
+    int lhs = get<int>(children[0]->execute().value);
+    int rhs = get<int>(children[1]->execute().value);
+    int result = 0;
 
-  switch(op) {
-    case '+':
-      result = lhs + rhs;
-      break;
-    case '-':
-      result = lhs - rhs;
-      break;
-    case '*':
-      result = lhs * rhs;
-      break;
-    case '/':
-      result = lhs / rhs;
-      break;
-    case '%':
-      if(rhs == 0) {
-        ErrorHandler::error("x mod 0 is undefined");
+    switch(op) {
+      case '+':
+        result = lhs + rhs;
+        break;
+      case '-':
+        result = lhs - rhs;
+        break;
+      case '*':
+        result = lhs * rhs;
+        break;
+      case '/':
+        if(rhs == 0) {
+          ErrorHandler::error("x / 0 is undefined");
+          return Symbol::ERROR();
+        }
+
+        result = lhs / rhs;
+        break;
+      case '%':
+        if(rhs == 0) {
+          ErrorHandler::error("x mod 0 is undefined");
+          return Symbol::ERROR();
+        }
+
+        result = lhs - rhs * (lhs / rhs);
+        break;
+      default:
+        ErrorHandler::error(value + " operator not found");
         return Symbol::ERROR();
-      }
+    }
 
-      result = lhs - rhs * (lhs / rhs);
-      break;
-    default:
-      ErrorHandler::error(value + " operator not found");
-      return Symbol::ERROR();
+    return Symbol::EXPRESSION("int", result);
   }
+  else if(children[0]->execute().dataType == "string" && children[1]->execute().dataType == "string") {
+    string lhs = get<string>(children[0]->execute().value);
+    string rhs = get<string>(children[1]->execute().value);
+    string result;
 
-  return Symbol::EXPRESSION("int", result);
+    lhs.erase(remove(lhs.begin(), lhs.end(), '"'), lhs.end());
+    rhs.erase(remove(rhs.begin(), rhs.end(), '"'), rhs.end());
+
+    result += lhs + rhs;
+
+    return Symbol::EXPRESSION("string", result);
+  }
 }

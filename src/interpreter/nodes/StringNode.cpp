@@ -17,9 +17,5 @@ Symbol StringNode::sematicCheck(Symbol sym) {
 }
 
 Symbol StringNode::execute(Symbol sym) {
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->execute();
-  }
-
-  return Symbol::EMPTY();
+  return Symbol::EXPRESSION("string", value);
 }

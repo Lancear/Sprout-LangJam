@@ -35,8 +35,6 @@ Symbol ShiftExprNode::sematicCheck(Symbol param) {
 }
 
 Symbol ShiftExprNode::execute(Symbol sym) {
-  Symbol test = SymbolTable::getInstance()->get(value);
-
   int lhs = get<int>(children[0]->execute().value);
   int rhs = get<int>(children[1]->execute().value);
 
