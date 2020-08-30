@@ -71,8 +71,6 @@ class SymbolTable
 			add(Symbol::IMMUTABLE("true", "bool", 1));
 			add(Symbol::IMMUTABLE("false", "bool", 0));
 			openNewScope();
-
-
 		}
 		shared_ptr<Scope> root;
 
@@ -82,6 +80,6 @@ class SymbolTable
 		Scope* currentScope;
 
 	protected:
-		std::stack<int> branches;
-		std::stack<Scope> callstack;
+		stack<stack<int>> branches;
+		stack<Scope> callstack;
 };

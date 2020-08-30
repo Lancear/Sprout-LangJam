@@ -1,5 +1,6 @@
 #include <string>
 #include <memory>
+#include <variant>
 
 #include "DeclarationNode.hpp"
 #include "../ErrorHandler.hpp"
@@ -49,10 +50,15 @@ Symbol DeclarationNode::sematicCheck(Symbol sym) {
   return Symbol::EMPTY();
 }
 
-Symbol DeclarationNode::execute(Symbol sym) {
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->execute();
+Symbol DeclarationNode::execute(Symbol param) {
+  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
+  Symbol sym = syms->get(value);
+
+  if (children[0]->type != VariableTypeNode || children.size() == 2) {
+    sym.value = children[children.size() - 1]->execute().value;
+    syms->add(sym);
   }
 
+  cout << value << ": " << get<int>(syms->get(value).value) << endl;
   return Symbol::EMPTY();
 }

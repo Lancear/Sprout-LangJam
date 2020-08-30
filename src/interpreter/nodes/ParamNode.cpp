@@ -49,10 +49,12 @@ Symbol ParamNode::sematicCheck(Symbol sym) {
   return Symbol::EMPTY();
 }
 
-Symbol ParamNode::execute(Symbol sym) {
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->execute();
-  }
+Symbol ParamNode::execute(Symbol arg) {
+  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
+  Symbol param = syms->get(value);
+  param.value = arg.value;
+  syms->add(param);
 
+  cout << value << ": " << get<int>(syms->get(value).value) << endl;
   return Symbol::EMPTY();
 }

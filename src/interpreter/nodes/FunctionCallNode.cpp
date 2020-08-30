@@ -16,13 +16,13 @@ Symbol FunctionCallNode::sematicCheck(Symbol sym) {
     children[i]->sematicCheck();
   }
 
-  return Symbol::EMPTY();
+  return Symbol::TYPE("int");
 }
 
 Symbol FunctionCallNode::execute(Symbol sym) {
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->execute();
-  }
+  Symbol args[children.size()];
+
+  // for (int i = 0; i < args.size(); i++)
 
   return Symbol::EMPTY();
 }

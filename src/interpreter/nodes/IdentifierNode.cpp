@@ -22,9 +22,10 @@ Symbol IdentifierNode::sematicCheck(Symbol sym) {
 }
 
 Symbol IdentifierNode::execute(Symbol sym) {
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->execute();
+  if (!SymbolTable::getInstance()->contains(value)) {
+    ErrorHandler::error("unknown identifier");
+    return Symbol::ERROR();
   }
 
-  return Symbol::EMPTY();
+  return SymbolTable::getInstance()->get(value);
 }
