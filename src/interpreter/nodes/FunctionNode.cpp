@@ -29,15 +29,12 @@ Symbol FunctionNode::addSymbols() {
 	}
 	
 	this->scope = *syms->currentScope;	
-	cout << this->scope.parent << endl;
-	cout << get<int>(this->scope.parent->parent->get("true").value) << endl;
 	syms->closeScope();
   return Symbol::EMPTY();
 }
 
 Symbol FunctionNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  "  << syms->get(value).dataType << " " << value << endl;
 
   syms->enterScope();
 	for (int i = 0; i < children.size(); i++)
@@ -51,12 +48,7 @@ Symbol FunctionNode::sematicCheck(Symbol sym) {
 
 Symbol FunctionNode::execute(Symbol args[]) {
 	shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-	cout << "Executing ... " << endl;
 	syms->pushScope(this->scope);
-	cout << this->scope.parent << endl;
-	cout << syms->currentScope->parent << endl;
-	cout << get<int>(this->scope.parent->parent->get("true").value) << endl;
-
 
 	int params = (children.size() == 4) ? 1 : 0;
 	((ParamListNode*)children[params].get())->execute(args);

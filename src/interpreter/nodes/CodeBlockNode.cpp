@@ -1,5 +1,6 @@
 #include <string>
 #include <memory>
+#include <variant>
 
 #include "CodeBlockNode.hpp"
 #include "../ErrorHandler.hpp"
@@ -10,7 +11,6 @@ using namespace std;
 
 Symbol CodeBlockNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
   
   for (int i = 0; i < children.size(); i++) {
     children[i]->sematicCheck();
@@ -21,7 +21,11 @@ Symbol CodeBlockNode::sematicCheck(Symbol sym) {
 
 Symbol CodeBlockNode::execute(Symbol sym) {
   for (int i = 0; i < children.size(); i++) {
-    children[i]->execute();
+    Symbol retVal = children[i]->execute();
+
+    if (children[i]->type == ReturnStatement && !retVal.isEmpty()) {
+      return retVal;
+    }
   }
 
   return Symbol::EMPTY();

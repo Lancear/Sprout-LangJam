@@ -19,7 +19,6 @@ bool Scope::contains(string symbolName){
 void Scope::add(Symbol symbol)
 {
 	if (contains(symbol.name)) {
-		cout << "overwriting..." << endl;
 		internalMap.erase(symbol.name);
 	}
 

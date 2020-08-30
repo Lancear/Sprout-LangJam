@@ -41,7 +41,6 @@ Symbol DeclarationNode::addSymbols() {
 
 Symbol DeclarationNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout  << type << ":  " << syms->get(value).dataType << "  " << value << endl;
   
   for (int i = 0; i < children.size(); i++) {
     children[i]->sematicCheck();
@@ -59,6 +58,5 @@ Symbol DeclarationNode::execute(Symbol param) {
     syms->add(sym);
   }
 
-  cout << value << ": " << get<int>(syms->get(value).value) << endl;
   return Symbol::EMPTY();
 }
