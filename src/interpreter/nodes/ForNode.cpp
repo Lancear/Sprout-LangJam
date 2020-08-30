@@ -25,6 +25,7 @@ Symbol ForNode::sematicCheck(Symbol sym) {
 
 
 	if(children.size() == 1){
+		SymbolTable::getInstance()->exitScope();
 		return Symbol::EMPTY();
 	}
 
@@ -48,9 +49,42 @@ Symbol ForNode::sematicCheck(Symbol sym) {
 }
 
 Symbol ForNode::execute(Symbol sym) {
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->execute();
-  }
+	cout << "FUCK" << endl;
+	SymbolTable::getInstance()->enterScope();
+	cout << "FUCK1" << endl;
+	children[0]->execute();
+	if (children.size() == 1)
+	{
+		SymbolTable::getInstance()->exitScope();
+		return Symbol::EMPTY();
+	}
 
-  return Symbol::EMPTY();
+	//If for has 4 children, if we have no codeblock, we reduce the idx by one
+	int idxModifier = children.size() == 4 ? 0 : 1;
+
+	//Check if we have a third statement
+	bool thirdExp = children[3-idxModifier]->type != EmptyStatement;
+	//If the second statement is empty, we have an endless loop
+	if (children[2-idxModifier]->type == EmptyStatement)
+	{
+		while (true)
+		{
+			if(idxModifier == 0)
+				children[1]->execute();
+			if (thirdExp)
+				children[3-idxModifier]->execute();
+		}
+	}
+	else
+	{
+		while (get<int>(children[2-idxModifier]->execute().value) == 1)
+		{
+			if (idxModifier == 0)
+				children[1]->execute();
+			if (thirdExp)
+				children[3-idxModifier]->execute();
+		}
+	}
+	SymbolTable::getInstance()->exitScope();
+	return Symbol::EMPTY();
 }

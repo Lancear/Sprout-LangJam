@@ -31,9 +31,10 @@ Symbol DoWhileNode::sematicCheck(Symbol sym) {
 }
 
 Symbol DoWhileNode::execute(Symbol sym) {
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->execute();
-  }
-
-  return Symbol::EMPTY();
+	do{
+		SymbolTable::getInstance()->enterScope();
+		children[0]->execute();
+		SymbolTable::getInstance()->exitScope();
+	} while (get<int>(children[1]->execute().value) == 1);
+	return Symbol::EMPTY();
 }

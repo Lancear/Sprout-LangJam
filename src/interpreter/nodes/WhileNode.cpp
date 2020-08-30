@@ -30,9 +30,10 @@ Symbol WhileNode::sematicCheck(Symbol sym) {
 }
 
 Symbol WhileNode::execute(Symbol sym) {
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->execute();
-  }
-
-  return Symbol::EMPTY();
+	while (get<int>(children[0]->execute().value) == 1){
+		SymbolTable::getInstance()->enterScope();
+		children[1]->execute();
+		SymbolTable::getInstance()->exitScope();
+	}
+	return Symbol::EMPTY();
 }
