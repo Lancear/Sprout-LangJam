@@ -9,23 +9,24 @@
 using namespace std;
 
 Symbol AssignmentNode::addSymbols() {
-  if (value.compare("=") == 0) {
-    return children[1]->addSymbols();
-  }
-  else {
-    return children[0]->addSymbols();
-  }
+  return children[0]->addSymbols();
 }
 
-Symbol AssignmentNode::sematicCheck(Symbol sym) {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
-  
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->sematicCheck();
+Symbol AssignmentNode::sematicCheck(Symbol param) {
+  Symbol rhs = children[1]->sematicCheck();
+  Symbol lhs = children[0]->sematicCheck();
+  Symbol sym = lhs;
+
+  if (lhs.isError() || rhs.isError()) {
+    return Symbol::ERROR();
   }
 
-  return Symbol::EMPTY();
+  if (lhs.dataType.compare(rhs.dataType) != 0) {
+    ErrorHandler::error(value + " lhs is not of the same type as rhs");
+    sym = Symbol::ERROR();
+  }
+
+  return sym;
 }
 
 Symbol AssignmentNode::execute(Symbol sym) {

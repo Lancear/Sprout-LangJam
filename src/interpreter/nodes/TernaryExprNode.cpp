@@ -12,15 +12,28 @@ Symbol TernaryExprNode::addSymbols() {
   return children[1]->addSymbols();
 }
 
-Symbol TernaryExprNode::sematicCheck(Symbol sym) {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
-  
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->sematicCheck();
+Symbol TernaryExprNode::sematicCheck(Symbol param) {
+  Symbol cond = children[0]->sematicCheck();
+  Symbol lhs = children[1]->sematicCheck();
+  Symbol rhs = children[2]->sematicCheck();
+
+  if (cond.isError() || lhs.isError() || rhs.isError()) {
+    return Symbol::ERROR();
   }
 
-  return Symbol::EMPTY();
+  Symbol sym = lhs;
+
+  if (cond.dataType.compare("bool") != 0) {
+    ErrorHandler::error(value + " condition is not a boolean");
+    sym = Symbol::ERROR();
+  }
+
+  if (lhs.dataType.compare(rhs.dataType) != 0) {
+    ErrorHandler::error(value + " lhs is not of the same type as rhs");
+    sym = Symbol::ERROR();
+  }
+
+  return sym;
 }
 
 Symbol TernaryExprNode::execute(Symbol sym) {

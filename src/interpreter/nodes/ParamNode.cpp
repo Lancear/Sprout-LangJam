@@ -15,21 +15,32 @@ ParamNode::ParamNode(struct node * n, bool mut) : ParamNode(n) {
 
 Symbol ParamNode::addSymbols() {
 	Symbol s;
-	if (isMut)
-	{
-		s = Symbol::MUTABLE(value, "?", "?");
+  string type = children[0]->addSymbols().dataType;
+
+	if (isMut) {
+    if (type.compare("string") == 0) {
+      s = Symbol::MUTABLE(value,type,"");
+    }
+    else {
+      s = Symbol::MUTABLE(value,type,0);
+    }
 	}
-	else
-	{
-		s = Symbol::IMMUTABLE(value, "?", "?");
+  else {
+		if (type.compare("string") == 0) {
+      s = Symbol::MUTABLE(value,type,"");
+    }
+    else {
+      s = Symbol::MUTABLE(value,type,0);
+    }
 	}
+
 	SymbolTable::getInstance()->add(s);
   return Symbol::EMPTY();
 }
 
 Symbol ParamNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
+  cout  << type << ":  " << syms->get(value).dataType << "  " << value << endl;
   
   for (int i = 0; i < children.size(); i++) {
     children[i]->sematicCheck();

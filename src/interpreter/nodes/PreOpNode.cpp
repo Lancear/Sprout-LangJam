@@ -14,18 +14,22 @@ Symbol PreOpNode::addSymbols() {
 
 
 Symbol PreOpNode::sematicCheck(Symbol param) {
-  string expr = children[0]->addSymbols().dataType;
-  Symbol sym = Symbol::TYPE(expr);
+  Symbol expr = children[0]->sematicCheck();
+  Symbol sym = Symbol::TYPE(expr.dataType);
 
-  if (value.compare("!")) {
-    if (expr.compare("bool") != 0) {
-      ErrorHandler::error("expr is not an boolean");
+  if (expr.isError()) {
+    return Symbol::ERROR();
+  }
+
+  if (value.compare("!") == 0) {
+    if (expr.dataType.compare("bool") != 0) {
+      ErrorHandler::error(value + " expr is not an boolean");
       sym = Symbol::ERROR();
     }
   }
   else {
-    if (expr.compare("int") != 0) {
-      ErrorHandler::error("expr is not an integer");
+    if (expr.dataType.compare("int") != 0) {
+      ErrorHandler::error(value + " expr is not an integer");
       sym = Symbol::ERROR();
     }
   }

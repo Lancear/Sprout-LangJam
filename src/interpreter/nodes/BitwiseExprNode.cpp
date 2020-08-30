@@ -13,8 +13,8 @@ Symbol BitwiseExprNode::addSymbols() {
 }
 
 Symbol BitwiseExprNode::sematicCheck(Symbol param) {
-  string lhs = children[0]->addSymbols().dataType;
-  string rhs = children[1]->addSymbols().dataType;
+  string lhs = children[0]->sematicCheck().dataType;
+  string rhs = children[1]->sematicCheck().dataType;
   Symbol sym = Symbol::TYPE("int");
 
   if (lhs.compare("int") != 0) {
@@ -31,9 +31,25 @@ Symbol BitwiseExprNode::sematicCheck(Symbol param) {
 }
 
 Symbol BitwiseExprNode::execute(Symbol sym) {
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->execute();
+  char op = value[0];
+  int lhs = get<int>(children[0]->execute().value);
+  int rhs = get<int>(children[1]->execute().value);
+
+  int result = 0;
+
+  switch(op) {
+    case '|':
+      result = lhs | rhs;
+      break;
+    case '&':
+      result = lhs & rhs;
+      break;
+    case '^':
+      result = lhs ^ rhs;
+      break;
+    default:
+      break;
   }
 
-  return Symbol::EMPTY();
+  return Symbol::EXPRESSION("int", result);
 }

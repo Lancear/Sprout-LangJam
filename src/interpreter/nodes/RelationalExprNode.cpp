@@ -13,22 +13,28 @@ Symbol RelationalExprNode::addSymbols() {
 }
 
 Symbol RelationalExprNode::sematicCheck(Symbol param) {
-  string lhs = children[0]->addSymbols().dataType;
-  string rhs = children[1]->addSymbols().dataType;
+  Symbol lhs = children[0]->sematicCheck();
+  Symbol rhs = children[1]->sematicCheck();
   Symbol sym = Symbol::TYPE("bool");
 
-  if (value.compare("==") == 0 || value.compare("!=") == 0 && lhs.compare(rhs) != 0) {
-    ErrorHandler::error("lhs is not of the same type as rhs");
-    sym = Symbol::ERROR();
+  if (lhs.isError() || rhs.isError()) {
+    return Symbol::ERROR();
+  }
+
+  if (value.compare("==") == 0 || value.compare("!=") == 0){
+    if (lhs.dataType.compare(rhs.dataType) != 0) {
+      ErrorHandler::error(value + " lhs is not of the same type as rhs");
+      sym = Symbol::ERROR();
+    }
   }
   else {
-    if (lhs.compare("int") != 0) {
-      ErrorHandler::error("lhs is not an integer");
+    if (lhs.dataType.compare("int") != 0) {
+      ErrorHandler::error(value + " lhs is not an integer");
       sym = Symbol::ERROR();
     }
     
-    if (rhs.compare("int") != 0) {
-      ErrorHandler::error("rhs is not an integer");
+    if (rhs.dataType.compare("int") != 0) {
+      ErrorHandler::error(value + " rhs is not an integer");
       sym = Symbol::ERROR();
     }
   }
