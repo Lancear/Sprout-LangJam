@@ -24,7 +24,6 @@ EventNode::EventNode(struct node * n) {
 
 Symbol EventNode::addSymbols() {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value  << " (" << children.size() << ")" << endl;
 
   for (int i = 0; i < children.size(); i++) {
     children[i]->addSymbols();
