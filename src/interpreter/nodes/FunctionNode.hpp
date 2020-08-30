@@ -8,7 +8,7 @@ class FunctionNode : public TreeNode {
   using TreeNode::TreeNode;
 
   public:
-    Scope scope;
+    Scope* scope;
 
     Symbol addSymbols();
     Symbol sematicCheck(Symbol sym);

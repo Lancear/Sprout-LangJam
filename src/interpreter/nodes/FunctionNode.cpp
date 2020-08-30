@@ -28,7 +28,7 @@ Symbol FunctionNode::addSymbols() {
 		children[i]->addSymbols();
 	}
 	
-	this->scope = *syms->currentScope;	
+	this->scope = syms->currentScope;	
 	syms->closeScope();
   return Symbol::EMPTY();
 }

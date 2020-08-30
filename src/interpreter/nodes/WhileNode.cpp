@@ -31,8 +31,9 @@ Symbol WhileNode::sematicCheck(Symbol sym) {
 
 Symbol WhileNode::execute(Symbol sym) {
 	SymbolTable::getInstance()->enterScope();
-	Scope s = *SymbolTable::getInstance()->currentScope;
+	Scope * s = SymbolTable::getInstance()->currentScope;
 	SymbolTable::getInstance()->exitScope();
+
 	while (get<int>(children[0]->execute().value) == 1){
 		SymbolTable::getInstance()->pushScope(s);
 		children[1]->execute();

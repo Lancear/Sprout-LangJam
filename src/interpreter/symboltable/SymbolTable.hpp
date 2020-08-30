@@ -50,7 +50,7 @@ class SymbolTable
 		/**
 		 * keeps track of a call-stack of scopes, pushScope adds a scope to the call-stack
 		 */
-		SymbolTable *pushScope(Scope scope);
+		SymbolTable *pushScope(Scope * scope);
 
 		/**
 		 * keeps track of a call-stack of scopes, popScope removes the top scope of the call-stack
@@ -81,5 +81,5 @@ class SymbolTable
 
 	protected:
 		stack<stack<int>> branches;
-		stack<Scope> callstack;
+		stack<Scope*> callstack;
 };

@@ -50,9 +50,7 @@ Symbol ForNode::sematicCheck(Symbol sym) {
 }
 
 Symbol ForNode::execute(Symbol sym) {
-	cout << "FUCK" << endl;
 	SymbolTable::getInstance()->enterScope();
-	cout << "FUCK1" << endl;
 	children[0]->execute();
 	if (children.size() == 1)
 	{
