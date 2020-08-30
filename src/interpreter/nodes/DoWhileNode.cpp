@@ -17,15 +17,17 @@ Symbol DoWhileNode::addSymbols() {
 }
 
 Symbol DoWhileNode::sematicCheck(Symbol sym) {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
+	Symbol whileNode = children[1]->sematicCheck();
+	if (whileNode.dataType != "bool")
+	{
+		cerr << "Expression in do-while loop is of type \"" << whileNode.dataType << "\", it should be of type bool" << endl;
+		return Symbol::ERROR();
+	}
+	SymbolTable::getInstance()->enterScope();
+	children[0]->sematicCheck();
+	SymbolTable::getInstance()->exitScope();
 
-  syms->enterScope();
-  children[0]->sematicCheck();
-  syms->exitScope();
-  children[1]->sematicCheck();
-
-  return Symbol::EMPTY();
+	return Symbol::EMPTY();
 }
 
 Symbol DoWhileNode::execute(Symbol sym) {

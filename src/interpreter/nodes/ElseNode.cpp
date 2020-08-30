@@ -12,18 +12,22 @@ Symbol ElseNode::addSymbols() {
 	SymbolTable::getInstance()->openNewScope();
 	children[0]->addSymbols();
 	SymbolTable::getInstance()->closeScope();
+	
+	SymbolTable::getInstance()->openNewScope();
+	children[1]->addSymbols();
+	SymbolTable::getInstance()->closeScope();
   return Symbol::EMPTY();
 }
 
 Symbol ElseNode::sematicCheck(Symbol sym) {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
-  
-  syms->enterScope();
-  children[0]->sematicCheck();
-  syms->exitScope();
+	SymbolTable::getInstance()->enterScope();
+	children[0]->sematicCheck();
+	SymbolTable::getInstance()->exitScope();
 
-  return Symbol::EMPTY();
+	SymbolTable::getInstance()->enterScope();
+	children[1]->sematicCheck();
+	SymbolTable::getInstance()->exitScope();
+	return Symbol::EMPTY();
 }
 
 Symbol ElseNode::execute(Symbol sym) {

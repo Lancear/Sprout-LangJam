@@ -13,19 +13,20 @@ Symbol WhileNode::addSymbols() {
 	SymbolTable::getInstance()->openNewScope();
 	children[1]->addSymbols();
 	SymbolTable::getInstance()->closeScope();
-  return Symbol::EMPTY();
+	return Symbol::EMPTY();
 }
 
 Symbol WhileNode::sematicCheck(Symbol sym) {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
-  
-  children[0]->sematicCheck();
+	Symbol whileNode = children[0]->sematicCheck();
+	if(whileNode.dataType != "bool"){
+		cerr << "Expression in while loop is of type \"" << whileNode.dataType << "\", it should be of type bool" << endl;
+		return Symbol::ERROR();
+	}
 	SymbolTable::getInstance()->enterScope();
 	children[1]->sematicCheck();
 	SymbolTable::getInstance()->exitScope();
 
-  return Symbol::EMPTY();
+	return Symbol::EMPTY();
 }
 
 Symbol WhileNode::execute(Symbol sym) {

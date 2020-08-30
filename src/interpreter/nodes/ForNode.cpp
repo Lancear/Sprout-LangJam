@@ -19,10 +19,28 @@ Symbol ForNode::addSymbols() {
 }
 
 Symbol ForNode::sematicCheck(Symbol sym) {
-  SymbolTable::getInstance()->enterScope();
-  for (int i = 0; i < children.size(); i++)
+	SymbolTable::getInstance()->enterScope();
+
+	children[0]->sematicCheck();
+
+
+	if(children.size() == 1){
+		return Symbol::EMPTY();
+	}
+
+	int idx = 2;
+
+	if(children[1]->type != CodeBlock)
+		idx--;
+	Symbol s = children[idx++]->sematicCheck();
+
+	if (s.dataType != "<EMPTY>" && s.dataType != "bool")
 	{
-		children[i]->sematicCheck();
+		cerr << "Expression in for is of type \"" << s.dataType << "\", it should be of type bool" << endl;
+		return Symbol::ERROR();
+	}
+	for(idx; idx < children.size(); idx++){
+		children[idx]->sematicCheck();
 	}
   SymbolTable::getInstance()->exitScope();
 
