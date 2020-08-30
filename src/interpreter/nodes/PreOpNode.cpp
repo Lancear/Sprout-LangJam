@@ -13,7 +13,7 @@ Symbol PreOpNode::addSymbols() {
 }
 
 
-Symbol PreOpNode::sematicCheck(Symbol sym) {
+Symbol PreOpNode::sematicCheck(Symbol param) {
   string expr = children[0]->addSymbols().dataType;
   Symbol sym = Symbol::TYPE(expr);
 

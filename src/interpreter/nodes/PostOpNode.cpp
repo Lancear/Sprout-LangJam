@@ -12,7 +12,7 @@ Symbol PostOpNode::addSymbols() {
   return children[0]->addSymbols();
 }
 
-Symbol PostOpNode::sematicCheck(Symbol sym) {
+Symbol PostOpNode::sematicCheck(Symbol param) {
   string expr = children[0]->addSymbols().dataType;
   Symbol sym = Symbol::TYPE("int");
 
