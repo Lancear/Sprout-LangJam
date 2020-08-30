@@ -30,10 +30,13 @@ Symbol WhileNode::sematicCheck(Symbol sym) {
 }
 
 Symbol WhileNode::execute(Symbol sym) {
+	SymbolTable::getInstance()->enterScope();
+	Scope s = *SymbolTable::getInstance()->currentScope;
+	SymbolTable::getInstance()->exitScope();
 	while (get<int>(children[0]->execute().value) == 1){
-		SymbolTable::getInstance()->enterScope();
+		SymbolTable::getInstance()->pushScope(s);
 		children[1]->execute();
-		SymbolTable::getInstance()->exitScope();
+		SymbolTable::getInstance()->popScope();
 	}
 	return Symbol::EMPTY();
 }
