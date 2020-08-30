@@ -12,6 +12,10 @@ TypeNode::TypeNode(struct node * n, bool ref) : TypeNode(n) {
   isRef = ref;
 }
 
+Symbol TypeNode::addSymbols() {
+  return Symbol::TYPE(value);
+}
+
 Symbol TypeNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;

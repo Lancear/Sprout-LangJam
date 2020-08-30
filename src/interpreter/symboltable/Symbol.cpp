@@ -126,7 +126,7 @@ Symbol Symbol::IMMUTABLE(string name, string dataType, string value){
 }
 Symbol Symbol::TYPE(string dataType){
 	Symbol s = Symbol();
-	s.name = "<TYPE>";
+	s.name = dataType;
 	s.dataType = dataType;
 	s.type = SymbolType::TYPE;
 	return s;

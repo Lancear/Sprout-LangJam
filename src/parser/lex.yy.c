@@ -2475,7 +2475,8 @@ void process_file(const char * name) {
     yyset_in(fopen(name, "rb"), yyscanner);
     yyparse(yyscanner);
     yylex_destroy(yyscanner);
-}/* A Bison parser, made by GNU Bison 3.5.1.  */
+}
+/* A Bison parser, made by GNU Bison 3.5.1.  */
 
 /* Bison interface for Yacc-like parsers in C
 

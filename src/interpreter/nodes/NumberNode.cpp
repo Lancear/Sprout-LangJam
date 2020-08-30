@@ -8,6 +8,10 @@
 
 using namespace std;
 
+Symbol NumberNode::addSymbols() {
+  return Symbol::EXPRESSION("int", stoi(value));
+}
+
 Symbol NumberNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;

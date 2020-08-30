@@ -1,18 +1,18 @@
 #include <string>
 #include <memory>
 
-#include "StringNode.hpp"
+#include "CharNode.hpp"
 #include "../ErrorHandler.hpp"
 #include "../symboltable/SymbolTable.hpp"
 #include "../symboltable/Symbol.hpp"
 
 using namespace std;
 
-Symbol StringNode::addSymbols() {
-  return Symbol::EXPRESSION("string", value);
+Symbol CharNode::addSymbols() {
+  return Symbol::EXPRESSION("char", value);
 }
 
-Symbol StringNode::sematicCheck(Symbol sym) {
+Symbol CharNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;
   
@@ -23,7 +23,7 @@ Symbol StringNode::sematicCheck(Symbol sym) {
   return Symbol::EMPTY();
 }
 
-Symbol StringNode::execute(Symbol sym) {
+Symbol CharNode::execute(Symbol sym) {
   for (int i = 0; i < children.size(); i++) {
     children[i]->execute();
   }

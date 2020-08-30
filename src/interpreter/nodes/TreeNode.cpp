@@ -14,6 +14,7 @@
 #include "CodeBlockNode.hpp"
 #include "DeclarationNode.hpp"
 #include "NumberNode.hpp"
+#include "CharNode.hpp"
 #include "StringNode.hpp"
 #include "IdentifierNode.hpp"
 #include "ReturnNode.hpp"
@@ -78,6 +79,7 @@ unique_ptr<TreeNode> TreeNode::of(struct node * n) {
 		case FunctionReturnType:
 		case TypeCompound:
 		case TypeList:
+			n->type = TypeCompound;
 			return make_unique<TypeNode>(n);
 
 		case ImmutableReferenceTypeCompound:
@@ -104,6 +106,9 @@ unique_ptr<TreeNode> TreeNode::of(struct node * n) {
 
 		case NumericImmediate:
 			return make_unique<NumberNode>(n);
+		
+		case CharacterConstant:
+			return make_unique<CharNode>(n);
 
 		case StringImmediate:
 			return make_unique<StringNode>(n);

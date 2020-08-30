@@ -15,18 +15,21 @@ DeclarationNode::DeclarationNode(struct node * n, bool mut) : DeclarationNode(n)
 
 Symbol DeclarationNode::addSymbols() {
 	Symbol s;
+  string type = children[0]->addSymbols().dataType;
+
 	if(isMut){
-		s = Symbol::MUTABLE(value,"?","?");
+		s = Symbol::MUTABLE(value,type,"?");
 	}else{
-		s = Symbol::IMMUTABLE(value,"?","?");
+		s = Symbol::IMMUTABLE(value,type,"?");
 	}
+
 	SymbolTable::getInstance()->add(s);
   return Symbol::EMPTY();
 }
 
 Symbol DeclarationNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
+  cout  << type << ":  " << syms->get(value).dataType << "  " << value << endl;
   
   for (int i = 0; i < children.size(); i++) {
     children[i]->sematicCheck();

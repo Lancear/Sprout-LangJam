@@ -4,7 +4,7 @@
 #include "error.h"
 
 void lexer_error(const int type) {
-    fprintf(stderr, "TODO: Make me.\n");
+    fprintf(stderr, "LEXER ERRROR, TODO: Make me.\n");
     assert(0);
 }
 

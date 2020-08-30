@@ -62,4 +62,4 @@ const generate =(name)=> {
   fs.writeFile(name + ".cpp", cppFile(name));
 }
 
-// generate("TernaryExprNode");
+generate("CharNode");
