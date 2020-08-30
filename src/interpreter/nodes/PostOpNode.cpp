@@ -8,6 +8,10 @@
 
 using namespace std;
 
+Symbol PostOpNode::addSymbols() {
+  return children[0]->addSymbols();
+}
+
 Symbol PostOpNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;

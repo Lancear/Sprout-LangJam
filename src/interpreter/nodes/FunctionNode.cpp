@@ -13,7 +13,12 @@ Symbol FunctionNode::addSymbols() {
 	syms->openNewScope();
 	this->scope = *syms->currentScope;
 
-	Symbol s = Symbol::FUNCTION(value, "?", (void*)this);
+	string type = "void";
+	if (children.size() == 4)
+		type = children[3]->addSymbols().dataType;
+
+
+	Symbol s = Symbol::FUNCTION(value, type, (void*)this);
 	syms->currentScope->parent->add(s);
 	
 	for (int i = 0; i < children.size(); i++)
@@ -27,7 +32,7 @@ Symbol FunctionNode::addSymbols() {
 
 Symbol FunctionNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
+  cout << type << ":  "  << syms->get(value).dataType << " " << value << endl;
 
   syms->enterScope();
 	for (int i = 0; i < children.size(); i++)

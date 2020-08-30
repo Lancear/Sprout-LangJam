@@ -9,6 +9,13 @@
 using namespace std;
 
 Symbol ArithmeticExprNode::addSymbols() {
+  if (value.compare("+") == 0) {
+    string lhs = children[0]->addSymbols().dataType;
+    string rhs = children[1]->addSymbols().dataType;
+
+    return Symbol::TYPE((lhs.compare("string") == 0 || rhs.compare("string") == 0) ? "string" : "int");
+  }
+
   return Symbol::TYPE("int");
 }
 

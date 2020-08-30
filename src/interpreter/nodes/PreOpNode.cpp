@@ -8,6 +8,11 @@
 
 using namespace std;
 
+Symbol PreOpNode::addSymbols() {
+  return children[0]->addSymbols();
+}
+
+
 Symbol PreOpNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;

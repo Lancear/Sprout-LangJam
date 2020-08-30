@@ -9,7 +9,12 @@
 using namespace std;
 
 Symbol AssignmentNode::addSymbols() {
-  return children[1]->addSymbols();
+  if (value.compare("=") == 0) {
+    return children[1]->addSymbols();
+  }
+  else {
+    return children[0]->addSymbols();
+  }
 }
 
 Symbol AssignmentNode::sematicCheck(Symbol sym) {
