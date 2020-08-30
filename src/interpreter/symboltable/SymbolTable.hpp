@@ -17,7 +17,7 @@ public:
 	SymbolTable *add(Symbol symbol);
 	bool containsInCurrentScope(string symbol);
 	bool contains(string symbol);
-	Symbol get(string symbol, shared_ptr<Scope> scope);
+	Symbol get(string symbol, Scope* scope);
 	Symbol get(string symbol);
 	//Seeing as i return "this" here, i think a pointer will suffice 
 	SymbolTable *clear();
@@ -30,9 +30,9 @@ public:
 	SymbolTable()
 	{
 		root = std::make_shared<Scope>();
-		currentScope = root;
+		currentScope = root.get();
 	}
 	shared_ptr<Scope> root;
-	shared_ptr<Scope> currentScope;
+	Scope* currentScope;
 	std::stack<int> branches;
 };

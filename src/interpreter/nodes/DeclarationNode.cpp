@@ -12,7 +12,7 @@ DeclarationNode::DeclarationNode(struct node * n, bool mut) : DeclarationNode(n)
   isMut = mut;
 }
 
-void DeclarationNode::addSymbols() {
+Symbol DeclarationNode::addSymbols() {
 	Symbol s;
 	if(isMut){
 		s = Symbol::MUTABLE(value,"?","?");
@@ -20,6 +20,7 @@ void DeclarationNode::addSymbols() {
 		s = Symbol::IMMUTABLE(value,"?","?");
 	}
 	SymbolTable::getInstance()->add(s);
+  return Symbol::EMPTY();
 }
 
 Symbol DeclarationNode::sematicCheck(Symbol sym) {

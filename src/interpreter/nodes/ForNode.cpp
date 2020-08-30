@@ -7,22 +7,23 @@
 
 using namespace std;
 
-void ForNode::addSymbols() {
+Symbol ForNode::addSymbols() {
 	SymbolTable::getInstance()->openNewScope();
 	for (int i = 0; i < children.size(); i++)
 	{
 		children[i]->addSymbols();
 	}
 	SymbolTable::getInstance()->closeScope();
+  return Symbol::EMPTY();
 }
 
 Symbol ForNode::sematicCheck(Symbol sym) {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
-  
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->sematicCheck();
-  }
+  SymbolTable::getInstance()->enterScope();
+  for (int i = 0; i < children.size(); i++)
+	{
+		children[i]->sematicCheck();
+	}
+  SymbolTable::getInstance()->exitScope();
 
   return Symbol::EMPTY();
 }

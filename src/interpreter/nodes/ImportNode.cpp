@@ -7,13 +7,15 @@
 
 using namespace std;
 
-void ImportNode::addSymbols() {
+Symbol ImportNode::addSymbols() {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;
 
   for (int i = 0; i < children.size(); i++) {
     children[i]->addSymbols();
   }
+
+  return Symbol::EMPTY();
 }
 
 Symbol ImportNode::sematicCheck(Symbol sym) {

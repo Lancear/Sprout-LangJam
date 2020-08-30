@@ -7,7 +7,7 @@
 class EventNode : public TreeNode {
   public:
     EventNode(struct node * n);
-    void addSymbols();
+    Symbol addSymbols();
     Symbol sematicCheck(Symbol sym);
     Symbol execute(Symbol sym);
 };

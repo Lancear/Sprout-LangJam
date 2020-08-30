@@ -7,7 +7,7 @@ class ElseNode : public TreeNode {
   using TreeNode::TreeNode;
 
   public:
-	void   addSymbols();
+	Symbol   addSymbols();
     Symbol sematicCheck(Symbol sym);
     Symbol execute(Symbol sym);
 };

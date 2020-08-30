@@ -11,15 +11,16 @@ using namespace std;
 
 class Scope : public SimpleScope{
 public:
-	shared_ptr<Scope> parent;
+	Scope* parent;
 	vector<shared_ptr<Scope>> children;
 	Scope(){
-		this->parent = NULL;
+		this->parent = nullptr;
 	}
-	Scope(shared_ptr<Scope> parent){
+	Scope(Scope* parent){
 		this->parent = parent;
+		parent->children.push_back((shared_ptr<Scope>)this);
 	}
-	shared_ptr<Scope> getParent();
+	Scope* getParent();
 	void add(Symbol symbol);
 	bool contains(string symbolName);
 	Symbol get(string symbolName);

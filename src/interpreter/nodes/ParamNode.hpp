@@ -11,7 +11,7 @@ class ParamNode : public TreeNode {
     bool isMut = false;
 
     ParamNode(struct node * n, bool isMut);
-    void addSymbols();
+    Symbol addSymbols();
     Symbol sematicCheck(Symbol sym);
     Symbol execute(Symbol sym);
 };

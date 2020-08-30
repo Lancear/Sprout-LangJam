@@ -23,7 +23,7 @@ class TreeNode : public SimpleTreeNode{
     explicit TreeNode(struct node * n);
     static unique_ptr<TreeNode> of(struct node * n);
 
-    virtual void addSymbols();
+    virtual Symbol addSymbols();
 
     virtual Symbol sematicCheck(Symbol sym);
     Symbol sematicCheck();

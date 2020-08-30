@@ -268,10 +268,12 @@ Symbol TreeNode::execute() {
   return this->execute(Symbol::EMPTY());
 }
 
-void TreeNode::addSymbols() {
+Symbol TreeNode::addSymbols() {
   for (int i = 0; i < children.size(); i++) {
     children[i]->addSymbols();
   }
+	
+  return Symbol::EMPTY();
 }
 
 Symbol TreeNode::sematicCheck(Symbol sym) {

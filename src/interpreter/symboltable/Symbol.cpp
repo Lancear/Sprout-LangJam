@@ -35,16 +35,16 @@ bool Symbol::isExpression() {
 
 Symbol Symbol::EMPTY(){
 	Symbol s = Symbol();
-	s.name = "<EMPTY>";
-	s.dataType = "<EMPTY>";
+	s.name = EMPTYSTRING;
+	s.dataType = EMPTYSTRING;
 	s.type = SymbolType::EMPTY;
 	return s;
 }
 
 Symbol Symbol::ERROR(){
 	Symbol s = Symbol();
-	s.name = "<ERROR>";
-	s.dataType = "<ERROR>";
+	s.name = ERRORSTRING;
+	s.dataType = ERRORSTRING;
 	s.type = SymbolType::ERROR;
 	return s;
 }
@@ -62,7 +62,7 @@ Symbol Symbol::CLASS(string name, SimpleScope value)
 	Symbol s = Symbol();
 	s.name = name;
 	s.value = value;
-	s.dataType = "<MODULE>";
+	s.dataType = "<CLASS>";
 	s.type = SymbolType::MODULE;
 	return s;
 }

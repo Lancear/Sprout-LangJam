@@ -11,7 +11,7 @@ class DeclarationNode : public TreeNode {
     bool isMut = false;
 
     DeclarationNode(struct node * n, bool isMut);
-    void addSymbols();
+    Symbol addSymbols();
     Symbol sematicCheck(Symbol sym);
     Symbol execute(Symbol sym);
 };

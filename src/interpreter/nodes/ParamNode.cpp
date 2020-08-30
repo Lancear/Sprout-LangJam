@@ -12,7 +12,7 @@ ParamNode::ParamNode(struct node * n, bool mut) : ParamNode(n) {
   isMut = mut;
 }
 
-void ParamNode::addSymbols() {
+Symbol ParamNode::addSymbols() {
 	Symbol s;
 	if (isMut)
 	{
@@ -23,6 +23,7 @@ void ParamNode::addSymbols() {
 		s = Symbol::IMMUTABLE(value, "?", "?");
 	}
 	SymbolTable::getInstance()->add(s);
+  return Symbol::EMPTY();
 }
 
 Symbol ParamNode::sematicCheck(Symbol sym) {

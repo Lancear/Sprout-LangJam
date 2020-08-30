@@ -9,6 +9,8 @@ void dispatch(struct node *n){
     unique_ptr<TreeNode> tree = make_unique<FileNode>(n);
 
     tree->addSymbols();
+    SymbolTable::getInstance()->resetCursor();
     tree->sematicCheck();
-    // SymbolTable::instance()->get("main").value->execute();
+    
+    //SymbolTable::getInstance()->get("main").value->execute();
 }

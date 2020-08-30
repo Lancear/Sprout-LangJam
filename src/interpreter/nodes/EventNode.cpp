@@ -22,13 +22,14 @@ EventNode::EventNode(struct node * n) {
   }
 }
 
-void EventNode::addSymbols() {
+Symbol EventNode::addSymbols() {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value  << " (" << children.size() << ")" << endl;
 
   for (int i = 0; i < children.size(); i++) {
     children[i]->addSymbols();
   }
+  return Symbol::EMPTY();
 }
 
 Symbol EventNode::sematicCheck(Symbol sym) {

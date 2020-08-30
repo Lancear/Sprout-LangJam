@@ -7,20 +7,22 @@
 
 using namespace std;
 
-void DoWhileNode::addSymbols() {
+Symbol DoWhileNode::addSymbols() {
   SymbolTable::getInstance()->openNewScope();
   children[0]->addSymbols();
   SymbolTable::getInstance()->closeScope();
   children[1]->addSymbols();
+  return Symbol::EMPTY();
 }
 
 Symbol DoWhileNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;
-  
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->sematicCheck();
-  }
+
+  syms->enterScope();
+  children[0]->sematicCheck();
+  syms->exitScope();
+  children[1]->sematicCheck();
 
   return Symbol::EMPTY();
 }

@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void ModuleNode::addSymbols() {
+Symbol ModuleNode::addSymbols() {
 	shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
 	syms->openNewScope();
 	Symbol s = Symbol::MODULE(value, *(syms->currentScope));
@@ -17,15 +17,18 @@ void ModuleNode::addSymbols() {
 		children[i]->addSymbols();
 	}
 	syms->closeScope();
+  return Symbol::EMPTY();
 }
 
 Symbol ModuleNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   cout << type << ":  " << value << endl;
-  
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->sematicCheck();
-  }
+  syms->enterScope();
+	for (int i = 0; i < children.size(); i++)
+	{
+		children[i]->sematicCheck();
+	}
+	syms->exitScope();
 
   return Symbol::EMPTY();
 }

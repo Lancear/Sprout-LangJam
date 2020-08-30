@@ -9,19 +9,15 @@
 #include "Symbol.hpp"
 using namespace std;
 
-shared_ptr<SymbolTable> SymbolTable::_instance = NULL;
+shared_ptr<SymbolTable> SymbolTable::_instance = make_shared<SymbolTable>();
 
 shared_ptr<SymbolTable> SymbolTable::getInstance(){
-	if (_instance == NULL)
-	{
-		_instance.reset(new SymbolTable());
-	}
 	return _instance;
 }
 
-Symbol SymbolTable::get(string symbol, shared_ptr<Scope> scope)
+Symbol SymbolTable::get(string symbol, Scope* scope)
 {
-	shared_ptr<Scope> internalScope = scope;
+	Scope* internalScope = scope;
 	while (internalScope != 0)
 	{
 		if (internalScope->contains(symbol))
@@ -33,7 +29,7 @@ Symbol SymbolTable::get(string symbol, shared_ptr<Scope> scope)
 
 Symbol SymbolTable::get(string symbol)
 {
-	shared_ptr<Scope> internalScope = currentScope;
+	Scope* internalScope = currentScope;
 	while (internalScope != 0)
 	{
 		if (internalScope->contains(symbol))
@@ -45,14 +41,12 @@ Symbol SymbolTable::get(string symbol)
 
 bool SymbolTable::containsInCurrentScope(string symbol)
 {
-	if (currentScope->contains(symbol))
-		return true;
-	return false;
+	return currentScope->contains(symbol);
 }
 
 bool SymbolTable::contains(string symbol)
 {
-	shared_ptr<Scope> internalScope = currentScope;
+	Scope* internalScope = currentScope;
 	while (internalScope != 0)
 	{
 		if (internalScope->contains(symbol))
@@ -74,25 +68,26 @@ SymbolTable* SymbolTable::clear(){
 }
 
 SymbolTable * SymbolTable::openNewScope(){
-	currentScope = std::make_shared<Scope>(currentScope);
+	currentScope = new Scope(currentScope);
 	return this;
 }
 SymbolTable * SymbolTable::closeScope(){
 	if (currentScope->getParent() == 0)
 		throw invalid_argument("No parent set. Error.");
-		currentScope = currentScope->getParent();
+
+	currentScope = currentScope->getParent();
 	return this;
 }
 
 SymbolTable * SymbolTable::resetCursor(){
-	currentScope = root;
+	currentScope = root.get();
 	branches = stack<int>();
 	branches.push(0);
 	return this;
 }
 
 SymbolTable* SymbolTable::enterScope(){
-	currentScope = currentScope->children.at(branches.top());
+	currentScope = currentScope->children.at(branches.top()).get();
 	branches.push(0);
 	return this;
 }
@@ -100,7 +95,8 @@ SymbolTable* SymbolTable::enterScope(){
 SymbolTable* SymbolTable::exitScope(){
 	branches.pop();
 	currentScope = currentScope->getParent();
-	branches.push(branches.top() + 1);
+	int top = branches.top();
 	branches.pop();
+	branches.push(top + 1);
 	return this;
 }

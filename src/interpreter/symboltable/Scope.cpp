@@ -7,7 +7,7 @@
 
 using namespace std;
 
-shared_ptr<Scope> Scope::getParent(){
+Scope* Scope::getParent(){
 	return parent;
 }
 
