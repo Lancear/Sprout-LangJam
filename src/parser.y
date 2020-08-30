@@ -569,6 +569,9 @@ Expression
 : NUMERIC_IMMEDIATE[imm] {
     $$ = node(NumericImmediate, NULL, NULL, $imm);
 }
+| CHAR_CONSTANT[c] {
+    $$ = node(CharacterConstant, NULL, NULL, $c);
+}
 | LValue[ref] {
     $$ = $ref;
 }
