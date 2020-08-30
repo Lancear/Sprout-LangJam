@@ -99,4 +99,6 @@ Symbol ArithmeticExprNode::execute(Symbol sym) {
 
     return Symbol::EXPRESSION("string", result);
   }
+
+  return Symbol::EMPTY();
 }

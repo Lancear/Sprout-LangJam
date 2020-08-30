@@ -100,12 +100,14 @@ SymbolTable * SymbolTable::resetCursor(){
 
 
 SymbolTable* SymbolTable::enterScope(){
+	cout << "enter ... 🖕" << endl;
 	currentScope = currentScope->children.at(branches.top().top()).get();
 	branches.top().push(0);
 	return this;
 }
 
 SymbolTable* SymbolTable::exitScope(){
+	cout << "exit ... 🖕" << endl;
 	branches.top().pop();
 	currentScope = currentScope->getParent();
 	int top = branches.top().top();
@@ -117,13 +119,16 @@ SymbolTable* SymbolTable::exitScope(){
 
 
 SymbolTable* SymbolTable::pushScope(Scope scope) {
+	cout << "push ... 🖕" << endl;
 	callstack.push(scope);
 	branches.push(stack<int>());
+	branches.top().push(0);
 	currentScope = &callstack.top();
 	return this;
 }
 
 SymbolTable* SymbolTable::popScope(){
+	cout << "pop ... 🖕" << endl;
 	callstack.pop();
 	branches.pop();
 	currentScope = &callstack.top();

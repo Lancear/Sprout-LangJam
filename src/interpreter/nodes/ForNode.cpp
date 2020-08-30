@@ -38,13 +38,14 @@ Symbol ForNode::sematicCheck(Symbol sym) {
 	if (s.dataType != "<EMPTY>" && s.dataType != "bool")
 	{
 		cerr << "Expression in for is of type \"" << s.dataType << "\", it should be of type bool" << endl;
+		SymbolTable::getInstance()->exitScope();
 		return Symbol::ERROR();
 	}
 	for(idx; idx < children.size(); idx++){
 		children[idx]->sematicCheck();
 	}
-  SymbolTable::getInstance()->exitScope();
 
+  SymbolTable::getInstance()->exitScope();
   return Symbol::EMPTY();
 }
 

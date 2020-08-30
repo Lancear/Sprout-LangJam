@@ -17,14 +17,18 @@ fn main(): int {
     mut k = "hello";
     mut l = k = "hell no";
 
-    for (mut x = 0; x < 12; x += 2);
-    for (mut x = 0;; x++) return 69;
-
     while (true != false && !false) {
         return 5 - 4 * 7 / 12 % 10;
     }
 
     let x = true;
-    let y = 3;
-    return 3 + square(7);
+    mut y = 3;
+    mut z = 1;
+
+    while (z <= 3) {
+        y = y + z;
+        z = z + 1;
+    }
+    
+    return y + square(7);
 }
