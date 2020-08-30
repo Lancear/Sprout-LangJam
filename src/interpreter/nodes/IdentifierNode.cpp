@@ -13,14 +13,12 @@ Symbol IdentifierNode::addSymbols() {
 }
 
 Symbol IdentifierNode::sematicCheck(Symbol sym) {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
-  
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->sematicCheck();
+  if (!SymbolTable::getInstance()->contains(value)) {
+    ErrorHandler::error("unknown identifier");
+    return Symbol::ERROR();
   }
 
-  return Symbol::EMPTY();
+  return SymbolTable::getInstance()->get(value);
 }
 
 Symbol IdentifierNode::execute(Symbol sym) {

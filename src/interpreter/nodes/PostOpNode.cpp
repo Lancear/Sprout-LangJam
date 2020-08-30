@@ -13,14 +13,15 @@ Symbol PostOpNode::addSymbols() {
 }
 
 Symbol PostOpNode::sematicCheck(Symbol sym) {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
-  
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->sematicCheck();
+  string expr = children[0]->addSymbols().dataType;
+  Symbol sym = Symbol::TYPE("int");
+
+  if (expr.compare("int") != 0) {
+    ErrorHandler::error("expr is not an integer");
+    sym = Symbol::ERROR();
   }
 
-  return Symbol::EMPTY();
+  return sym;
 }
 
 Symbol PostOpNode::execute(Symbol sym) {

@@ -13,14 +13,7 @@ Symbol NumberNode::addSymbols() {
 }
 
 Symbol NumberNode::sematicCheck(Symbol sym) {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
-  
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->sematicCheck();
-  }
-
-  return Symbol::EMPTY();
+  return Symbol::EXPRESSION("int", stoi(value));
 }
 
 Symbol NumberNode::execute(Symbol sym) {

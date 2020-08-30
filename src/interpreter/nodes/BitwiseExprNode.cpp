@@ -12,15 +12,22 @@ Symbol BitwiseExprNode::addSymbols() {
   return Symbol::TYPE("int");
 }
 
-Symbol BitwiseExprNode::sematicCheck(Symbol sym) {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
+Symbol BitwiseExprNode::sematicCheck(Symbol param) {
+  string lhs = children[0]->addSymbols().dataType;
+  string rhs = children[1]->addSymbols().dataType;
+  Symbol sym = Symbol::TYPE("int");
+
+  if (lhs.compare("int") != 0) {
+    ErrorHandler::error("lhs is not an integer");
+    sym = Symbol::ERROR();
+  }
   
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->sematicCheck();
+  if (rhs.compare("int") != 0) {
+    ErrorHandler::error("rhs is not an integer");
+    sym = Symbol::ERROR();
   }
 
-  return Symbol::EMPTY();
+  return sym;
 }
 
 Symbol BitwiseExprNode::execute(Symbol sym) {

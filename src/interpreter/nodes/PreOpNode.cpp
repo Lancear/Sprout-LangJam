@@ -14,14 +14,23 @@ Symbol PreOpNode::addSymbols() {
 
 
 Symbol PreOpNode::sematicCheck(Symbol sym) {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  cout << type << ":  " << value << endl;
-  
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->sematicCheck();
+  string expr = children[0]->addSymbols().dataType;
+  Symbol sym = Symbol::TYPE(expr);
+
+  if (value.compare("!")) {
+    if (expr.compare("bool") != 0) {
+      ErrorHandler::error("expr is not an boolean");
+      sym = Symbol::ERROR();
+    }
+  }
+  else {
+    if (expr.compare("int") != 0) {
+      ErrorHandler::error("expr is not an integer");
+      sym = Symbol::ERROR();
+    }
   }
 
-  return Symbol::EMPTY();
+  return sym;
 }
 
 Symbol PreOpNode::execute(Symbol sym) {
