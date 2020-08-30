@@ -15,7 +15,7 @@ Symbol AssignmentNode::addSymbols() {
 Symbol AssignmentNode::sematicCheck(Symbol param) {
   Symbol rhs = children[1]->sematicCheck();
   Symbol lhs = children[0]->sematicCheck();
-  Symbol sym = Symbol::TYPE(lhs.dataType);
+  Symbol sym = lhs;
 
   if (lhs.isError() || rhs.isError()) {
     return Symbol::ERROR();
