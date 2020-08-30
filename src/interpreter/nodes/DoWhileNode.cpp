@@ -31,10 +31,13 @@ Symbol DoWhileNode::sematicCheck(Symbol sym) {
 }
 
 Symbol DoWhileNode::execute(Symbol sym) {
+	SymbolTable::getInstance()->enterScope();
+	Scope s = *SymbolTable::getInstance()->currentScope;
+	SymbolTable::getInstance()->exitScope();
 	do{
-		SymbolTable::getInstance()->enterScope();
+		SymbolTable::getInstance()->pushScope(s);
 		children[0]->execute();
-		SymbolTable::getInstance()->exitScope();
+		SymbolTable::getInstance()->popScope();
 	} while (get<int>(children[1]->execute().value) == 1);
 	return Symbol::EMPTY();
 }

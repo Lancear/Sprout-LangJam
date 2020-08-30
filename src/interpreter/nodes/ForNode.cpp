@@ -51,10 +51,15 @@ Symbol ForNode::sematicCheck(Symbol sym) {
 
 Symbol ForNode::execute(Symbol sym) {
 	SymbolTable::getInstance()->enterScope();
-	children[0]->execute();
+	Scope s = *SymbolTable::getInstance()->currentScope;
+	SymbolTable::getInstance()->exitScope();
 	if (children.size() == 1)
 	{
-		SymbolTable::getInstance()->exitScope();
+		while(true){
+			SymbolTable::getInstance()->pushScope(s);
+			children[0]->execute();
+			SymbolTable::getInstance()->popScope();
+		}
 		return Symbol::EMPTY();
 	}
 
@@ -68,22 +73,25 @@ Symbol ForNode::execute(Symbol sym) {
 	{
 		while (true)
 		{
-			if(idxModifier == 0)
+			SymbolTable::getInstance()->pushScope(s);
+			if (idxModifier == 0)
 				children[1]->execute();
 			if (thirdExp)
-				children[3-idxModifier]->execute();
+				children[3 - idxModifier]->execute();
+			SymbolTable::getInstance()->popScope();
 		}
 	}
 	else
 	{
 		while (get<int>(children[2-idxModifier]->execute().value) == 1)
 		{
+			SymbolTable::getInstance()->pushScope(s);
 			if (idxModifier == 0)
 				children[1]->execute();
 			if (thirdExp)
-				children[3-idxModifier]->execute();
+				children[3 - idxModifier]->execute();
+			SymbolTable::getInstance()->popScope();
 		}
 	}
-	SymbolTable::getInstance()->exitScope();
 	return Symbol::EMPTY();
 }
