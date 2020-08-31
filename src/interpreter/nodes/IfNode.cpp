@@ -36,15 +36,17 @@ Symbol IfNode::sematicCheck(Symbol sym) {
 }
 
 Symbol IfNode::execute(Symbol sym) {
+	Symbol result = Symbol::EMPTY();
 	if(children[0]->type != ElseCompound){
 		int condResult = get<int>(children[0]->execute().value);
 		SymbolTable::getInstance()->enterScope();
+
 		if(condResult == 1)
-			children[1]->execute();
+			result = children[1]->execute();
 		SymbolTable::getInstance()->exitScope();
 	}else{
 		int condResult = get<int>(children[1]->execute().value);
-		children[0]->execute(Symbol::EXPRESSION("bool",condResult));
+		result = children[0]->execute(Symbol::EXPRESSION("bool",condResult));
 	}
-  	return Symbol::EMPTY();
+	return result;
 }
