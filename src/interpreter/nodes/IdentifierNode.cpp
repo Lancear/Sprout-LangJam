@@ -14,7 +14,7 @@ Symbol IdentifierNode::addSymbols() {
 
 Symbol IdentifierNode::sematicCheck(Symbol sym) {
   if (!SymbolTable::getInstance()->contains(value)) {
-    ErrorHandler::error("unknown identifier");
+    ErrorHandler::error("unknown identifier " + value);
     return Symbol::ERROR();
   }
 
@@ -22,10 +22,5 @@ Symbol IdentifierNode::sematicCheck(Symbol sym) {
 }
 
 Symbol IdentifierNode::execute(Symbol sym) {
-  if (!SymbolTable::getInstance()->contains(value)) {
-    ErrorHandler::error("unknown identifier");
-    return Symbol::ERROR();
-  }
-
   return SymbolTable::getInstance()->get(value);
 }

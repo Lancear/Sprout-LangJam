@@ -34,6 +34,10 @@ bool Symbol::isExpression() {
 	return type == SymbolType::EXPRESSION;
 }
 
+bool Symbol::isType() {
+	return type == SymbolType::TYPE;
+}
+
 Symbol Symbol::EMPTY(){
 	Symbol s = Symbol();
 	s.name = EMPTYSTRING;

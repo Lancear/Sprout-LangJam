@@ -26,6 +26,7 @@ class Symbol {
 		bool isMutable();
 		bool isImmutable();
 		bool isExpression();
+		bool isType();
 
 		static Symbol EMPTY();
 		static Symbol ERROR();

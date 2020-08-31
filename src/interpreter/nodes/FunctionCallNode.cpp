@@ -10,14 +10,49 @@
 
 using namespace std;
 
-Symbol FunctionCallNode::sematicCheck(Symbol sym) {
+Symbol FunctionCallNode::sematicCheck(Symbol param) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->sematicCheck();
+  Symbol sym = Symbol::EMPTY();
+
+  if (!syms->contains(value)) {
+    ErrorHandler::error("unknown function " + value);
+    return Symbol::ERROR();
   }
 
-  return Symbol::TYPE(syms->get(value).dataType);
+  if (!syms->get(value).isFunction()) {
+    ErrorHandler::error(value + " is not a function");
+    return Symbol::ERROR();
+  }
+
+  FunctionNode* fn = (FunctionNode*)get<void*>(syms->get(value).value);
+  int paramsNode = (fn->children.size() == 4) ? 1 : 0;
+	int nrOfParams = fn->children[paramsNode]->children.size();
+
+  Symbol args[children.size()];
+  for (int i = 0; i < children.size(); i++) {
+    args[i] = children[i]->sematicCheck();
+  }
+
+  if (nrOfParams != children.size()) {
+    ErrorHandler::error("Incorrect number of arguments for function call to " + value + ", got " + to_string(children.size()) + " arguments, expected " + to_string(nrOfParams));
+    sym = Symbol::ERROR();
+  }
+  else {
+    syms->pushScope(fn->scope);
+
+    for (int i = 0; i < nrOfParams; i++) {
+      string paramName = fn->children[paramsNode]->children[i]->value;
+
+      if (!args[i].isError() && syms->get(paramName).dataType.compare(args[i].dataType) != 0) {
+        ErrorHandler::error("datatype of argument " + to_string(i + 1) + " does not match the datatype of parameter " + to_string(i + 1) + ", " + paramName + ", datatype is " + args[i].dataType + ", expected " + syms->get(paramName).dataType);
+        sym = Symbol::ERROR();
+      }
+    }
+
+    syms->popScope();
+  }
+
+  return (sym.isError()) ? sym : Symbol::TYPE(syms->get(value).dataType);
 }
 
 Symbol FunctionCallNode::execute(Symbol sym) {
