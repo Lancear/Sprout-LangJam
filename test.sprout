@@ -24,6 +24,12 @@ fn main(): int {
     if (true) {
         y = y + z;
     }
+
+    mut u = 0;
+    while (u < 5) {
+        y = y + 1;
+        u = u + 1;
+    }
     
     return y + square(7);
 }
