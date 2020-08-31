@@ -50,7 +50,7 @@ Symbol ArithmeticExprNode::execute(Symbol sym) {
   Symbol lhs = children[0]->execute();
   Symbol rhs = children[1]->execute();
 
-  if(children[0]->execute().dataType == "int" && children[1]->execute().dataType == "int") {
+  if(lhs.dataType == "int" && rhs.dataType == "int") {
     int result = 0;
 
     switch(op) {
@@ -86,15 +86,32 @@ Symbol ArithmeticExprNode::execute(Symbol sym) {
 
     return Symbol::EXPRESSION("int", result);
   }
-  else if(children[0]->execute().dataType == "string" && children[1]->execute().dataType == "string") {
+  else if(lhs.dataType == "string" && rhs.dataType == "string") {
     return Symbol::EXPRESSION("string", get<string>(lhs.value) + get<string>(rhs.value));
   }
-  else if(children[0]->execute().dataType == "string" && children[1]->execute().dataType == "int") {
+  else if(lhs.dataType == "string" && rhs.dataType == "int") {
     return Symbol::EXPRESSION("string", get<string>(lhs.value) + to_string(get<int>(rhs.value)));
   }
-  else if(children[0]->execute().dataType == "int" && children[1]->execute().dataType == "string") {
+  else if(lhs.dataType == "int" && rhs.dataType == "string") {
     return Symbol::EXPRESSION("string", to_string(get<int>(lhs.value)) + get<string>(rhs.value));
   }
+  else if(lhs.dataType == "string" && rhs.dataType == "bool") {
+    string result;
+    get<int>(rhs.value) == 1 ? result = "true" : result = "false";
+    return Symbol::EXPRESSION("string", get<string>(lhs.value) + result);
+  }
+  else if(lhs.dataType == "bool" && rhs.dataType == "string") {
+    string result;
+    get<int>(lhs.value) == 1 ? result = "true" : result = "false";
+    return Symbol::EXPRESSION("string", result + get<string>(rhs.value));
+  }
+  else if(lhs.dataType == "string" && rhs.dataType == "char") {
+    return Symbol::EXPRESSION("string", get<string>(lhs.value) + (char)get<int>(rhs.value));
+  }
+  else if(lhs.dataType == "char" && rhs.dataType == "string") {
+    return Symbol::EXPRESSION("string", string(1, (char)get<int>(lhs.value)) + get<string>(rhs.value));
+  }
 
-  return Symbol::EMPTY();
+  ErrorHandler::error("expression not handled");
+  return Symbol::ERROR();
 }

@@ -17,9 +17,5 @@ Symbol CharNode::sematicCheck(Symbol sym) {
 }
 
 Symbol CharNode::execute(Symbol sym) {
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->execute();
-  }
-
-  return Symbol::EMPTY();
+  return Symbol::EXPRESSION("char", (int)value[1]);
 }
