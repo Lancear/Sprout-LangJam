@@ -31,12 +31,13 @@ Symbol ElseNode::sematicCheck(Symbol sym) {
 }
 
 Symbol ElseNode::execute(Symbol sym) {
+	Symbol result = Symbol::EMPTY();
 	SymbolTable::getInstance()->enterScope();
 	if(get<int>(sym.value) == 1){
-		children[0]->execute();
+		result = children[0]->execute();
 	}else{
-		children[1]->execute();
+		result = children[1]->execute();
 	}
 	SymbolTable::getInstance()->exitScope();
-	return Symbol::EMPTY();
+	return result;
 }

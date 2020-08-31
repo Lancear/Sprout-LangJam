@@ -31,6 +31,7 @@ Symbol DoWhileNode::sematicCheck(Symbol sym) {
 }
 
 Symbol DoWhileNode::execute(Symbol sym) {
+	Symbol result = Symbol::EMPTY();
 	SymbolTable::getInstance()->enterScope();
 	Scope * s = SymbolTable::getInstance()->currentScope;
 	SymbolTable::getInstance()->exitScope();
@@ -38,6 +39,8 @@ Symbol DoWhileNode::execute(Symbol sym) {
 		SymbolTable::getInstance()->pushScope(s);
 		children[1]->execute();
 		SymbolTable::getInstance()->popScope();
+		if (!result.isEmpty())
+			return result;
 	} while (get<int>(children[0]->execute().value) == 1);
-	return Symbol::EMPTY();
+	return result;
 }

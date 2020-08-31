@@ -50,6 +50,7 @@ Symbol ForNode::sematicCheck(Symbol sym) {
 }
 
 Symbol ForNode::execute(Symbol sym) {
+	Symbol result = Symbol::EMPTY();
 	SymbolTable::getInstance()->enterScope();
 	Scope * s = SymbolTable::getInstance()->currentScope;
 	if(children.size() != 1)
@@ -59,10 +60,12 @@ Symbol ForNode::execute(Symbol sym) {
 	{
 		while(true){
 			SymbolTable::getInstance()->pushScope(s);
-			children[0]->execute();
+			result = children[0]->execute();
+			if (!result.isEmpty())
+				return result;
 			SymbolTable::getInstance()->popScope();
 		}
-		return Symbol::EMPTY();
+		return result;
 	}
 	//If for has 4 children, if we have no codeblock, we reduce the idx by one
 	int idxModifier = children.size() == 4 ? 0 : 1;
@@ -75,8 +78,13 @@ Symbol ForNode::execute(Symbol sym) {
 		while (true)
 		{
 			SymbolTable::getInstance()->pushScope(s);
-			if (idxModifier == 0)
-				children[1]->execute();
+			if (idxModifier == 0){
+				result = children[1]->execute();
+				if (!result.isEmpty()){
+					SymbolTable::getInstance()->popScope();
+					return result;
+				}
+			}
 			if (thirdExp)
 				children[3 - idxModifier]->execute();
 			SymbolTable::getInstance()->popScope();
@@ -91,13 +99,19 @@ Symbol ForNode::execute(Symbol sym) {
 		while (value == 1)
 		{
 			SymbolTable::getInstance()->pushScope(s);
-			if (idxModifier == 0)
-				children[1]->execute();
+			if (idxModifier == 0){
+				result = children[1]->execute();
+				if (!result.isEmpty())
+				{
+					SymbolTable::getInstance()->popScope();
+					return result;
+				}
+			}
 			if (thirdExp)
 				children[3 - idxModifier]->execute();
 			value = get<int>(children[2 - idxModifier]->execute().value);
 			SymbolTable::getInstance()->popScope();
 		}
 	}
-	return Symbol::EMPTY();
+	return result;
 }
