@@ -21,8 +21,8 @@ Symbol PostOpNode::sematicCheck(Symbol param) {
   }
 
   if (expr.dataType.compare("int") != 0) {
-    ErrorHandler::error(value + " expr is not an integer");
-    sym = Symbol::ERROR();
+	  ErrorHandler::error(value + " expr is not an integer", line, col);
+	  sym = Symbol::ERROR();
   }
 
   return sym;
@@ -41,8 +41,8 @@ Symbol PostOpNode::execute(Symbol sym) {
     SymbolTable::getInstance()->update(lhs);
   } 
   else {
-    ErrorHandler::error(value + " operator not found");
-    return Symbol::ERROR();
+	  ErrorHandler::error(value + " operator not found", line, col);
+	  return Symbol::ERROR();
   }
 
   return Symbol::EXPRESSION("int", result);

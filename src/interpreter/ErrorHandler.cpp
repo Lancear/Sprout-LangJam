@@ -11,7 +11,7 @@ bool ErrorHandler::hadError = false;
  * logs the error and remembers that there was an error. 
  * if there were errors, after the semantic checks the interpreter will stop.
  */
-void ErrorHandler::error(string errMessage) {
+void ErrorHandler::error(string errMessage, int line, int col) {
   ErrorHandler::hadError = true;
-  cout << errMessage << endl;
+  cout << "ERROR:" + errMessage + "at line " << line << " at col " << col << endl;
 }

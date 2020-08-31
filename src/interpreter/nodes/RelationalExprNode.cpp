@@ -23,19 +23,19 @@ Symbol RelationalExprNode::sematicCheck(Symbol param) {
 
   if (value.compare("==") == 0 || value.compare("!=") == 0){
     if (lhs.dataType.compare(rhs.dataType) != 0) {
-      ErrorHandler::error(value + " lhs is not of the same type as rhs");
-      sym = Symbol::ERROR();
+		ErrorHandler::error(value + " lhs is not of the same type as rhs", line, col);
+		sym = Symbol::ERROR();
     }
   }
   else {
     if (lhs.dataType.compare("int") != 0) {
-      ErrorHandler::error(value + " lhs is not an integer");
-      sym = Symbol::ERROR();
+		ErrorHandler::error(value + " lhs is not an integer", line, col);
+		sym = Symbol::ERROR();
     }
     
     if (rhs.dataType.compare("int") != 0) {
-      ErrorHandler::error(value + " rhs is not an integer");
-      sym = Symbol::ERROR();
+		ErrorHandler::error(value + " rhs is not an integer", line, col);
+		sym = Symbol::ERROR();
     }
   }
   
@@ -67,6 +67,6 @@ Symbol RelationalExprNode::execute(Symbol sym) {
     return get<int>(lhs.value) <= get<int>(rhs.value) ? Symbol::EXPRESSION("bool", 1) : Symbol::EXPRESSION("bool", 0);
   }
 
-  ErrorHandler::error(value + " operator not found");
+  ErrorHandler::error(value + " operator not found", line, col);
   return Symbol::ERROR();
 }

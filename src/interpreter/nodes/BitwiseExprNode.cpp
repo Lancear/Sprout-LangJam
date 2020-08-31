@@ -18,13 +18,13 @@ Symbol BitwiseExprNode::sematicCheck(Symbol param) {
   Symbol sym = Symbol::TYPE("int");
 
   if (lhs.compare("int") != 0) {
-    ErrorHandler::error("lhs is not an integer");
-    sym = Symbol::ERROR();
+	  ErrorHandler::error("lhs is not an integer", line, col);
+	  sym = Symbol::ERROR();
   }
   
   if (rhs.compare("int") != 0) {
-    ErrorHandler::error("rhs is not an integer");
-    sym = Symbol::ERROR();
+	  ErrorHandler::error("rhs is not an integer", line, col);
+	  sym = Symbol::ERROR();
   }
 
   return sym;
@@ -48,8 +48,8 @@ Symbol BitwiseExprNode::execute(Symbol sym) {
       result = lhs ^ rhs;
       break;
     default:
-      ErrorHandler::error(value + " operator not found");
-      return Symbol::ERROR();
+		ErrorHandler::error(value + " operator not found", line, col);
+		return Symbol::ERROR();
   }
 
   return Symbol::EXPRESSION("int", result);

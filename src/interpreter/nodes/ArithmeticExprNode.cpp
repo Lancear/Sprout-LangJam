@@ -33,13 +33,13 @@ Symbol ArithmeticExprNode::sematicCheck(Symbol param) {
   }
 
   if (lhs.dataType.compare("int") != 0) {
-    ErrorHandler::error(value + " lhs is not an integer");
+    ErrorHandler::error(value + " lhs is not an integer", line, col);
     sym = Symbol::ERROR();
   }
   
   if (rhs.dataType.compare("int") != 0) {
-    ErrorHandler::error(value + " lhs is not an integer");
-    sym = Symbol::ERROR();
+	  ErrorHandler::error(value + " lhs is not an integer", line, col);
+	  sym = Symbol::ERROR();
   }
 
   return sym;
@@ -65,23 +65,23 @@ Symbol ArithmeticExprNode::execute(Symbol sym) {
         break;
       case '/':
         if(get<int>(rhs.value) == 0) {
-          ErrorHandler::error("x / 0 is undefined");
-          return Symbol::ERROR();
+			ErrorHandler::error("x / 0 is undefined", line, col);
+			return Symbol::ERROR();
         }
 
         result = get<int>(lhs.value) / get<int>(rhs.value);
         break;
       case '%':
         if(get<int>(rhs.value) == 0) {
-          ErrorHandler::error("x mod 0 is undefined");
-          return Symbol::ERROR();
+			ErrorHandler::error("x mod 0 is undefined", line, col);
+			return Symbol::ERROR();
         }
 
         result = get<int>(lhs.value) - get<int>(rhs.value) * (get<int>(lhs.value) / get<int>(rhs.value));
         break;
       default:
-        ErrorHandler::error(value + " operator not found");
-        return Symbol::ERROR();
+		  ErrorHandler::error(value + " operator not found", line, col);
+		  return Symbol::ERROR();
     }
 
     return Symbol::EXPRESSION("int", result);
@@ -112,6 +112,6 @@ Symbol ArithmeticExprNode::execute(Symbol sym) {
     return Symbol::EXPRESSION("string", string(1, (char)get<int>(lhs.value)) + get<string>(rhs.value));
   }
 
-  ErrorHandler::error("expression not handled");
+  ErrorHandler::error("expression not handled", line, col);
   return Symbol::ERROR();
 }

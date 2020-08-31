@@ -23,13 +23,13 @@ Symbol AssignmentNode::sematicCheck(Symbol param) {
   }
 
   if (lhs.isImmutable()) {
-    ErrorHandler::error("lhs is immutable, cannot assign to it");
-    sym = Symbol::ERROR();
+	  ErrorHandler::error("lhs is immutable, cannot assign to it", line, col);
+	  sym = Symbol::ERROR();
   }
 
   if (lhs.dataType.compare(rhs.dataType) != 0) {
-    ErrorHandler::error(value + " lhs is not of the same type as rhs");
-    sym = Symbol::ERROR();
+	  ErrorHandler::error(value + " lhs is not of the same type as rhs", line, col);
+	  sym = Symbol::ERROR();
   }
 
   return sym;
@@ -48,16 +48,16 @@ Symbol AssignmentNode::execute(Symbol sym) {
   else if(value == "*=") lhs.value.emplace<int>(get<int>(lhs.value) * get<int>(rhs.value));
   else if(value == "/=") {
     if(get<int>(rhs.value) == 0) {
-      ErrorHandler::error("x / 0 is undefined");
-      return Symbol::ERROR();
+		ErrorHandler::error("x / 0 is undefined", line, col);
+		return Symbol::ERROR();
     }
 
     lhs.value.emplace<int>(get<int>(lhs.value) / get<int>(rhs.value));
   }
   else if(value == "%=") {
     if(get<int>(rhs.value) == 0) {
-      ErrorHandler::error("x mod 0 is undefined");
-      return Symbol::ERROR();
+		ErrorHandler::error("x mod 0 is undefined", line, col);
+		return Symbol::ERROR();
     }
 
     lhs.value.emplace<int>(get<int>(lhs.value) % get<int>(rhs.value));

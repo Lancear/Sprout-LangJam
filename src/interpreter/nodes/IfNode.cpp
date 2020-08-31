@@ -24,7 +24,7 @@ Symbol IfNode::sematicCheck(Symbol sym) {
 	Symbol firstNode = children[condIdx]->sematicCheck();
 	if (firstNode.dataType != "bool")
 	{
-		cerr << "Expression in if is of type \"" << firstNode.dataType << "\", it should be of type bool" << endl;
+		ErrorHandler::error("Expression in if is of type \"" + firstNode.dataType + "\", it should be of type bool", line, col);
 		return Symbol::ERROR();
 	}
 

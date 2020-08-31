@@ -25,8 +25,8 @@ Symbol FunctionNode::addSymbols() {
 	}
 
 	if (syms->currentScope->parent->contains(value)) {
-    ErrorHandler::error("a symbol with this name already exists, name: " + value);
-    sym = Symbol::ERROR();
+		ErrorHandler::error("a symbol with this name already exists, name: " + value, line, col);
+		sym = Symbol::ERROR();
   }
 	else if (!sym.isError()) {
 		fnSym = Symbol::FUNCTION(value, type, (void*)this);

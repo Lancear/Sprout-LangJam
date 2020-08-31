@@ -37,7 +37,7 @@ Symbol ForNode::sematicCheck(Symbol sym) {
 
 	if (s.dataType != "<EMPTY>" && s.dataType != "bool")
 	{
-		cerr << "Expression in for is of type \"" << s.dataType << "\", it should be of type bool" << endl;
+		ErrorHandler::error("Expression in for is of type \"" + s.dataType + "\", it should be of type bool", line, col);
 		SymbolTable::getInstance()->exitScope();
 		return Symbol::ERROR();
 	}

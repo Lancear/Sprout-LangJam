@@ -14,8 +14,8 @@ Symbol IdentifierNode::addSymbols() {
 
 Symbol IdentifierNode::sematicCheck(Symbol sym) {
   if (!SymbolTable::getInstance()->contains(value)) {
-    ErrorHandler::error("unknown identifier " + value);
-    return Symbol::ERROR();
+	  ErrorHandler::error("unknown identifier " + value, line, col);
+	  return Symbol::ERROR();
   }
 
   if (!SymbolTable::getInstance()->contains(SymbolTable::getInstance()->get(value).dataType)) {
