@@ -5,7 +5,7 @@ fn square(x: int): int {
     return x * x;
 }
 
-fn main(): int {
+fn main(): bool {
     let a = true;
     let b = a ? "true" : "false";
     let c = 1 + 3;
@@ -30,6 +30,7 @@ fn main(): int {
         y = y + 1;
         u = u + 1;
     }
-    
-    return y + square(7);
+
+    let t = '\n';
+    return t == '\n';
 }

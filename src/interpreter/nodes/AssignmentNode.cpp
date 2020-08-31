@@ -70,9 +70,9 @@ Symbol AssignmentNode::execute(Symbol sym) {
 
   SymbolTable::getInstance()->update(lhs);
 
-  if (lhs.dataType.compare("int") == 0)
-    cout << lhs.name << value << ": " << get<int>(SymbolTable::getInstance()->get(lhs.name).value) << endl;
-  else 
+  if (lhs.dataType.compare("string") == 0)
     cout << lhs.name << value << ": " << get<string>(SymbolTable::getInstance()->get(lhs.name).value) << endl;
+  else 
+    cout << lhs.name << value << ": " << get<int>(SymbolTable::getInstance()->get(lhs.name).value) << endl;
   return rhs;
 }

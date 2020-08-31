@@ -47,12 +47,12 @@ Symbol RelationalExprNode::execute(Symbol sym) {
   Symbol rhs = children[1]->execute();
 
   if(value == "==") {
-    if(lhs.dataType == "int") return get<int>(lhs.value) == get<int>(rhs.value) ? Symbol::EXPRESSION("bool", 1) : Symbol::EXPRESSION("bool", 0);
-    else return get<string>(lhs.value) == get<string>(rhs.value) ? Symbol::EXPRESSION("bool", 1) : Symbol::EXPRESSION("bool", 0);
+    if(lhs.dataType.compare("string") == 0) return get<string>(lhs.value) == get<string>(rhs.value) ? Symbol::EXPRESSION("bool", 1) : Symbol::EXPRESSION("bool", 0);
+    else return get<int>(lhs.value) == get<int>(rhs.value) ? Symbol::EXPRESSION("bool", 1) : Symbol::EXPRESSION("bool", 0);
   }
   else if(value == "!=") {
-    if(lhs.dataType == "int") return get<int>(lhs.value) != get<int>(rhs.value) ? Symbol::EXPRESSION("bool", 1) : Symbol::EXPRESSION("bool", 0);
-    else return get<string>(lhs.value) != get<string>(rhs.value) ? Symbol::EXPRESSION("bool", 1) : Symbol::EXPRESSION("bool", 0);
+    if(lhs.dataType.compare("string") == 0) return get<string>(lhs.value) != get<string>(rhs.value) ? Symbol::EXPRESSION("bool", 1) : Symbol::EXPRESSION("bool", 0);
+    else return get<int>(lhs.value) != get<int>(rhs.value) ? Symbol::EXPRESSION("bool", 1) : Symbol::EXPRESSION("bool", 0);
   }
   else if(value == "<") {
     return get<int>(lhs.value) < get<int>(rhs.value) ? Symbol::EXPRESSION("bool", 1) : Symbol::EXPRESSION("bool", 0);

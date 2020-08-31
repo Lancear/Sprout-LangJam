@@ -67,7 +67,6 @@ Symbol FunctionNode::execute(Symbol args[]) {
 
 	int code = (children.size() == 4) ? 2 : 1;
 	Symbol retVal = children[code]->execute();
-
 	syms->popScope();
   return retVal;
 }
