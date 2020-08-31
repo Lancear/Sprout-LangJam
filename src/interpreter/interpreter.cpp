@@ -26,8 +26,5 @@ void dispatch(struct node *n){
   Symbol args[0];
   Symbol retVal = main->execute(args);
 
-  if (retVal.dataType.compare("string") == 0)
-    cout << get<string>(retVal.value) << endl;
-  else 
-    cout << get<int>(retVal.value) << endl;
+  if (retVal.dataType.compare("int") == 0) exit( get<int>(retVal.value) );
 }
