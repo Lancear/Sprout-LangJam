@@ -1,6 +1,5 @@
 #include <string>
 #include <memory>
-#include <algorithm>
 
 #include "ArithmeticExprNode.hpp"
 #include "../ErrorHandler.hpp"
@@ -90,12 +89,7 @@ Symbol ArithmeticExprNode::execute(Symbol sym) {
   else if(children[0]->execute().dataType == "string" && children[1]->execute().dataType == "string") {
     string lhs = get<string>(children[0]->execute().value);
     string rhs = get<string>(children[1]->execute().value);
-    string result;
-
-    lhs.erase(remove(lhs.begin(), lhs.end(), '"'), lhs.end());
-    rhs.erase(remove(rhs.begin(), rhs.end(), '"'), rhs.end());
-
-    result += lhs + rhs;
+    string result = lhs + rhs;
 
     return Symbol::EXPRESSION("string", result);
   }

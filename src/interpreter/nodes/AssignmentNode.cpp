@@ -35,7 +35,10 @@ Symbol AssignmentNode::execute(Symbol sym) {
   Symbol lhs = children[0]->execute();
 
   if(value == "=") lhs.value = rhs.value;
-  else if(value == "+=") lhs.value.emplace<int>(get<int>(lhs.value) + get<int>(rhs.value));
+  else if(value == "+=") {
+    if(lhs.dataType == "int") lhs.value.emplace<int>(get<int>(lhs.value) + get<int>(rhs.value));
+    else lhs.value.emplace<string>(get<string>(lhs.value) + get<string>(rhs.value));
+  }
   else if(value == "-=") lhs.value.emplace<int>(get<int>(lhs.value) - get<int>(rhs.value));
   else if(value == "*=") lhs.value.emplace<int>(get<int>(lhs.value) * get<int>(rhs.value));
   else if(value == "/=") {
@@ -64,5 +67,7 @@ Symbol AssignmentNode::execute(Symbol sym) {
 
   if (lhs.dataType.compare("int") == 0)
     cout << lhs.name << value << ": " << get<int>(SymbolTable::getInstance()->get(lhs.name).value) << endl;
+  else 
+    cout << lhs.name << value << ": " << get<string>(SymbolTable::getInstance()->get(lhs.name).value) << endl;
   return rhs;
 }
