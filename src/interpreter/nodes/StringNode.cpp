@@ -1,5 +1,6 @@
 #include <string>
 #include <memory>
+#include <algorithm>
 
 #include "StringNode.hpp"
 #include "../ErrorHandler.hpp"
@@ -17,5 +18,6 @@ Symbol StringNode::sematicCheck(Symbol sym) {
 }
 
 Symbol StringNode::execute(Symbol sym) {
+  value.erase(remove(value.begin(), value.end(), '"'), value.end());
   return Symbol::EXPRESSION("string", value);
 }
