@@ -61,8 +61,5 @@ Symbol AssignmentNode::execute(Symbol sym) {
   else if(value == ">>=") lhs.value.emplace<int>(get<int>(lhs.value) >> get<int>(rhs.value));
 
   SymbolTable::getInstance()->update(lhs);
-
-  if (lhs.dataType.compare("int") == 0)
-    cout << lhs.name << value << ": " << get<int>(SymbolTable::getInstance()->get(lhs.name).value) << endl;
   return rhs;
 }
