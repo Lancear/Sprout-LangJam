@@ -4,6 +4,7 @@
 
 #include "FunctionCallNode.hpp"
 #include "FunctionNode.hpp"
+#include "ClassNode.hpp"
 #include "../ErrorHandler.hpp"
 #include "../symboltable/SymbolTable.hpp"
 #include "../symboltable/Symbol.hpp"
@@ -13,20 +14,30 @@ using namespace std;
 Symbol FunctionCallNode::sematicCheck(Symbol param) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   Symbol sym = Symbol::EMPTY();
+  FunctionNode* fn;
 
   if (!syms->contains(value)) {
     ErrorHandler::error("unknown function " + value);
     return Symbol::ERROR();
   }
 
-  if (!syms->get(value).isFunction()) {
+  if (!syms->get(value).isFunction() && !syms->get(value).isClass()) {
     ErrorHandler::error(value + " is not a function");
     return Symbol::ERROR();
   }
 
-  FunctionNode* fn = (FunctionNode*)get<void*>(syms->get(value).value);
+  if (syms->get(value).isClass()) {
+    ClassNode* clazz = (ClassNode*)get<void*>(syms->get(value).value);
+    syms->pushScope(clazz->scope);
+    fn = (FunctionNode*)get<void*>(syms->get(value).value);
+    syms->popScope();
+  }
+  else {
+    fn = (FunctionNode*)get<void*>(syms->get(value).value);
+  }
+
   int paramsNode = (fn->children.size() == 4) ? 1 : 0;
-	int nrOfParams = fn->children[paramsNode]->children.size();
+  int nrOfParams = fn->children[paramsNode]->children.size();
 
   Symbol args[children.size()];
   for (int i = 0; i < children.size(); i++) {
@@ -50,7 +61,7 @@ Symbol FunctionCallNode::sematicCheck(Symbol param) {
     }
 
     syms->popScope();
-  }
+  }  
 
   return (sym.isError()) ? sym : Symbol::TYPE(syms->get(value).dataType);
 }

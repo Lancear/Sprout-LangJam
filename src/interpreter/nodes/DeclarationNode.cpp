@@ -29,16 +29,22 @@ Symbol DeclarationNode::addSymbols() {
     if (type.compare("string") == 0) {
       s = Symbol::MUTABLE(value,type,"");
     }
+    else if (syms->get(type).isClass()) {
+      s = Symbol::MUTABLE(value,type, (void*)NULL);
+    }
     else {
       s = Symbol::MUTABLE(value,type,0);
     }
 	}
   else {
 		if (type.compare("string") == 0) {
-      s = Symbol::MUTABLE(value,type,"");
+      s = Symbol::IMMUTABLE(value,type,"");
+    }
+    else if (syms->get(type).isClass()) {
+      s = Symbol::IMMUTABLE(value,type, (void*)NULL);
     }
     else {
-      s = Symbol::MUTABLE(value,type,0);
+      s = Symbol::IMMUTABLE(value,type,0);
     }
 	}
 
@@ -47,11 +53,17 @@ Symbol DeclarationNode::addSymbols() {
 }
 
 Symbol DeclarationNode::sematicCheck(Symbol sym) {
-  if ((children[0]->type != VariableTypeNode && children[0]->type != TypeCompound) || children.size() == 2) {
-    return children[children.size() - 1]->sematicCheck();
+  Symbol typeSym, valSym;
+
+  if (children[0]->type == VariableTypeNode || children[0]->type == TypeCompound) {
+    typeSym = children[0]->sematicCheck();
   }
 
-  return Symbol::EMPTY();
+  if ((children[0]->type != VariableTypeNode && children[0]->type != TypeCompound) || children.size() == 2) {
+    valSym = children[children.size() - 1]->sematicCheck();
+  }
+
+  return (typeSym.isError() || valSym.isError()) ? Symbol::ERROR() : SymbolTable::getInstance()->get(value);
 }
 
 Symbol DeclarationNode::execute(Symbol param) {

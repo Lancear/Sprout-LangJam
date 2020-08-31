@@ -18,6 +18,16 @@ Symbol IdentifierNode::sematicCheck(Symbol sym) {
     return Symbol::ERROR();
   }
 
+  if (!SymbolTable::getInstance()->contains(SymbolTable::getInstance()->get(value).dataType)) {
+    return Symbol::ERROR();
+  }
+
+  Symbol type = SymbolTable::getInstance()->get(SymbolTable::getInstance()->get(value).dataType);
+
+  if (!type.isType() && !type.isClass()) {
+    return Symbol::ERROR();
+  }
+
   return SymbolTable::getInstance()->get(value);
 }
 
