@@ -47,37 +47,37 @@ Symbol ArithmeticExprNode::sematicCheck(Symbol param) {
 
 Symbol ArithmeticExprNode::execute(Symbol sym) {
   char op = value[0];
+  Symbol lhs = children[0]->execute();
+  Symbol rhs = children[1]->execute();
 
   if(children[0]->execute().dataType == "int" && children[1]->execute().dataType == "int") {
-    int lhs = get<int>(children[0]->execute().value);
-    int rhs = get<int>(children[1]->execute().value);
     int result = 0;
 
     switch(op) {
       case '+':
-        result = lhs + rhs;
+        result = get<int>(lhs.value) + get<int>(rhs.value);
         break;
       case '-':
-        result = lhs - rhs;
+        result = get<int>(lhs.value) - get<int>(rhs.value);
         break;
       case '*':
-        result = lhs * rhs;
+        result = get<int>(lhs.value) * get<int>(rhs.value);
         break;
       case '/':
-        if(rhs == 0) {
+        if(get<int>(rhs.value) == 0) {
           ErrorHandler::error("x / 0 is undefined");
           return Symbol::ERROR();
         }
 
-        result = lhs / rhs;
+        result = get<int>(lhs.value) / get<int>(rhs.value);
         break;
       case '%':
-        if(rhs == 0) {
+        if(get<int>(rhs.value) == 0) {
           ErrorHandler::error("x mod 0 is undefined");
           return Symbol::ERROR();
         }
 
-        result = lhs - rhs * (lhs / rhs);
+        result = get<int>(lhs.value) - get<int>(rhs.value) * (get<int>(lhs.value) / get<int>(rhs.value));
         break;
       default:
         ErrorHandler::error(value + " operator not found");
@@ -87,11 +87,7 @@ Symbol ArithmeticExprNode::execute(Symbol sym) {
     return Symbol::EXPRESSION("int", result);
   }
   else if(children[0]->execute().dataType == "string" && children[1]->execute().dataType == "string") {
-    string lhs = get<string>(children[0]->execute().value);
-    string rhs = get<string>(children[1]->execute().value);
-    string result = lhs + rhs;
-
-    return Symbol::EXPRESSION("string", result);
+    return Symbol::EXPRESSION("string", get<string>(lhs.value) + get<string>(rhs.value));
   }
 
   return Symbol::EMPTY();
