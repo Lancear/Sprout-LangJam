@@ -13,6 +13,8 @@ using namespace std;
 
 Symbol FunctionNode::addSymbols() {
 	shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
+	Symbol fnSym, sym;
+
 	syms->openNewScope();
 
 	string type = "void";
@@ -20,17 +22,24 @@ Symbol FunctionNode::addSymbols() {
 		type = children[3]->addSymbols().dataType;
 
 
-	Symbol s = Symbol::FUNCTION(value, type, (void*)this);
-	syms->currentScope->parent->add(s);
+	if (syms->currentScope->parent->contains(value)) {
+    ErrorHandler::error("a symbol with this name already exists, name: " + value);
+    sym = Symbol::ERROR();
+  }
+	else {
+		fnSym = Symbol::FUNCTION(value, type, (void*)this);
+		syms->currentScope->parent->add(fnSym);
+	}
 	
 	for (int i = 0; i < children.size(); i++)
 	{
-		children[i]->addSymbols();
+		sym = children[i]->addSymbols();
 	}
 	
 	this->scope = syms->currentScope;	
 	syms->closeScope();
-  return Symbol::EMPTY();
+
+  return (sym.isError()) ? sym : fnSym;
 }
 
 Symbol FunctionNode::sematicCheck(Symbol sym) {

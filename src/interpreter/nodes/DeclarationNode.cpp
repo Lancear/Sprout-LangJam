@@ -15,6 +15,13 @@ DeclarationNode::DeclarationNode(struct node * n, bool mut) : DeclarationNode(n)
 }
 
 Symbol DeclarationNode::addSymbols() {
+  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
+
+  if (syms->containsInCurrentScope(value)) {
+    ErrorHandler::error("a symbol with this name already exists, name: " + value);
+    return Symbol::ERROR();
+  }
+
 	Symbol s;
   string type = children[0]->addSymbols().dataType;
 
@@ -35,15 +42,13 @@ Symbol DeclarationNode::addSymbols() {
     }
 	}
 
-	SymbolTable::getInstance()->add(s);
-  return Symbol::EMPTY();
+	syms->add(s);
+  return s;
 }
 
 Symbol DeclarationNode::sematicCheck(Symbol sym) {
-  shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-  
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->sematicCheck();
+  if (children[0]->type != VariableTypeNode || children.size() == 2) {
+    return children[children.size() - 1]->sematicCheck();
   }
 
   return Symbol::EMPTY();
