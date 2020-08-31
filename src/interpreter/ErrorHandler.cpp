@@ -13,5 +13,5 @@ bool ErrorHandler::hadError = false;
  */
 void ErrorHandler::error(string errMessage, int line, int col) {
   ErrorHandler::hadError = true;
-  cout << "ERROR:" + errMessage + "at line " << line << " at col " << col << endl;
+  cout << "[" << line << ":" << col << "] ERROR: " << errMessage << endl;
 }
