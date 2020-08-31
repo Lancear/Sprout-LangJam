@@ -52,6 +52,8 @@ Symbol ForNode::sematicCheck(Symbol sym) {
 Symbol ForNode::execute(Symbol sym) {
 	SymbolTable::getInstance()->enterScope();
 	Scope * s = SymbolTable::getInstance()->currentScope;
+	if(children.size() != 1)
+		children[0]->execute();
 	SymbolTable::getInstance()->exitScope();
 	if (children.size() == 1)
 	{
@@ -62,7 +64,6 @@ Symbol ForNode::execute(Symbol sym) {
 		}
 		return Symbol::EMPTY();
 	}
-
 	//If for has 4 children, if we have no codeblock, we reduce the idx by one
 	int idxModifier = children.size() == 4 ? 0 : 1;
 
@@ -83,13 +84,18 @@ Symbol ForNode::execute(Symbol sym) {
 	}
 	else
 	{
-		while (get<int>(children[2-idxModifier]->execute().value) == 1)
+		SymbolTable::getInstance()->pushScope(s);
+		int value = get<int>(children[2 - idxModifier]->execute().value);
+		SymbolTable::getInstance()->popScope();
+
+		while (value == 1)
 		{
 			SymbolTable::getInstance()->pushScope(s);
 			if (idxModifier == 0)
 				children[1]->execute();
 			if (thirdExp)
 				children[3 - idxModifier]->execute();
+			value = get<int>(children[2 - idxModifier]->execute().value);
 			SymbolTable::getInstance()->popScope();
 		}
 	}
