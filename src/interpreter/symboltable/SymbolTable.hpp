@@ -15,6 +15,7 @@ class SymbolTable
 	public:
 		static shared_ptr<SymbolTable> getInstance();
 		SymbolTable *add(Symbol symbol);
+		SymbolTable * update(Symbol symbol);
 		bool containsInCurrentScope(string symbol);
 		bool contains(string symbol);
 		Symbol get(string symbol, Scope* scope);

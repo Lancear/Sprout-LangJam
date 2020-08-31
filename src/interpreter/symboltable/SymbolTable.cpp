@@ -56,6 +56,21 @@ bool SymbolTable::contains(string symbol)
 	return false;
 }
 
+SymbolTable * SymbolTable::update(Symbol symbol) {
+	Scope* internalScope = currentScope;
+	while (internalScope != 0)
+	{
+		if (internalScope->contains(symbol.name)) {
+			internalScope->add(symbol);
+			return this;
+		}
+
+		internalScope = internalScope->getParent();
+	}
+
+	return this;
+}
+
 SymbolTable *SymbolTable::add(Symbol symbol)
 {
 	currentScope->add(symbol);

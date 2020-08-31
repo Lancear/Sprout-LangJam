@@ -34,7 +34,7 @@ Symbol AssignmentNode::execute(Symbol sym) {
   Symbol rhs = children[1]->execute();
   Symbol lhs = children[0]->execute();
   lhs.value = rhs.value;
-  SymbolTable::getInstance()->add(lhs);
+  SymbolTable::getInstance()->update(lhs);
 
   if (lhs.dataType.compare("int") == 0)
     cout << lhs.name << ": " << get<int>(SymbolTable::getInstance()->get(lhs.name).value) << endl;

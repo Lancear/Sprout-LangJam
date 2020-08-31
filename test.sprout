@@ -19,7 +19,7 @@ fn main(): int {
 
     let x = true;
     mut y = 3;
-    mut z = 1;
+    mut z = 10;
 
     if (true) {
         y = y + z;
