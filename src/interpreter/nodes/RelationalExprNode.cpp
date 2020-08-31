@@ -43,9 +43,28 @@ Symbol RelationalExprNode::sematicCheck(Symbol param) {
 }
 
 Symbol RelationalExprNode::execute(Symbol sym) {
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->execute();
+  Symbol lhs = children[0]->execute();
+  Symbol rhs = children[1]->execute();
+
+  if(value == "==") {
+    return get<int>(lhs.value) == get<int>(rhs.value) ? Symbol::EXPRESSION("bool", 1) : Symbol::EXPRESSION("bool", 0);
+  }
+  else if(value == "!=") {
+    return get<int>(lhs.value) != get<int>(rhs.value) ? Symbol::EXPRESSION("bool", 1) : Symbol::EXPRESSION("bool", 0);
+  }
+  else if(value == "<") {
+    return get<int>(lhs.value) < get<int>(rhs.value) ? Symbol::EXPRESSION("bool", 1) : Symbol::EXPRESSION("bool", 0);
+  }
+  else if(value == ">") {
+    return get<int>(lhs.value) > get<int>(rhs.value) ? Symbol::EXPRESSION("bool", 1) : Symbol::EXPRESSION("bool", 0);
+  }
+  else if(value == ">=") {
+    return get<int>(lhs.value) >= get<int>(rhs.value) ? Symbol::EXPRESSION("bool", 1) : Symbol::EXPRESSION("bool", 0);
+  }
+  else if(value == "<=") {
+    return get<int>(lhs.value) <= get<int>(rhs.value) ? Symbol::EXPRESSION("bool", 1) : Symbol::EXPRESSION("bool", 0);
   }
 
-  return Symbol::EMPTY();
+  ErrorHandler::error(value + " operator not found");
+  return Symbol::ERROR();
 }

@@ -33,10 +33,36 @@ Symbol AssignmentNode::sematicCheck(Symbol param) {
 Symbol AssignmentNode::execute(Symbol sym) {
   Symbol rhs = children[1]->execute();
   Symbol lhs = children[0]->execute();
-  lhs.value = rhs.value;
+
+  if(value == "=") lhs.value = rhs.value;
+  else if(value == "+=") lhs.value.emplace<int>(get<int>(lhs.value) + get<int>(rhs.value));
+  else if(value == "-=") lhs.value.emplace<int>(get<int>(lhs.value) - get<int>(rhs.value));
+  else if(value == "*=") lhs.value.emplace<int>(get<int>(lhs.value) * get<int>(rhs.value));
+  else if(value == "/=") {
+    if(get<int>(rhs.value) == 0) {
+      ErrorHandler::error("x / 0 is undefined");
+      return Symbol::ERROR();
+    }
+
+    lhs.value.emplace<int>(get<int>(lhs.value) / get<int>(rhs.value));
+  }
+  else if(value == "%=") {
+    if(get<int>(rhs.value) == 0) {
+      ErrorHandler::error("x mod 0 is undefined");
+      return Symbol::ERROR();
+    }
+
+    lhs.value.emplace<int>(get<int>(lhs.value) % get<int>(rhs.value));
+  }
+  else if(value == "&=") lhs.value.emplace<int>(get<int>(lhs.value) & get<int>(rhs.value));
+  else if(value == "|=") lhs.value.emplace<int>(get<int>(lhs.value) | get<int>(rhs.value));
+  else if(value == "^=") lhs.value.emplace<int>(get<int>(lhs.value) ^ get<int>(rhs.value));
+  else if(value == "<<=") lhs.value.emplace<int>(get<int>(lhs.value) << get<int>(rhs.value));
+  else if(value == ">>=") lhs.value.emplace<int>(get<int>(lhs.value) >> get<int>(rhs.value));
+
   SymbolTable::getInstance()->update(lhs);
 
   if (lhs.dataType.compare("int") == 0)
-    cout << lhs.name << ": " << get<int>(SymbolTable::getInstance()->get(lhs.name).value) << endl;
+    cout << lhs.name << value << ": " << get<int>(SymbolTable::getInstance()->get(lhs.name).value) << endl;
   return rhs;
 }
