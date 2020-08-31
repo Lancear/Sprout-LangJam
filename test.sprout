@@ -31,6 +31,9 @@ fn main(): bool {
         u = u + 1;
     }
 
-    let t = '\n';
-    return t == '\n';
+    Console.writeln("" + Console.readint());
+    Console.writeln("" + Console.readbool());
+    Console.writeln("" + Console.readchar());
+    Console.writeln(Console.readln());
+    return y + square(7);
 }
