@@ -13,28 +13,31 @@ using namespace std;
 
 Symbol FunctionNode::addSymbols() {
 	shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
-	Symbol fnSym, sym;
+	Symbol fnSym;
+	Symbol sym = Symbol::EMPTY();
 
 	syms->openNewScope();
 
 	string type = "void";
-	if (children.size() == 4)
-		type = children[3]->addSymbols().dataType;
-
+	if (children.size() == 4) {
+		sym = children[3]->addSymbols();
+		type = sym.dataType;
+	}
 
 	if (syms->currentScope->parent->contains(value)) {
     ErrorHandler::error("a symbol with this name already exists, name: " + value);
     sym = Symbol::ERROR();
   }
-	else {
+	else if (!sym.isError()) {
 		fnSym = Symbol::FUNCTION(value, type, (void*)this);
 		syms->currentScope->parent->add(fnSym);
 	}
 	
-	for (int i = 0; i < children.size(); i++)
-	{
-		sym = children[i]->addSymbols();
-	}
+	int params = (children.size() == 4) ? 1 : 0;
+	sym = children[params]->addSymbols();
+
+	int code = (children.size() == 4) ? 2 : 1;
+	sym = children[code]->addSymbols();
 	
 	this->scope = syms->currentScope;	
 	syms->closeScope();
@@ -46,7 +49,7 @@ Symbol FunctionNode::sematicCheck(Symbol sym) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
 
   syms->enterScope();
-	for (int i = 0; i < children.size(); i++)
+	for (int i = (children.size() == 4) ? 1 : 0; i < children.size(); i++)
 	{
 		children[i]->sematicCheck();
 	}

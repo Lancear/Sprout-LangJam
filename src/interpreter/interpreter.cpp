@@ -14,11 +14,11 @@ void dispatch(struct node *n){
 	if(!n) return;
     
   unique_ptr<TreeNode> tree = make_unique<FileNode>(n);
-
   tree->addSymbols();
+  if (ErrorHandler::hadError) return;
+
   SymbolTable::getInstance()->resetCursor();
   tree->sematicCheck();
-
   if (ErrorHandler::hadError) return;
   
   SymbolTable::getInstance()->resetCursor();
@@ -26,6 +26,6 @@ void dispatch(struct node *n){
   Symbol args[0];
   Symbol retVal = main->execute(args);
 
-  if (!retVal.isEmpty())
+  if (!retVal.isEmpty() && retVal.dataType.compare("int") == 0)
     cout << get<int>(retVal.value) << endl;
 }
