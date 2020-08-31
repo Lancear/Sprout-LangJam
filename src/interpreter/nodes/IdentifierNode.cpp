@@ -19,12 +19,14 @@ Symbol IdentifierNode::sematicCheck(Symbol sym) {
   }
 
   if (!SymbolTable::getInstance()->contains(SymbolTable::getInstance()->get(value).dataType)) {
+    ErrorHandler::error("unknown type " + SymbolTable::getInstance()->get(value).dataType, line, col);
     return Symbol::ERROR();
   }
 
   Symbol type = SymbolTable::getInstance()->get(SymbolTable::getInstance()->get(value).dataType);
 
   if (!type.isType() && !type.isClass()) {
+    ErrorHandler::error(SymbolTable::getInstance()->get(value).dataType + "is not a type", line, col);
     return Symbol::ERROR();
   }
 

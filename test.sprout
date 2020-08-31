@@ -1,42 +1,14 @@
-fn square(x: int): int {
-    if (x > 7)
-        return x;
-    else
-        return x * x;
+/*
+fn main() {
+    let input = Console.readint();
+
+    do {
+        Console.writeln("" + input);
+    }
+    while (input == 1);
 }
+*/
 
-fn main(): bool {
-    let a = true;
-    let b = a ? "true" : "false";
-    let c = 1 + 3;
-    let d = a && c > 2;
-    let e = -2 < 0;
-    let f = !a;
-    let h = c++;
-    let i = --c;
-    mut k = "hello";
-    mut l = k = "hell no";
-
-    let x = true;
-    mut y = 3;
-    mut z = 10;
-
-    if (true) {
-        y = y + z;
-    }
-
-    mut u = 0;
-    while (u < 5) {
-        y = y + 1;
-        u = u + 1;
-    }
-
-    Console.writeln("" + Console.readint());
-    Console.writeln("" + Console.readbool());
-    Console.writeln("" + Console.readchar());
-    Console.writeln(Console.readln());
-
-    Console.write("enter you name: ");
-    Console.writeln(Console.readln());
-    return y + square(7);
+fn main() {
+    
 }

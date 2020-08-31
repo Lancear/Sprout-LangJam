@@ -18,7 +18,7 @@ Symbol DoWhileNode::addSymbols() {
 
 Symbol DoWhileNode::sematicCheck(Symbol sym) {
 	Symbol whileNode = children[0]->sematicCheck();
-	if (whileNode.dataType != "bool")
+	if (whileNode.dataType.compare("bool") != 0)
 	{
 		ErrorHandler::error("Expression in do-while loop is of type \"" + whileNode.dataType + "\", it should be of type bool", line, col);
 		return Symbol::ERROR();

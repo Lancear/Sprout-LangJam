@@ -23,8 +23,8 @@ Symbol RelationalExprNode::sematicCheck(Symbol param) {
 
   if (value.compare("==") == 0 || value.compare("!=") == 0){
     if (lhs.dataType.compare(rhs.dataType) != 0) {
-		ErrorHandler::error(value + " lhs is not of the same type as rhs", line, col);
-		sym = Symbol::ERROR();
+      ErrorHandler::error(value + " lhs is not of the same type as rhs", line, col);
+      sym = Symbol::ERROR();
     }
   }
   else {

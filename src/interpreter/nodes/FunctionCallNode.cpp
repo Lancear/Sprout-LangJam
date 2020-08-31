@@ -12,6 +12,30 @@
 
 using namespace std;
 
+Symbol FunctionCallNode::addSymbols() {
+  if (value.compare("Console.write") == 0) {
+    return Symbol::TYPE("void");
+  }
+  else if (value.compare("Console.writeln") == 0) {
+    return Symbol::TYPE("void");
+  }
+  else if (value.compare("Console.readint") == 0) {
+    return Symbol::TYPE("int");
+  }
+  else if (value.compare("Console.readchar") == 0) {
+    return Symbol::TYPE("char");
+  }
+  else if (value.compare("Console.readbool") == 0) {
+    return Symbol::TYPE("bool");
+  }
+  else if (value.compare("Console.readln") == 0) {
+    return Symbol::TYPE("string");
+  }
+  else {
+    return Symbol::TYPE(SymbolTable::getInstance()->get(value).dataType);
+  }
+}
+
 Symbol FunctionCallNode::sematicCheck(Symbol param) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   Symbol sym = Symbol::EMPTY();

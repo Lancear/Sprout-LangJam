@@ -23,6 +23,8 @@
 %option yylineno
 %option reentrant bison-bridge bison-locations
 
+%x C_COMMENT
+
 %%
 let         return(KEYWORD_LET);
 while       return(KEYWORD_WHILE);
@@ -40,6 +42,12 @@ match       return(KEYWORD_MATCH);
 for         return(KEYWORD_FOR);
 import      return(KEYWORD_IMPORT);
 as          return(KEYWORD_AS);
+
+"/*"            BEGIN(C_COMMENT);
+<C_COMMENT>"*/" BEGIN(INITIAL);
+<C_COMMENT>.|\n 
+
+"//"(.*)\n      ;
 
 "("         return(OP_LEFT_PAREN);
 ")"         return(OP_RIGHT_PAREN);
