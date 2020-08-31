@@ -37,7 +37,7 @@ Symbol DoWhileNode::execute(Symbol sym) {
 	SymbolTable::getInstance()->exitScope();
 	do{
 		SymbolTable::getInstance()->pushScope(s);
-		children[1]->execute();
+		result = children[1]->execute();
 		SymbolTable::getInstance()->popScope();
 		if (!result.isEmpty())
 			return result;

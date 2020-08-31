@@ -23,7 +23,7 @@ Symbol CodeBlockNode::execute(Symbol sym) {
   for (int i = 0; i < children.size(); i++) {
     Symbol retVal = children[i]->execute();
 
-    if (children[i]->type == ReturnStatement && !retVal.isEmpty()) {
+    if (children[i]->type == ReturnStatement || (!retVal.isEmpty() && (children[i]->type == ConditionalStatement || children[i]->type == WhileStatement || children[i]->type == DoWhileStatement || children[i]->type == ForStatement))) {
       return retVal;
     }
   }

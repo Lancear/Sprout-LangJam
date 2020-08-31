@@ -1,5 +1,8 @@
 fn square(x: int): int {
-    return x * x;
+    if (x > 7)
+        return x;
+    else
+        return x * x;
 }
 
 fn main(): bool {

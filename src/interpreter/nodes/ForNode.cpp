@@ -61,8 +61,10 @@ Symbol ForNode::execute(Symbol sym) {
 		while(true){
 			SymbolTable::getInstance()->pushScope(s);
 			result = children[0]->execute();
-			if (!result.isEmpty())
+			if (!result.isEmpty()){
+				SymbolTable::getInstance()->popScope();
 				return result;
+			}
 			SymbolTable::getInstance()->popScope();
 		}
 		return result;

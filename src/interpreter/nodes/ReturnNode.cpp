@@ -19,5 +19,5 @@ Symbol ReturnNode::sematicCheck(Symbol sym) {
 }
 
 Symbol ReturnNode::execute(Symbol sym) {
-  return (children.size() == 1) ? children[0]->execute() : Symbol::EMPTY();
+  return (children.size() == 1) ? children[0]->execute() : Symbol::TYPE("void");
 }
