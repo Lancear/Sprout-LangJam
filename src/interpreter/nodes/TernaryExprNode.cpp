@@ -38,28 +38,11 @@ Symbol TernaryExprNode::sematicCheck(Symbol param) {
 
 Symbol TernaryExprNode::execute(Symbol sym) {
   Symbol statement = children[0]->execute();
-  Symbol lhs = children[1]->execute();
-  Symbol rhs = children[2]->execute();
 
   if(get<int>(statement.value)) {
-    if(lhs.dataType.compare("int") == 0) return Symbol::EXPRESSION("int", get<int>(lhs.value));
-    else if(lhs.dataType.compare("string") == 0) return Symbol::EXPRESSION("string", get<string>(lhs.value));
-    else if(lhs.dataType.compare("bool") == 0) return Symbol::EXPRESSION("bool", get<int>(lhs.value));
-    else if(lhs.dataType.compare("char") == 0) return Symbol::EXPRESSION("char", get<int>(lhs.value));
-
-    ErrorHandler::error("ternary lhs failed", line, col);
-    return Symbol::ERROR();
+    return children[1]->execute();
   }
   else {
-    if(lhs.dataType.compare("int") == 0) return Symbol::EXPRESSION("int", get<int>(rhs.value));
-    else if(lhs.dataType.compare("string") == 0) return Symbol::EXPRESSION("string", get<string>(rhs.value));
-    else if(lhs.dataType.compare("bool") == 0) return Symbol::EXPRESSION("bool", get<int>(rhs.value));
-    else if(lhs.dataType.compare("char") == 0) return Symbol::EXPRESSION("char", get<int>(rhs.value));
-
-    ErrorHandler::error("ternary rhs failed", line, col);
-    return Symbol::ERROR();
+    return children[2]->execute();
   }
-
-  ErrorHandler::error("ternary failed", line, col);
-  return Symbol::ERROR();
 }

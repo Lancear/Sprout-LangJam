@@ -29,6 +29,16 @@ Symbol ArithmeticExprNode::sematicCheck(Symbol param) {
   }
 
   if (value.compare("+") == 0 && (lhs.dataType.compare("string") == 0 || rhs.dataType.compare("string") == 0)) {
+    if (lhs.dataType.compare("void") == 0) {
+      ErrorHandler::error(value + " lhs is no value, it is void", line, col);
+	    sym = Symbol::ERROR();
+    }
+
+    if (rhs.dataType.compare("void") == 0) {
+      ErrorHandler::error(value + " lhs is no value, it is void", line, col);
+	    sym = Symbol::ERROR();
+    }
+
     return Symbol::TYPE("string");
   }
 

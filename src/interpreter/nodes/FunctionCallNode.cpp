@@ -130,24 +130,24 @@ Symbol FunctionCallNode::execute(Symbol sym) {
   else if (value.compare("Console.readint") == 0) {
     int x = 0;
     cin >> x;
+    cin.clear();
+    cin.ignore();
     return Symbol::EXPRESSION("int", x);
   }
   else if (value.compare("Console.readchar") == 0) {
     char x;
     x = cin.get();
+    cin.clear();
+    cin.ignore();
     return Symbol::EXPRESSION("char", (int)x);
   }
   else if (value.compare("Console.readbool") == 0) {
     string x;
-    cin.clear();
-    cin.ignore();
     getline (cin, x);
     return Symbol::EXPRESSION("bool", (x.compare("true") == 0));
   }
   else if (value.compare("Console.readln") == 0) {
     string x;
-    cin.clear();
-    cin.ignore();
     getline (cin, x);
     return Symbol::EXPRESSION("string", x);
   }

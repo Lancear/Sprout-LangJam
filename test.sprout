@@ -1,6 +1,3 @@
-import std.Console as console;
-import std.Collections;
-
 fn square(x: int): int {
     return x * x;
 }
@@ -34,6 +31,9 @@ fn main(): bool {
     Console.writeln("" + Console.readint());
     Console.writeln("" + Console.readbool());
     Console.writeln("" + Console.readchar());
+    Console.writeln(Console.readln());
+
+    Console.write("enter you name: ");
     Console.writeln(Console.readln());
     return y + square(7);
 }

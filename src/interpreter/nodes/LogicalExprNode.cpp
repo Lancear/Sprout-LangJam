@@ -46,5 +46,5 @@ Symbol LogicalExprNode::execute(Symbol sym) {
 	  return Symbol::ERROR();
   }
 
-  return Symbol::EXPRESSION("int", result);
+  return Symbol::EXPRESSION("bool", result);
 }
