@@ -65,6 +65,7 @@ class SymbolTable
 			currentScope = root.get();
 
 			// predefined types/values
+			add(Symbol::TYPE("void"));
 			add(Symbol::TYPE("int"));
 			add(Symbol::TYPE("bool"));
 			add(Symbol::TYPE("char"));

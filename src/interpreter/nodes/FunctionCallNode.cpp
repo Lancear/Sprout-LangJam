@@ -160,7 +160,7 @@ Symbol FunctionCallNode::execute(Symbol sym) {
   }
   else if (value.compare("Console.readchar") == 0) {
     char x;
-    x = cin.get();
+    cin >> noskipws >> x;
     cin.clear();
     cin.ignore();
     return Symbol::EXPRESSION("char", (int)x);
