@@ -23,14 +23,14 @@ Symbol PreOpNode::sematicCheck(Symbol param) {
 
   if (value.compare("!") == 0) {
     if (expr.dataType.compare("bool") != 0) {
-      ErrorHandler::error(value + " expr is not an boolean");
-      sym = Symbol::ERROR();
+		ErrorHandler::error(value + " expr is not an boolean", line, col);
+		sym = Symbol::ERROR();
     }
   }
   else {
     if (expr.dataType.compare("int") != 0) {
-      ErrorHandler::error(value + " expr is not an integer");
-      sym = Symbol::ERROR();
+		ErrorHandler::error(value + " expr is not an integer", line, col);
+		sym = Symbol::ERROR();
     }
   }
 
@@ -52,8 +52,8 @@ Symbol PreOpNode::execute(Symbol sym) {
     SymbolTable::getInstance()->update(lhs);
   } 
   else {
-    ErrorHandler::error(value + " operator not found");
-    return Symbol::ERROR();
+	  ErrorHandler::error(value + " operator not found", line, col);
+	  return Symbol::ERROR();
   }
 
   return Symbol::EXPRESSION("int", result);

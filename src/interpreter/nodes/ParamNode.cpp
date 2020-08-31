@@ -17,8 +17,8 @@ Symbol ParamNode::addSymbols() {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
 
   if (syms->containsInCurrentScope(value)) {
-    ErrorHandler::error("a symbol with this name already exists, name: " + value);
-    return Symbol::ERROR();
+	  ErrorHandler::error("a symbol with this name already exists, name: " + value, line, col);
+	  return Symbol::ERROR();
   }
 
 	Symbol s;

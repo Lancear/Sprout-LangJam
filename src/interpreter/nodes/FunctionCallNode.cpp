@@ -17,13 +17,13 @@ Symbol FunctionCallNode::sematicCheck(Symbol param) {
   FunctionNode* fn;
 
   if (!syms->contains(value)) {
-    ErrorHandler::error("unknown function " + value);
-    return Symbol::ERROR();
+	  ErrorHandler::error("unknown function " + value, line, col);
+	  return Symbol::ERROR();
   }
 
   if (!syms->get(value).isFunction() && !syms->get(value).isClass()) {
-    ErrorHandler::error(value + " is not a function");
-    return Symbol::ERROR();
+	  ErrorHandler::error(value + " is not a function", line, col);
+	  return Symbol::ERROR();
   }
 
   if (syms->get(value).isClass()) {
@@ -45,8 +45,8 @@ Symbol FunctionCallNode::sematicCheck(Symbol param) {
   }
 
   if (nrOfParams != children.size()) {
-    ErrorHandler::error("Incorrect number of arguments for function call to " + value + ", got " + to_string(children.size()) + " arguments, expected " + to_string(nrOfParams));
-    sym = Symbol::ERROR();
+	  ErrorHandler::error("Incorrect number of arguments for function call to " + value + ", got " + to_string(children.size()) + " arguments, expected " + to_string(nrOfParams), line, col);
+	  sym = Symbol::ERROR();
   }
   else {
     syms->pushScope(fn->scope);
@@ -55,8 +55,8 @@ Symbol FunctionCallNode::sematicCheck(Symbol param) {
       string paramName = fn->children[paramsNode]->children[i]->value;
 
       if (!args[i].isError() && syms->get(paramName).dataType.compare(args[i].dataType) != 0) {
-        ErrorHandler::error("datatype of argument " + to_string(i + 1) + " does not match the datatype of parameter " + to_string(i + 1) + ", " + paramName + ", datatype is " + args[i].dataType + ", expected " + syms->get(paramName).dataType);
-        sym = Symbol::ERROR();
+		  ErrorHandler::error("datatype of argument " + to_string(i + 1) + " does not match the datatype of parameter " + to_string(i + 1) + ", " + paramName + ", datatype is " + args[i].dataType + ", expected " + syms->get(paramName).dataType, line, col);
+		  sym = Symbol::ERROR();
       }
     }
 

@@ -18,15 +18,15 @@ Symbol TypeNode::addSymbols() {
 
 Symbol TypeNode::sematicCheck(Symbol sym) {
   if (!SymbolTable::getInstance()->contains(value)) {
-    ErrorHandler::error("unknown type " + value);
-    return Symbol::ERROR();
+	  ErrorHandler::error("unknown type " + value, line, col);
+	  return Symbol::ERROR();
   }
 
   Symbol type = SymbolTable::getInstance()->get(value);
 
   if (!type.isType() && !type.isClass()) {
-    ErrorHandler::error(value + " is not a type");
-    return Symbol::ERROR();
+	  ErrorHandler::error(value + " is not a type", line, col);
+	  return Symbol::ERROR();
   }
 
   return type;

@@ -24,13 +24,13 @@ Symbol TernaryExprNode::sematicCheck(Symbol param) {
   Symbol sym = lhs;
 
   if (cond.dataType.compare("bool") != 0) {
-    ErrorHandler::error(value + " condition is not a boolean");
-    sym = Symbol::ERROR();
+	  ErrorHandler::error(value + " condition is not a boolean", line, col);
+	  sym = Symbol::ERROR();
   }
 
   if (lhs.dataType.compare(rhs.dataType) != 0) {
-    ErrorHandler::error(value + " lhs is not of the same type as rhs");
-    sym = Symbol::ERROR();
+	  ErrorHandler::error(value + " lhs is not of the same type as rhs", line, col);
+	  sym = Symbol::ERROR();
   }
 
   return sym;

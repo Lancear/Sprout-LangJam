@@ -19,7 +19,7 @@ Symbol WhileNode::addSymbols() {
 Symbol WhileNode::sematicCheck(Symbol sym) {
 	Symbol whileNode = children[0]->sematicCheck();
 	if(whileNode.dataType != "bool"){
-		cerr << "Expression in while loop is of type \"" << whileNode.dataType << "\", it should be of type bool" << endl;
+		ErrorHandler::error("Expression in while loop is of type \"" + whileNode.dataType + "\", it should be of type bool", line, col);
 		return Symbol::ERROR();
 	}
 	SymbolTable::getInstance()->enterScope();

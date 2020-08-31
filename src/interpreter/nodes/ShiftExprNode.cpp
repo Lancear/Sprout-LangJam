@@ -22,13 +22,13 @@ Symbol ShiftExprNode::sematicCheck(Symbol param) {
   }
 
   if (lhs.dataType.compare("int") != 0) {
-    ErrorHandler::error(value + " lhs is not an integer");
-    sym = Symbol::ERROR();
+	  ErrorHandler::error(value + " lhs is not an integer", line, col);
+	  sym = Symbol::ERROR();
   }
   
   if (rhs.dataType.compare("int") != 0) {
-    ErrorHandler::error(value + " rhs is not an integer");
-    sym = Symbol::ERROR();
+	  ErrorHandler::error(value + " rhs is not an integer", line, col);
+	  sym = Symbol::ERROR();
   }
 
   return sym;
@@ -43,8 +43,8 @@ Symbol ShiftExprNode::execute(Symbol sym) {
   if(value == ">>") result = lhs >> rhs;
   else if(value == "<<") result = lhs << rhs; 
   else {
-    ErrorHandler::error(value + " operator not found");
-    return Symbol::ERROR();
+	  ErrorHandler::error(value + " operator not found", line, col);
+	  return Symbol::ERROR();
   }
 
   return Symbol::EXPRESSION("int", result);
