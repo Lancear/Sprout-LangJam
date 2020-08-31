@@ -89,6 +89,12 @@ Symbol ArithmeticExprNode::execute(Symbol sym) {
   else if(children[0]->execute().dataType == "string" && children[1]->execute().dataType == "string") {
     return Symbol::EXPRESSION("string", get<string>(lhs.value) + get<string>(rhs.value));
   }
+  else if(children[0]->execute().dataType == "string" && children[1]->execute().dataType == "int") {
+    return Symbol::EXPRESSION("string", get<string>(lhs.value) + to_string(get<int>(rhs.value)));
+  }
+  else if(children[0]->execute().dataType == "int" && children[1]->execute().dataType == "string") {
+    return Symbol::EXPRESSION("string", to_string(get<int>(lhs.value)) + get<string>(rhs.value));
+  }
 
   return Symbol::EMPTY();
 }
