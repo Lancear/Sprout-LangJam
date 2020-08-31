@@ -22,6 +22,11 @@ Symbol AssignmentNode::sematicCheck(Symbol param) {
     return Symbol::ERROR();
   }
 
+  if (lhs.isImmutable()) {
+    ErrorHandler::error("lhs is immutable, cannot assign to it");
+    sym = Symbol::ERROR();
+  }
+
   if (lhs.dataType.compare(rhs.dataType) != 0) {
     ErrorHandler::error(value + " lhs is not of the same type as rhs");
     sym = Symbol::ERROR();
