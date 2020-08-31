@@ -24,7 +24,7 @@ Symbol TypeNode::sematicCheck(Symbol sym) {
 
   Symbol type = SymbolTable::getInstance()->get(value);
 
-  if (!type.isType()) {
+  if (!type.isType() && !type.isClass()) {
     ErrorHandler::error(value + " is not a type");
     return Symbol::ERROR();
   }

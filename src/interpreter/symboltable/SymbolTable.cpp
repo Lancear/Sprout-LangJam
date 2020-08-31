@@ -3,6 +3,9 @@
 #include <iostream>
 #include <optional>
 #include <string>
+#include <vector>
+#include <stack>
+
 
 #include "SymbolTable.hpp"
 #include "Scope.hpp"
@@ -120,7 +123,7 @@ SymbolTable* SymbolTable::enterScope(){
 	return this;
 }
 
-SymbolTable* SymbolTable::exitScope(){
+SymbolTable* SymbolTable::exitScope() {
 	branches.top().pop();
 	currentScope = currentScope->getParent();
 	int top = branches.top().top();
@@ -143,5 +146,21 @@ SymbolTable* SymbolTable::popScope(){
 	callstack.pop();
 	branches.pop();
 	currentScope = callstack.top();
+	vector<int> path;
+
+	while(branches.top().size() > 0) {
+		int top = branches.top().top();
+		path.insert(path.begin(), top);
+		branches.top().pop();
+	}
+
+	for (int i = 0; i < path.size() - 1; i++) {
+		currentScope = currentScope->children[path[i]].get();
+		branches.top().push(path[i]);
+	}
+
+	if (path.size() > 0)
+		branches.top().push(path[path.size() - 1]);
+
 	return this;
 }

@@ -8,7 +8,7 @@
 
 using namespace std;
 
-enum class SymbolType{EMPTY,EXPRESSION,MUTABLE,IMMUTABLE,FUNCTION,MODULE,TYPE,ERROR};
+enum class SymbolType{EMPTY,EXPRESSION,MUTABLE,IMMUTABLE,FUNCTION,MODULE,CLASS,TYPE,ERROR};
 
 class Symbol {
 	public:
@@ -26,6 +26,7 @@ class Symbol {
 		bool isMutable();
 		bool isImmutable();
 		bool isExpression();
+		bool isClass();
 		bool isType();
 
 		static Symbol EMPTY();

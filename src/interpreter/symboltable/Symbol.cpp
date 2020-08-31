@@ -38,6 +38,10 @@ bool Symbol::isType() {
 	return type == SymbolType::TYPE;
 }
 
+bool Symbol::isClass() {
+	return type == SymbolType::CLASS;
+}
+
 Symbol Symbol::EMPTY(){
 	Symbol s = Symbol();
 	s.name = EMPTYSTRING;
@@ -67,8 +71,8 @@ Symbol Symbol::CLASS(string name, void* value)
 	Symbol s = Symbol();
 	s.name = name;
 	s.value = value;
-	s.dataType = "<CLASS>";
-	s.type = SymbolType::MODULE;
+	s.dataType = name;
+	s.type = SymbolType::CLASS;
 	return s;
 }
 Symbol Symbol::FUNCTION(string name, string returnType, void* body)

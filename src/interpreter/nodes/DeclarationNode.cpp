@@ -47,7 +47,7 @@ Symbol DeclarationNode::addSymbols() {
 }
 
 Symbol DeclarationNode::sematicCheck(Symbol sym) {
-  if (children[0]->type != VariableTypeNode || children.size() == 2) {
+  if ((children[0]->type != VariableTypeNode && children[0]->type != TypeCompound) || children.size() == 2) {
     return children[children.size() - 1]->sematicCheck();
   }
 
@@ -58,7 +58,7 @@ Symbol DeclarationNode::execute(Symbol param) {
   shared_ptr<SymbolTable> syms = SymbolTable::getInstance();
   Symbol sym = syms->get(value);
 
-  if (children[0]->type != VariableTypeNode || children.size() == 2) {
+  if ((children[0]->type != VariableTypeNode && children[0]->type != TypeCompound) || children.size() == 2) {
     sym.value = children[children.size() - 1]->execute().value;
     syms->add(sym);
   }
