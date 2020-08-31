@@ -17,14 +17,14 @@ Symbol DoWhileNode::addSymbols() {
 }
 
 Symbol DoWhileNode::sematicCheck(Symbol sym) {
-	Symbol whileNode = children[1]->sematicCheck();
+	Symbol whileNode = children[0]->sematicCheck();
 	if (whileNode.dataType != "bool")
 	{
 		cerr << "Expression in do-while loop is of type \"" << whileNode.dataType << "\", it should be of type bool" << endl;
 		return Symbol::ERROR();
 	}
 	SymbolTable::getInstance()->enterScope();
-	children[0]->sematicCheck();
+	children[1]->sematicCheck();
 	SymbolTable::getInstance()->exitScope();
 
 	return Symbol::EMPTY();
@@ -36,8 +36,8 @@ Symbol DoWhileNode::execute(Symbol sym) {
 	SymbolTable::getInstance()->exitScope();
 	do{
 		SymbolTable::getInstance()->pushScope(s);
-		children[0]->execute();
+		children[1]->execute();
 		SymbolTable::getInstance()->popScope();
-	} while (get<int>(children[1]->execute().value) == 1);
+	} while (get<int>(children[0]->execute().value) == 1);
 	return Symbol::EMPTY();
 }
