@@ -1,2 +1,0 @@
-run = "clang++ -std=c++2a ./src/main.cpp -o ./bin/main && ./bin/main"
-language = "C++"
