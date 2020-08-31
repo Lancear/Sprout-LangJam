@@ -29,9 +29,21 @@ Symbol PostOpNode::sematicCheck(Symbol param) {
 }
 
 Symbol PostOpNode::execute(Symbol sym) {
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->execute();
+  Symbol lhs = children[0]->execute();
+  int result = 0;
+
+  if(value == "++") {
+    result = get<int>(lhs.value)++;
+    SymbolTable::getInstance()->update(lhs);
+  } 
+  else if(value == "--") {
+    result = get<int>(lhs.value)--;
+    SymbolTable::getInstance()->update(lhs);
+  } 
+  else {
+    ErrorHandler::error(value + " operator not found");
+    return Symbol::ERROR();
   }
 
-  return Symbol::EMPTY();
+  return Symbol::EXPRESSION("int", result);
 }
