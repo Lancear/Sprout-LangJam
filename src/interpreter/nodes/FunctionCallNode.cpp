@@ -129,15 +129,11 @@ Symbol FunctionCallNode::execute(Symbol sym) {
   }
   else if (value.compare("Console.readint") == 0) {
     int x = 0;
-    cin.clear();
-    cin.ignore();
     cin >> x;
     return Symbol::EXPRESSION("int", x);
   }
   else if (value.compare("Console.readchar") == 0) {
     char x;
-    cin.clear();
-    cin.ignore();
     x = cin.get();
     return Symbol::EXPRESSION("char", (int)x);
   }
