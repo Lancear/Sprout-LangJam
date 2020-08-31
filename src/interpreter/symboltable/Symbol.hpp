@@ -38,8 +38,10 @@ class Symbol {
 		static Symbol EXPRESSION(string dataType, string value);
 		static Symbol MUTABLE(string name, string dataType, int value);
 		static Symbol MUTABLE(string name, string dataType, string value);
+		static Symbol MUTABLE(string name, string dataType, void* value);
 		static Symbol IMMUTABLE(string name, string dataType, int value);
 		static Symbol IMMUTABLE(string name, string dataType, string value);
+		static Symbol IMMUTABLE(string name, string dataType, void* value);
 		static Symbol TYPE(string dataType);
 		Symbol(){}
 };

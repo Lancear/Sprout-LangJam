@@ -7,11 +7,11 @@ static string EMPTYSTRING = "<EMPTY>";
 static string ERRORSTRING = "<ERROR>";
 
 bool Symbol::isError(){
-	return name == ERRORSTRING;
+	return type == SymbolType::ERROR;
 }
 bool Symbol::isEmpty()
 {
-	return name == EMPTYSTRING;
+	return type == SymbolType::EMPTY;
 }
 bool Symbol::isFunction()
 {
@@ -116,6 +116,16 @@ Symbol Symbol::MUTABLE(string name, string dataType, string value){
 	s.type = SymbolType::MUTABLE;
 	return s;
 }
+
+Symbol Symbol::MUTABLE(string name, string dataType, void* value){
+	Symbol s = Symbol();
+	s.name = name;
+	s.value = value;
+	s.dataType = dataType;
+	s.type = SymbolType::MUTABLE;
+	return s;
+}
+
 Symbol Symbol::IMMUTABLE(string name, string dataType, int value){
 	Symbol s = Symbol();
 	s.name = name;
@@ -132,6 +142,16 @@ Symbol Symbol::IMMUTABLE(string name, string dataType, string value){
 	s.type = SymbolType::IMMUTABLE;
 	return s;
 }
+
+Symbol Symbol::IMMUTABLE(string name, string dataType, void* value){
+	Symbol s = Symbol();
+	s.name = name;
+	s.value = value;
+	s.dataType = dataType;
+	s.type = SymbolType::MUTABLE;
+	return s;
+}
+
 Symbol Symbol::TYPE(string dataType){
 	Symbol s = Symbol();
 	s.name = dataType;
